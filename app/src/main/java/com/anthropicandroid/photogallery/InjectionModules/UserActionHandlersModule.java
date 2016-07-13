@@ -4,6 +4,8 @@ package com.anthropicandroid.photogallery.InjectionModules;
  * Created by Andrew Brin on 7/12/2016.
  */
 
+import com.anthropicandroid.photogallery.ViewModel.UserActionHandlers;
+
 import javax.inject.Singleton;
 
 import dagger.Module;

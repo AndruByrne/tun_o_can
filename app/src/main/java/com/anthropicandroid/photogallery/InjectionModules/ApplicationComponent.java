@@ -6,6 +6,8 @@ package com.anthropicandroid.photogallery.InjectionModules;
 
 import android.app.Application;
 
+import com.anthropicandroid.photogallery.ViewModel.UserActionHandlers;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -16,7 +18,7 @@ import dagger.Component;
         UserActionHandlersModule.class })
 public interface ApplicationComponent {
 
-    Application getContext();
+    Application getApplication();
 
     UserActionHandlers getUserActionHandlers();
 

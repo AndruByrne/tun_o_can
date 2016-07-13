@@ -5,6 +5,7 @@ package com.anthropicandroid.photogallery.InjectionModules;
  */
 
 import com.anthropicandroid.photogallery.ViewModel.GalleryActivity;
+import com.anthropicandroid.photogallery.ViewModel.UserActionHandlers;
 
 import dagger.Component;
 
@@ -12,7 +13,7 @@ import dagger.Component;
 @Component(
         dependencies = ApplicationComponent.class
 )
-public interface ActivityComponent {
+public interface ActivityComponent extends android.databinding.DataBindingComponent {
 
     UserActionHandlers getUserActionHandlers();
 
