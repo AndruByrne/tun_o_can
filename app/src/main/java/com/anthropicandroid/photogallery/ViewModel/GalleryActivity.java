@@ -1,9 +1,11 @@
-package com.anthropicandroid.photogallery;
+package com.anthropicandroid.photogallery.ViewModel;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
-public class GalleryActivity extends AppCompatActivity {
+import com.anthropicandroid.photogallery.R;
+
+public class GalleryActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
