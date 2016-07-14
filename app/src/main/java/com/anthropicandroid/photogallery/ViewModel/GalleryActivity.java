@@ -25,7 +25,9 @@ public class GalleryActivity extends Activity {
                 this,
                 R.layout.activity_gallery,
                 activityComponent);
-        // set the user action handlers in the
+        // set the user action handlers for the main view model (use separate one for bottom nav)
         galleryActivityBinding.setActionHandlers(userActionHandlers);
+        // set app bar with relative layout base
+        setActionBar(galleryActivityBinding.appBar);
     }
 }

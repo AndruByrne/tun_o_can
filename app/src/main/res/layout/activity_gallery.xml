@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <import type="java.util.List"/>
+        <import type="java.lang.Boolean"/>
+        <import type="java.lang.Integer"/>
+        <variable
+            name="entries"
+            type="List&lt;Integer>"/>
         <variable
             name="action_handlers"
             type="com.anthropicandroid.photogallery.ViewModel.UserActionHandlers"/>
     </data>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/activity_vertical_margin"
@@ -19,11 +27,49 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context=".ViewModel.GalleryActivity">
 
-        <Button
-            android:id="@+id/touchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onTouch="@{action_handlers::aTouch}"
-            android:text="Hello World!"/>
+        <Toolbar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:background="?android:attr/colorPrimary"
+            android:elevation="@dimen/app_bar_elevation">
+
+            <RelativeLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/app_title_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/gallery_label"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/colorDarkText"/>
+
+                <Button
+                    android:id="@+id/touchButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:onTouch="@{action_handlers::aTouch}"
+                    android:text="onTouch!"/>
+            </RelativeLayout>
+        </Toolbar>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gallery_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="2"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
+            android:stretchMode="none"
+            app:entries="@{entries}"
+        />
+
     </RelativeLayout>
 </layout>

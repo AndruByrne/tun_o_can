@@ -2,6 +2,9 @@
 
     <style name="GalleryTheme" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:textViewStyle">@style/GalleryTextViewStyle</item>
     </style>
+
+    <style name="GalleryTextViewStyle">sans-serif-light</style>
 
 </resources>
