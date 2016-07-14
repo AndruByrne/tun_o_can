@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 24
@@ -40,5 +41,13 @@ dependencies {
     compile 'com.android.support:design:24.0.0'
     // couldn't find GridLayoutManager without support libraries, so using support libraries =[
     compile 'com.android.support:recyclerview-v7:24.0.0'
+    // rxJava
+    compile 'io.reactivex:rxandroid:1.1.0'
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    compile 'io.reactivex:rxjava:1.1.0'
+    // a db
+
+
 
 }
