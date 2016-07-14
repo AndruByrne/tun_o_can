@@ -5,7 +5,6 @@ package com.anthropicandroid.photogallery.ViewModel;
  */
 
 import android.databinding.BindingAdapter;
-import android.os.Looper;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -21,6 +20,6 @@ public class GridItemAdapter {
             ImageView imageView,
             Integer imageIndex) {
         // check if we need rxJava Answer: this returns true
-        Log.d(TAG, "we are on the main thread: "+(Looper.myLooper() == Looper.getMainLooper()));
+        Log.d(TAG, "we are on the main thread: ");
     }
 }

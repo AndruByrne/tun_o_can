@@ -1,8 +1,8 @@
 package com.anthropicandroid.photogallery.ViewModel;
 
-import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.anthropicandroid.photogallery.InjectionModules.GalleryActivityComponent;
 import com.anthropicandroid.photogallery.PhotoGalleryApplication;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class GalleryActivity extends Activity {
+public class GalleryActivity extends AppCompatActivity {
 
     @Inject UserActionHandlers userActionHandlers;
 
@@ -22,7 +22,8 @@ public class GalleryActivity extends Activity {
         // Bootstrap into dependency graph and bind view to view model and set variables
         super.onCreate(savedInstanceState);
         PhotoGalleryApplication application = (PhotoGalleryApplication) getApplication();
-        GalleryActivityComponent galleryActivityComponent = application.getGalleryActivityComponent();
+        GalleryActivityComponent galleryActivityComponent = application
+                .getGalleryActivityComponent();
 
         galleryActivityComponent.inject(this);
 
@@ -34,12 +35,18 @@ public class GalleryActivity extends Activity {
         // set the user action handlers for the main view model (use separate one for bottom nav)
         activityGalleryBinding.setActionHandlers(userActionHandlers);
         // set app bar with relative layout base
-        setActionBar(activityGalleryBinding.appBar);
-
+        setSupportActionBar(activityGalleryBinding.appBar);
         // check if we are on main thread (and need rxJava)
-        activityGalleryBinding.setEntries(new ArrayList<Integer>(){{
+        activityGalleryBinding.setEntries(new ArrayList<Integer>() {{
             add(1);
             add(2);
+            add(3);
+            add(3);
+            add(3);
+            add(3);
+            add(3);
+            add(3);
+            add(3);
             add(3);
             add(4);
             add(5);

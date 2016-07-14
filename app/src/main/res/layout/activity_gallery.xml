@@ -1,74 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import type="java.util.List"/>
+
         <import type="java.lang.Boolean"/>
+
         <import type="java.lang.Integer"/>
+
         <variable
             name="entries"
             type="List&lt;Integer>"/>
+
         <variable
             name="action_handlers"
             type="com.anthropicandroid.photogallery.ViewModel.UserActionHandlers"/>
     </data>
 
-    <RelativeLayout
-
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
+        android:fitsSystemWindows="false"
         tools:context=".ViewModel.GalleryActivity">
 
-        <Toolbar
-            android:id="@+id/app_bar"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/root_activity_layout"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:layout_alignParentTop="true"
-            android:background="?android:attr/colorPrimary"
-            android:elevation="@dimen/app_bar_elevation">
+            android:fitsSystemWindows="false"
+            android:layout_height="match_parent"
+            >
 
-            <RelativeLayout
-                android:id="@+id/toolbar_layout"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
-                android:gravity="center_vertical">
+                android:layout_alignParentTop="true"
+                android:background="?android:attr/colorPrimary"
+                android:elevation="@dimen/app_bar_elevation"
+                app:layout_scrollFlags="enterAlways">
 
-                <TextView
-                    android:id="@+id/app_title_field"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/gallery_label"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/colorDarkText"/>
+                <RelativeLayout
+                    android:id="@+id/toolbar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:gravity="center_vertical">
 
-                <Button
-                    android:id="@+id/touchButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:onTouch="@{action_handlers::aTouch}"
-                    android:text="onTouch!"/>
-            </RelativeLayout>
-        </Toolbar>
+                    <TextView
+                        android:id="@+id/app_title_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/gallery_label"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/colorDarkText"/>
 
-        <android.support.v17.leanback.widget.VerticalGridView
-            android:id="@+id/gallery_grid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:numColumns="2"
-            android:horizontalSpacing="10dp"
-            android:verticalSpacing="10dp"
-            android:stretchMode="none"
-            app:entries="@{entries}"/>
+                    <Button
+                        android:id="@+id/touchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:onTouch="@{action_handlers::aTouch}"
+                        android:text="onTouch!"/>
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
 
-    </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/gallery_grid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:horizontalSpacing="10dp"
+                android:orientation="vertical"
+                android:verticalSpacing="10dp"
+                app:entries="@{entries}"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:spanCount="2"/>
+        </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

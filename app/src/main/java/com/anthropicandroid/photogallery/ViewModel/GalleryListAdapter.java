@@ -6,7 +6,6 @@ package com.anthropicandroid.photogallery.ViewModel;
 
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
-import android.support.v17.leanback.widget.VerticalGridView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,7 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
     @BindingAdapter("entries")
     public static void setEntries(
             GalleryActivityComponent galleryActivityComponent,
-            VerticalGridView view,
+            RecyclerView view,
             List<Integer> imageIndicies) {
         // create and populate list adapter and give it to the view
         view.setAdapter(new GalleryListAdapter(imageIndicies));

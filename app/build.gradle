@@ -33,11 +33,12 @@ dependencies {
     testCompile 'com.google.dagger:dagger:2.2'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     testProvided 'org.glassfish:javax.annotation:10.0-b28'
-    // updated guava depenency for dagger
+    // updated guava dependency for dagger
     apt 'com.google.guava:guava:19.0'
     testApt 'com.google.guava:guava:19.0'
+    // design support library
+    compile 'com.android.support:design:24.0.0'
     // couldn't find GridLayoutManager without support libraries, so using support libraries =[
     compile 'com.android.support:recyclerview-v7:24.0.0'
-    compile 'com.android.support:leanback-v17:24.0.0'
 
 }
