@@ -6,45 +6,47 @@ package com.anthropicandroid.photogallery.ViewModel;
 
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
+import android.support.v17.leanback.widget.VerticalGridView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.anthropicandroid.photogallery.databinding.ActivityGalleryBinding;
+import com.anthropicandroid.photogallery.InjectionModules.GalleryActivityComponent;
+import com.anthropicandroid.photogallery.R;
+import com.anthropicandroid.photogallery.databinding.LayoutGridItemBinding;
 
 import java.util.List;
 
-public class GalleryGridAdapter extends RecyclerView.Adapter {
+public class GalleryListAdapter extends RecyclerView.Adapter {
 
     private List<Integer> imageIndicies;
 
-    public GalleryGridAdapter(List<Integer> imageIndicies) {
+    public GalleryListAdapter(List<Integer> imageIndicies) {
         // class constructed by an annotated static function
         this.imageIndicies = imageIndicies;
     }
 
     @BindingAdapter("entries")
     public static void setEntries(
-            ActivityGalleryBinding activityGalleryBinding,
-            RecyclerView view,
+            GalleryActivityComponent galleryActivityComponent,
+            VerticalGridView view,
             List<Integer> imageIndicies) {
-        GalleryGridAdapter adapter = new GalleryGridAdapter(imageIndicies);
-        view.setAdapter(adapter);
+        // create and populate list adapter and give it to the view
+        view.setAdapter(new GalleryListAdapter(imageIndicies));
     }
 
     public static class BindingHolder extends RecyclerView.ViewHolder {
 
-        private ViewDataBinding dataBinding;
+        private LayoutGridItemBinding dataBinding;
 
         public BindingHolder(View rowView) {
-            super(rowView);
             // get tie-in to this view's databinding
+            super(rowView);
             dataBinding = DataBindingUtil.bind(rowView);
         }
 
-        public ViewDataBinding getDataBinding() {
+        public LayoutGridItemBinding getDataBinding() {
             return dataBinding;
         }
     }
@@ -52,7 +54,7 @@ public class GalleryGridAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                android.R.layout.simple_list_item_1,
+                R.layout.layout_grid_item,
                 parent,
                 false);
         return new BindingHolder(view);
@@ -60,9 +62,13 @@ public class GalleryGridAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        // Sets viewmodel index
         if (holder instanceof BindingHolder) {
-            BindingHolder bindingHolder = (BindingHolder) holder;
+            LayoutGridItemBinding itemBinding = ((BindingHolder) holder).getDataBinding();
             Integer imageIndex = imageIndicies.get(position);
+
+            itemBinding.setIndex(imageIndex);
+            itemBinding.setDescription(""+position);
         }
     }
 

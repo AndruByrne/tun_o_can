@@ -54,13 +54,13 @@
                     android:id="@+id/touchButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:onTouch="@{action_handlers::aTouch}"
                     android:text="onTouch!"/>
             </RelativeLayout>
         </Toolbar>
 
-        <android.support.v7.widget.RecyclerView
+        <android.support.v17.leanback.widget.VerticalGridView
             android:id="@+id/gallery_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -68,8 +68,7 @@
             android:horizontalSpacing="10dp"
             android:verticalSpacing="10dp"
             android:stretchMode="none"
-            app:entries="@{entries}"
-        />
+            app:entries="@{entries}"/>
 
     </RelativeLayout>
 </layout>

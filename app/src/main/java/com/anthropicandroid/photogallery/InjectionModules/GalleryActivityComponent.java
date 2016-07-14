@@ -9,11 +9,11 @@ import com.anthropicandroid.photogallery.ViewModel.UserActionHandlers;
 
 import dagger.Component;
 
-@GalleryScope
+@GalleryActivityScope
 @Component(
         dependencies = ApplicationComponent.class
 )
-public interface ActivityComponent extends android.databinding.DataBindingComponent {
+public interface GalleryActivityComponent extends android.databinding.DataBindingComponent {
 
     UserActionHandlers getUserActionHandlers();
 

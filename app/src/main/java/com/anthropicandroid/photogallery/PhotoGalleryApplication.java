@@ -2,25 +2,25 @@ package com.anthropicandroid.photogallery;
 
 import android.app.Application;
 
-import com.anthropicandroid.photogallery.InjectionModules.ActivityComponent;
 import com.anthropicandroid.photogallery.InjectionModules.AppModule;
 import com.anthropicandroid.photogallery.InjectionModules.ApplicationComponent;
-import com.anthropicandroid.photogallery.InjectionModules.DaggerActivityComponent;
 import com.anthropicandroid.photogallery.InjectionModules.DaggerApplicationComponent;
+import com.anthropicandroid.photogallery.InjectionModules.DaggerGalleryActivityComponent;
+import com.anthropicandroid.photogallery.InjectionModules.GalleryActivityComponent;
 import com.anthropicandroid.photogallery.InjectionModules.UserActionHandlersModule;
 
 /*
  * Created by Andrew Brin on 7/12/2016.
  */
-public class PhotoGalleryApplication extends Application{
+public class PhotoGalleryApplication extends Application {
 
     private ApplicationComponent applicationComponent;
-    private ActivityComponent activityComponent;
+    private GalleryActivityComponent galleryActivityComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        // create and set application component
+        // Create and set application component
         applicationComponent = DaggerApplicationComponent
                 .builder()
                 .appModule(new AppModule(this))
@@ -28,13 +28,19 @@ public class PhotoGalleryApplication extends Application{
                 .build();
     }
 
-    public ActivityComponent getActivityComponent() {
-        if(activityComponent==null) {
-            activityComponent = DaggerActivityComponent
+    public GalleryActivityComponent getGalleryActivityComponent() {
+        // create component to be ties to the activity lifespan
+        if (galleryActivityComponent == null) {
+            galleryActivityComponent = DaggerGalleryActivityComponent
                     .builder()
                     .applicationComponent(applicationComponent)
                     .build();
         }
-        return activityComponent;
+        return galleryActivityComponent;
+    }
+
+    public void releaseGalleryActivityComponent() {
+//        release reference to activity component
+        galleryActivityComponent = null;
     }
 }

@@ -37,6 +37,7 @@ dependencies {
     apt 'com.google.guava:guava:19.0'
     testApt 'com.google.guava:guava:19.0'
     // couldn't find GridLayoutManager without support libraries, so using support libraries =[
-    compile 'com.android.support:recyclerview-v7:24.0.+'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
+    compile 'com.android.support:leanback-v17:24.0.0'
 
 }
