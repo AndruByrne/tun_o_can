@@ -6,6 +6,7 @@ package com.anthropicandroid.photogallery.injectionmodules;
 
 import android.app.Application;
 
+import com.anthropicandroid.photogallery.model.Repository;
 import com.anthropicandroid.photogallery.viewmodel.UserActionHandlers;
 
 import javax.inject.Singleton;
@@ -17,8 +18,9 @@ import rx.Observable;
 @Singleton //  Singleton is the annotation for the Application scope
 @Component(modules = {
         AppModule.class,
-        UserActionHandlersModule.class,
-        RealmModule.class})
+        RealmModule.class,
+        RepositoryModule.class,
+        UserActionHandlersModule.class})
 public interface ApplicationComponent {
 
     Application getApplication();
@@ -26,4 +28,8 @@ public interface ApplicationComponent {
     UserActionHandlers getUserActionHandlers();
 
     Observable<Realm> getRealmObs();
+
+    Repository getRepository();
+
+
 }

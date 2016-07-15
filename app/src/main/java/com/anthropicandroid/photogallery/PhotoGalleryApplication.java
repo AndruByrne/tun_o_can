@@ -8,8 +8,8 @@ import com.anthropicandroid.photogallery.injectionmodules.DaggerApplicationCompo
 import com.anthropicandroid.photogallery.injectionmodules.DaggerGalleryActivityComponent;
 import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
 import com.anthropicandroid.photogallery.injectionmodules.RealmModule;
-import com.anthropicandroid.photogallery.injectionmodules.ScreenWidthModule;
-import com.anthropicandroid.photogallery.injectionmodules.ThumbnailRepositoryModule;
+import com.anthropicandroid.photogallery.injectionmodules.RepositoryModule;
+import com.anthropicandroid.photogallery.injectionmodules.ScreenMetricsModule;
 import com.anthropicandroid.photogallery.injectionmodules.UserActionHandlersModule;
 
 /*
@@ -27,7 +27,8 @@ public class PhotoGalleryApplication extends Application {
         applicationComponent = DaggerApplicationComponent
                 .builder()
                 .appModule(new AppModule(this))
-                .realmModule(new RealmModule(this))
+                .realmModule(new RealmModule(this)) // context required for constructor
+                .repositoryModule(new RepositoryModule())
                 .userActionHandlersModule(new UserActionHandlersModule())
                 .build();
         // load images into Realm
@@ -39,8 +40,7 @@ public class PhotoGalleryApplication extends Application {
             galleryActivityComponent = DaggerGalleryActivityComponent
                     .builder()
                     .applicationComponent(applicationComponent)
-                    .screenWidthModule(new ScreenWidthModule())
-                    .thumbnailRepositoryModule(new ThumbnailRepositoryModule())
+                    .screenMetricsModule(new ScreenMetricsModule())
                     .build();
         }
         return galleryActivityComponent;

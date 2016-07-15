@@ -1,4 +1,4 @@
-package com.anthropicandroid.photogallery.ViewModel;
+package com.anthropicandroid.photogallery.viewmodel;
 
 /*
  * Created by Andrew Brin on 7/13/2016.
@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.anthropicandroid.photogallery.InjectionModules.GalleryActivityComponent;
 import com.anthropicandroid.photogallery.R;
 import com.anthropicandroid.photogallery.databinding.LayoutGridItemBinding;
+import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
 
 import java.util.List;
 

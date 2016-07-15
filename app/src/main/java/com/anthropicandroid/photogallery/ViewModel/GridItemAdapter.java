@@ -10,9 +10,14 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
+import com.anthropicandroid.photogallery.model.Thumbnail;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
+
+import static com.anthropicandroid.photogallery.model.utils.Utils.decodeSampledBitmap;
+import static com.anthropicandroid.photogallery.model.utils.Utils.dipToPixels;
 
 public class GridItemAdapter {
 
@@ -20,13 +25,24 @@ public class GridItemAdapter {
 
     @BindingAdapter("imageIndex")
     public static void setImageIndex(
-            GalleryActivityComponent galleryActivityComponent,
+            final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
             Integer imageIndex) {
         // Here rxJava is necessary, as we seem to be on the main thread, contra data binding docs
         galleryActivityComponent
-                .getThumbnailRepository()
+                .getRepository()
                 .getThumbnail(imageIndex)
+                .map(new Func1<Thumbnail, Bitmap>() {
+                    @Override
+                    public Bitmap call(Thumbnail thumbnail) {
+                        int widthAndHeight = galleryActivityComponent.getScreenWidth() / 2 -
+                                dipToPixels(galleryActivityComponent.getDisplayMetrics(), 20);
+                        return decodeSampledBitmap(
+                                thumbnail.getThumbnail(),
+                                widthAndHeight,
+                                widthAndHeight);
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         new Action1<Bitmap>() {
