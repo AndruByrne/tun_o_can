@@ -11,7 +11,7 @@
         android:theme="@style/GalleryTheme">
 
         <activity
-            android:name=".ViewModel.GalleryActivity"
+            android:name=".viewmodel.GalleryActivity"
             android:label="@string/gallery_label"
             android:screenOrientation="portrait">
             <intent-filter>
