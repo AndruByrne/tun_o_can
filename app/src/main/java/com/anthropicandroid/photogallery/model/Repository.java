@@ -8,8 +8,8 @@ package com.anthropicandroid.photogallery.model;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
+import rx.Subscriber;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 public class Repository {
 
@@ -19,35 +19,56 @@ public class Repository {
         this.realmObservable = realmObservable;
     }
 
-    public Observable<Thumbnail> getThumbnail(final Integer imageIndex) {
+    public Observable<GalleryImage> getImage(final Integer imageIndex) {
         return realmObservable
                 // Get Observable of RealmResults for index.
-                .flatMap(new Func1<Realm, Observable<RealmResults<Thumbnail>>>() {
+                .flatMap(new Func1<Realm, Observable<RealmResults<GalleryImage>>>() {
                     @Override
-                    public Observable<RealmResults<Thumbnail>> call(Realm realm) {
+                    public Observable<RealmResults<GalleryImage>> call(Realm realm) {
                         return realm
-                                .where(Thumbnail.class)
+                                .where(GalleryImage.class)
                                 .equalTo("index", imageIndex)
                                 .findAllAsync()
                                 .asObservable();
                     }
                 })
                 // Filter out Results that are not actually results
-                .filter(new Func1<RealmResults<Thumbnail>, Boolean>() {
+                .filter(new Func1<RealmResults<GalleryImage>, Boolean>() {
                     @Override
-                    public Boolean call(RealmResults<Thumbnail> thumbnails) {
-                        return thumbnails.isLoaded();
+                    public Boolean call(RealmResults<GalleryImage> galleryImages) {
+                        return galleryImages.isLoaded();
                     }
                 })
-                .map(new Func1<RealmResults<Thumbnail>, Thumbnail>() {
+                .map(new Func1<RealmResults<GalleryImage>, GalleryImage>() {
                     @Override
-                    public Thumbnail call(RealmResults<Thumbnail> thumbnails) {
-                        return thumbnails.first();
+                    public GalleryImage call(RealmResults<GalleryImage> galleryImages) {
+                        return galleryImages.first();
                     }
-                })
-
-                .subscribeOn(Schedulers.io());
+                });
     }
 
-
+    public Boolean addImage(final GalleryImage galleryImage) {
+        // Unused; repo populator does this with transaction bounding in its "Transaction" closure
+        return realmObservable
+                .flatMap(new Func1<Realm, Observable<Boolean>>() {
+                    @Override
+                    public Observable<Boolean> call(final Realm realm) {
+                        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+                            @Override
+                            public void call(Subscriber<? super Boolean> subscriber) {
+                                try {
+                                    realm.beginTransaction();
+                                    realm.copyToRealmOrUpdate(galleryImage);
+                                    realm.commitTransaction();
+                                    subscriber.onNext(true);
+                                } catch (Exception e) {
+                                    subscriber.onError(e);
+                                }
+                                subscriber.onCompleted();
+                            }
+                        });
+                    }
+                })
+                .take(1).toBlocking().first();
+    }
 }

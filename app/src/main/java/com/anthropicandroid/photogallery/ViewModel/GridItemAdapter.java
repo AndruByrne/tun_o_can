@@ -10,14 +10,13 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
-import com.anthropicandroid.photogallery.model.Thumbnail;
+import com.anthropicandroid.photogallery.model.GalleryImage;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-import static com.anthropicandroid.photogallery.model.utils.Utils.decodeSampledBitmap;
-import static com.anthropicandroid.photogallery.model.utils.Utils.dipToPixels;
+import static com.anthropicandroid.photogallery.model.utils.Utils.decodeSampledBitmapFromResource;
 
 public class GridItemAdapter {
 
@@ -27,20 +26,23 @@ public class GridItemAdapter {
     public static void setImageIndex(
             final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
-            Integer imageIndex) {
+            final Integer imageIndex) {
         // Here rxJava is necessary, as we seem to be on the main thread, contra data binding docs
-        galleryActivityComponent
-                .getRepository()
-                .getThumbnail(imageIndex)
-                .map(new Func1<Thumbnail, Bitmap>() {
+        galleryActivityComponent.getRepository()
+                .getImage(imageIndex)
+                // scale bitmap
+                .map(new Func1<GalleryImage, Bitmap>() {
                     @Override
-                    public Bitmap call(Thumbnail thumbnail) {
-                        int widthAndHeight = galleryActivityComponent.getScreenWidth() / 2 -
-                                dipToPixels(galleryActivityComponent.getDisplayMetrics(), 20);
-                        return decodeSampledBitmap(
-                                thumbnail.getThumbnail(),
+                    public Bitmap call(GalleryImage galleryImage) {
+                        int screenWidth = galleryActivityComponent.getScreenWidth();
+                        int widthAndHeight = screenWidth / 2;
+//                                dipToPixels(galleryActivityComponent.getDisplayMetrics(), 5);
+                        return decodeSampledBitmapFromResource(
+                                imageView.getContext().getResources(),
+                                imageIndex,
                                 widthAndHeight,
-                                widthAndHeight);
+                                2);
+//
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

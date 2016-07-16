@@ -19,6 +19,7 @@ import java.util.List;
 
 public class GalleryListAdapter extends RecyclerView.Adapter {
 
+    public static final String TAG = GalleryListAdapter.class.getSimpleName();
     private List<Integer> imageIndicies;
 
     public GalleryListAdapter(List<Integer> imageIndicies) {
@@ -26,7 +27,7 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
         this.imageIndicies = imageIndicies;
     }
 
-    @BindingAdapter("entries")
+    @BindingAdapter("gridEntries")
     public static void setEntries(
             GalleryActivityComponent galleryActivityComponent,
             RecyclerView view,
@@ -67,7 +68,7 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
             Integer imageIndex = imageIndicies.get(position);
 
             itemBinding.setIndex(imageIndex);
-            itemBinding.setDescription(""+position);
+            itemBinding.setDescription("" + position);
         }
     }
 

@@ -8,7 +8,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-public class Thumbnail extends RealmObject {
+public class GalleryImage extends RealmObject {
 
     @PrimaryKey
     private int index;
@@ -20,8 +20,8 @@ public class Thumbnail extends RealmObject {
 
     public void setIndex(int index) { this.index = index; }
 
-    public byte[] getThumbnail() { return thumbnail; }
+    public byte[] getImage() { return thumbnail; }
 
-    public void setThumbnail(byte[] thumbnail) { this.thumbnail = thumbnail; }
+    public void setImage(byte[] thumbnail) { this.thumbnail = thumbnail; }
 
 }

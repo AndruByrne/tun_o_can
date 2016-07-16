@@ -4,7 +4,10 @@ package com.anthropicandroid.photogallery.injectionmodules;
  * Created by Andrew Brin on 7/14/2016.
  */
 
+import android.app.Application;
+
 import com.anthropicandroid.photogallery.model.Repository;
+import com.anthropicandroid.photogallery.model.utils.RepositoryPopulator;
 
 import javax.inject.Singleton;
 
@@ -21,5 +24,11 @@ public class RepositoryModule {
     Repository getRepository(
             Observable<Realm> realmObservable) {
         return new Repository(realmObservable);
+    }
+
+    @Provides
+    @Singleton
+    RepositoryPopulator getRepositoryPopulator(Application context){
+        return new RepositoryPopulator(context);
     }
 }

@@ -5,6 +5,7 @@ package com.anthropicandroid.photogallery.viewmodel;
  */
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -16,6 +17,7 @@ final public class UserActionHandlers {
 
     public boolean aTouch(View view, MotionEvent motionEvent){
         //  check for databinding
+        Log.d(TAG, "got clikc on onTouchbutton");
         Activity context = (Activity) view.getContext();
         PhotoGalleryApplication application = (PhotoGalleryApplication) context.getApplication();
         return true;

@@ -8,6 +8,8 @@ import com.anthropicandroid.photogallery.PhotoGalleryApplication;
 import com.anthropicandroid.photogallery.R;
 import com.anthropicandroid.photogallery.databinding.ActivityGalleryBinding;
 import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
+import com.anthropicandroid.photogallery.model.Repository;
+import com.anthropicandroid.photogallery.model.utils.RepositoryPopulator;
 
 import java.util.ArrayList;
 
@@ -15,7 +17,9 @@ import javax.inject.Inject;
 
 public class GalleryActivity extends AppCompatActivity {
 
+    public static final String TAG = GalleryActivity.class.getSimpleName();
     @Inject UserActionHandlers userActionHandlers;
+    @Inject Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,32 +29,18 @@ public class GalleryActivity extends AppCompatActivity {
         GalleryActivityComponent galleryActivityComponent = application
                 .getGalleryActivityComponent();
 
-        galleryActivityComponent.inject(this);
-
         DataBindingUtil.setDefaultComponent(galleryActivityComponent);
         ActivityGalleryBinding activityGalleryBinding = DataBindingUtil.setContentView(
                 this,
                 R.layout.activity_gallery);
+        galleryActivityComponent.inject(this);
 
+        // set keys for image grid
+        activityGalleryBinding.setEntries(RepositoryPopulator.imageIds);
         // set the user action handlers for the main view model (use separate one for bottom nav)
         activityGalleryBinding.setActionHandlers(userActionHandlers);
         // set app bar with relative layout base
         setSupportActionBar(activityGalleryBinding.appBar);
-        // check if we are on main thread (and need rxJava)
-        activityGalleryBinding.setEntries(new ArrayList<Integer>() {{
-            add(1);
-            add(2);
-            add(3);
-            add(3);
-            add(3);
-            add(3);
-            add(3);
-            add(3);
-            add(3);
-            add(3);
-            add(4);
-            add(5);
-        }});
     }
 
     @Override

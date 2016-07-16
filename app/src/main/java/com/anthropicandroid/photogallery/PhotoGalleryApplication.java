@@ -27,11 +27,10 @@ public class PhotoGalleryApplication extends Application {
         applicationComponent = DaggerApplicationComponent
                 .builder()
                 .appModule(new AppModule(this))
-                .realmModule(new RealmModule(this)) // context required for constructor
+                .realmModule(new RealmModule()) // context required for constructor
                 .repositoryModule(new RepositoryModule())
                 .userActionHandlersModule(new UserActionHandlersModule())
                 .build();
-        // load images into Realm
     }
 
     public GalleryActivityComponent getGalleryActivityComponent() {

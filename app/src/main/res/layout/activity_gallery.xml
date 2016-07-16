@@ -22,16 +22,17 @@
     </data>
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="false"
+        android:fitsSystemWindows="true"
         tools:context=".viewmodel.GalleryActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/root_activity_layout"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:fitsSystemWindows="false"
-            android:layout_height="match_parent"
             >
 
             <android.support.v7.widget.Toolbar
@@ -67,18 +68,18 @@
                         android:text="onTouch!"/>
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/gallery_grid"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:horizontalSpacing="10dp"
-                android:orientation="vertical"
-                android:verticalSpacing="10dp"
-                app:entries="@{entries}"
-                app:layoutManager="android.support.v7.widget.GridLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:spanCount="2"/>
         </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gallery_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:padding="10dp"
+            app:gridEntries="@{entries}"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:spanCount="2"/>
+
     </android.support.design.widget.CoordinatorLayout>
 </layout>

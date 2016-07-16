@@ -7,6 +7,7 @@ package com.anthropicandroid.photogallery.injectionmodules;
 import android.app.Application;
 
 import com.anthropicandroid.photogallery.model.Repository;
+import com.anthropicandroid.photogallery.model.utils.RepositoryPopulator;
 import com.anthropicandroid.photogallery.viewmodel.UserActionHandlers;
 
 import javax.inject.Singleton;
@@ -31,5 +32,5 @@ public interface ApplicationComponent {
 
     Repository getRepository();
 
-
+    RepositoryPopulator getRepositoryPopulator();
 }

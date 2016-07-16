@@ -4,6 +4,7 @@ package com.anthropicandroid.photogallery.model.utils;
  * Created by Andrew Brin on 7/14/2016.
  */
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
@@ -13,7 +14,6 @@ public class Utils {
 
     // The following static utils were snicked from
     // https://developer.android.com/training/displaying-bitmaps/load-bitmap.html
-
     public static int calculateInSampleSize(
             BitmapFactory.Options options,
             int reqWidth,
@@ -52,6 +52,25 @@ public class Utils {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length, options);
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(
+            Resources resources,
+            int resId,
+            int reqWidth,
+            int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(resources, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(resources, resId, options);
     }
 
     public static int dipToPixels(DisplayMetrics metrics, float dipValue) {
