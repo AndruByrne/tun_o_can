@@ -6,12 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.anthropicandroid.photogallery.PhotoGalleryApplication;
 import com.anthropicandroid.photogallery.R;
-import com.anthropicandroid.photogallery.databinding.ActivityGalleryBinding;
+import com.anthropicandroid.photogallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
 import com.anthropicandroid.photogallery.model.Repository;
 import com.anthropicandroid.photogallery.model.utils.RepositoryPopulator;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -30,9 +28,9 @@ public class GalleryActivity extends AppCompatActivity {
                 .getGalleryActivityComponent();
 
         DataBindingUtil.setDefaultComponent(galleryActivityComponent);
-        ActivityGalleryBinding activityGalleryBinding = DataBindingUtil.setContentView(
+        LayoutActivityGalleryBinding activityGalleryBinding = DataBindingUtil.setContentView(
                 this,
-                R.layout.activity_gallery);
+                R.layout.layout_activity_gallery);
         galleryActivityComponent.inject(this);
 
         // set keys for image grid

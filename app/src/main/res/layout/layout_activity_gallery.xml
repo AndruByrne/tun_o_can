@@ -8,8 +8,6 @@
 
         <import type="java.util.List"/>
 
-        <import type="java.lang.Boolean"/>
-
         <import type="java.lang.Integer"/>
 
         <variable
@@ -76,10 +74,11 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:padding="10dp"
+            app:spanCount="2"
+            app:numSpans="@{Integer.valueOf(2)}"
             app:gridEntries="@{entries}"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:spanCount="2"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

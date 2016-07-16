@@ -16,32 +16,30 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-import static com.anthropicandroid.photogallery.model.utils.Utils.decodeSampledBitmapFromResource;
+import static com.anthropicandroid.photogallery.model.utils.Utils.decodeSampledBitmap;
 
-public class GridItemAdapter {
+public class GridImageAdapter {
 
-    public static final String TAG = GridItemAdapter.class.getSimpleName();
+    public static final String TAG = GridImageAdapter.class.getSimpleName();
 
-    @BindingAdapter("imageIndex")
+    @BindingAdapter("galleryItem")
     public static void setImageIndex(
             final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
-            final Integer imageIndex) {
-        // Here rxJava is necessary, as we seem to be on the main thread, contra data binding docs
+            final GalleryItem galleryItem) {
+        // Here rxJava is necessary, as we seem to be on the main thread, /contra/ data binding docs
         galleryActivityComponent.getRepository()
-                .getImage(imageIndex)
+                .getImage(galleryItem.getIndex())
                 // scale bitmap
                 .map(new Func1<GalleryImage, Bitmap>() {
                     @Override
                     public Bitmap call(GalleryImage galleryImage) {
-                        int screenWidth = galleryActivityComponent.getScreenWidth();
-                        int widthAndHeight = screenWidth / 2;
 //                                dipToPixels(galleryActivityComponent.getDisplayMetrics(), 5);
-                        return decodeSampledBitmapFromResource(
-                                imageView.getContext().getResources(),
-                                imageIndex,
-                                widthAndHeight,
-                                2);
+                        byte[] image = galleryImage.getImage();
+                        int itemWidth = galleryItem.getWidth();
+                        return decodeSampledBitmap(image,
+                                itemWidth,
+                                itemWidth);
 //
                     }
                 })
