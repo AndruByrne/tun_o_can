@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
-import com.anthropicandroid.photogallery.model.GalleryImage;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -45,9 +44,9 @@ public class GalleryImageAdapter {
         galleryActivityComponent.getRepository()
                 .getImage(galleryItem.getIndex())
                 // scale bitmap
-                .map(new Func1<GalleryImage, Pair<Bitmap, Pair<Integer, Integer>>>() {
+                .map(new Func1<com.anthropicandroid.photogallery.model.GalleryImage, Pair<Bitmap, Pair<Integer, Integer>>>() {
                     @Override
-                    public Pair<Bitmap, Pair<Integer, Integer>> call(GalleryImage galleryImage) {
+                    public Pair<Bitmap, Pair<Integer, Integer>> call(com.anthropicandroid.photogallery.model.GalleryImage galleryImage) {
                         byte[] image = galleryImage.getImage();
                         int itemWidth = galleryItem.getWidth();
                         return decodeSampledBitmapAndReturnWithRatio(

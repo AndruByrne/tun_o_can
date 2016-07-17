@@ -5,7 +5,7 @@ package com.anthropicandroid.photogallery.injectionmodules;
  */
 
 import com.anthropicandroid.photogallery.viewmodel.BackPressedRepo;
-import com.anthropicandroid.photogallery.viewmodel.GridToDetailAnimator;
+import com.anthropicandroid.photogallery.viewmodel.GalleryToDetailAnimator;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,7 +15,7 @@ public class AnimatorModule {
 
     @Provides
     @GalleryActivityScope
-    GridToDetailAnimator getGridToDetailAnimator(BackPressedRepo backPressedRepo){
-        return new GridToDetailAnimator(backPressedRepo);
+    GalleryToDetailAnimator getGridToDetailAnimator(BackPressedRepo backPressedRepo){
+        return new GalleryToDetailAnimator(backPressedRepo);
     }
 }

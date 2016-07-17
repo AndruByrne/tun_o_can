@@ -17,19 +17,19 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.anthropicandroid.photogallery.databinding.LayoutActivityGalleryBinding;
-import com.anthropicandroid.photogallery.databinding.LayoutGridItemBinding;
+import com.anthropicandroid.photogallery.databinding.LayoutGalleryImageBinding;
 import com.anthropicandroid.photogallery.databinding.LayoutImageDetailBinding;
 
 final public class GalleryActionHandlers {
 
     public static final String TAG = GalleryActionHandlers.class.getSimpleName();
-    private GridToDetailAnimator animator;
+    private GalleryToDetailAnimator animator;
     private DetailActionHandlers detailActionHandlers;
     private final GestureDetector singleTapUpDetector;
     private final GestureDetector downCatchDetector;
 
     public GalleryActionHandlers(
-            GridToDetailAnimator animator,
+            GalleryToDetailAnimator animator,
             Application context,
             DetailActionHandlers detailActionHandlers) {
         this.animator = animator;
@@ -46,7 +46,7 @@ final public class GalleryActionHandlers {
         if(downCatchDetector.onTouchEvent(motionEvent)) return true;
 
         Rect currentViewBounds = new Rect();
-        LayoutGridItemBinding gridItemBinding = DataBindingUtil.findBinding(view);
+        LayoutGalleryImageBinding gridItemBinding = DataBindingUtil.findBinding(view);
         LayoutActivityGalleryBinding activityGalleryBinding = DataBindingUtil
                 .findBinding((View) view.getParent().getParent());
         CoordinatorLayout rootActivityLayout = activityGalleryBinding.rootActivityLayout;

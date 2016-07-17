@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.anthropicandroid.photogallery.R;
-import com.anthropicandroid.photogallery.databinding.LayoutGridItemBinding;
+import com.anthropicandroid.photogallery.databinding.LayoutGalleryImageBinding;
 import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
 
     public static class BindingHolder extends RecyclerView.ViewHolder {
 
-        private LayoutGridItemBinding dataBinding;
+        private LayoutGalleryImageBinding dataBinding;
 
         public BindingHolder(View rowView, GalleryActionHandlers galleryActionHandlers) {
             // get tie-in to this view's databinding
@@ -66,7 +66,7 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
             dataBinding.setGalleryActionHandlers(galleryActionHandlers);
         }
 
-        public LayoutGridItemBinding getDataBinding() {
+        public LayoutGalleryImageBinding getDataBinding() {
             return dataBinding;
         }
     }
@@ -74,7 +74,7 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.layout_grid_item,
+                R.layout.layout_gallery_image,
                 parent,
                 false);
         return new BindingHolder(view, galleryActionHandlers);
@@ -84,13 +84,13 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         // Sets item-specific data
         if (holder instanceof BindingHolder) {
-            LayoutGridItemBinding itemBinding = ((BindingHolder) holder).getDataBinding();
+            LayoutGalleryImageBinding galleryImageBinding = ((BindingHolder) holder).getDataBinding();
             Integer imageIndex = imageIndicies.get(position);
 
-            itemBinding.getItem().setWidth(childWidth);
-            itemBinding.getItem().setIndex(imageIndex);
-            itemBinding.getItem().setDescription("Photo "+position);
-            itemBinding.getItem().setColorResId(bgColors
+            galleryImageBinding.getItem().setWidth(childWidth);
+            galleryImageBinding.getItem().setIndex(imageIndex);
+            galleryImageBinding.getItem().setDescription("Photo "+position);
+            galleryImageBinding.getItem().setColorResId(bgColors
                     .getResourceId(position%8, R.color.colorOrange));
         }
     }

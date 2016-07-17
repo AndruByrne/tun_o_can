@@ -9,7 +9,7 @@ import android.app.Application;
 import com.anthropicandroid.photogallery.viewmodel.BottomNavActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.DetailActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers;
-import com.anthropicandroid.photogallery.viewmodel.GridToDetailAnimator;
+import com.anthropicandroid.photogallery.viewmodel.GalleryToDetailAnimator;
 
 import dagger.Module;
 import dagger.Provides;
@@ -19,10 +19,10 @@ public class ActionHandlersModule {
     @Provides
     @GalleryActivityScope
     GalleryActionHandlers getGalleryActionHandlers(
-            GridToDetailAnimator gridToDetailAnimator,
+            GalleryToDetailAnimator galleryToDetailAnimator,
             Application context,
             DetailActionHandlers detailActionHandlers) {
-        return new GalleryActionHandlers(gridToDetailAnimator, context, detailActionHandlers);
+        return new GalleryActionHandlers(galleryToDetailAnimator, context, detailActionHandlers);
     }
 
     @Provides

@@ -10,11 +10,11 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-public class GridToDetailAnimator implements BackPressedRepo.BackPressedHandler {
+public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandler {
 
     private BackPressedRepo backPressedRepo;
 
-    public GridToDetailAnimator(BackPressedRepo backPressedRepo) {
+    public GalleryToDetailAnimator(BackPressedRepo backPressedRepo) {
         this.backPressedRepo = backPressedRepo;
     }
 

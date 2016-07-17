@@ -12,7 +12,7 @@ import com.anthropicandroid.photogallery.viewmodel.BottomNavActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.DetailActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.GalleryActivity;
-import com.anthropicandroid.photogallery.viewmodel.GridToDetailAnimator;
+import com.anthropicandroid.photogallery.viewmodel.GalleryToDetailAnimator;
 
 import javax.inject.Named;
 
@@ -41,7 +41,7 @@ public interface GalleryActivityComponent extends android.databinding.DataBindin
 
     GalleryActionHandlers getGalleryActionHandlers();
 
-    GridToDetailAnimator getGridToDetailAnimator();
+    GalleryToDetailAnimator getGridToDetailAnimator();
 
     Repository getRepository();
 
