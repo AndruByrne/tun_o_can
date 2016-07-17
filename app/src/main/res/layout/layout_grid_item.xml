@@ -10,26 +10,18 @@
     </data>
 
     <FrameLayout
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         >
 
-        <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:background="@color/colorAccent"
-            android:clickable="false"
-            app:setDimen="@{item}">
-
-            <ImageView
-                android:id="@+id/item_image_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@{item.getDescription()}"
-                android:scaleType="centerCrop"
-                app:galleryItem="@{item}"
-                />
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/item_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@{item.getDescription()}"
+            android:scaleType="centerCrop"
+            app:galleryItem="@{item}"
+            />
     </FrameLayout>
 </layout>

@@ -4,6 +4,7 @@ package com.anthropicandroid.photogallery.viewmodel;
  * Created by Andrew Brin on 7/13/2016.
  */
 
+import android.content.res.TypedArray;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
@@ -21,11 +22,13 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
 
     public static final String TAG = GalleryListAdapter.class.getSimpleName();
     private int childWidth;
+    private TypedArray bgColors;
     private List<Integer> imageIndicies;
 
-    public GalleryListAdapter(int childWidth, List<Integer> imageIndicies) {
-        this.childWidth = childWidth;
+    public GalleryListAdapter(int childWidth, TypedArray bgColors, List<Integer> imageIndicies) {
         // class constructed by an annotated static function
+        this.childWidth = childWidth;
+        this.bgColors = bgColors;
         this.imageIndicies = imageIndicies;
     }
 
@@ -37,7 +40,8 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
             List<Integer> imageIndicies) {
         // create and populate list adapter and give it to the view
         view.setAdapter(new GalleryListAdapter(
-                galleryActivityComponent.getScreenWidthInDp() / numSpans,
+                galleryActivityComponent.getNarrowestScreenDimenInPx() / numSpans,
+                view.getContext().getResources().obtainTypedArray(R.array.bg_colors),
                 imageIndicies));
     }
 
@@ -76,6 +80,8 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
             itemBinding.getItem().setWidth(childWidth);
             itemBinding.getItem().setIndex(imageIndex);
             itemBinding.getItem().setDescription("Photo "+position);
+            itemBinding.getItem().setColorResId(
+                    bgColors.getResourceId(position%8, R.color.colorOrange));
         }
     }
 

@@ -52,6 +52,6 @@ public class GalleryItem extends BaseObservable {
 
     public void setColorResId(int color) {
         this.colorResId = color;
-        notifyPropertyChanged(BR.color);
+        notifyPropertyChanged(BR.colorResId);
     }
 }

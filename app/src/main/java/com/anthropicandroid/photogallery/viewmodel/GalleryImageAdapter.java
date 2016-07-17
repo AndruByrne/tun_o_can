@@ -6,7 +6,9 @@ package com.anthropicandroid.photogallery.viewmodel;
 
 import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
@@ -27,7 +29,14 @@ public class GalleryImageAdapter {
             final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
             final GalleryItem galleryItem) {
+        int width = galleryItem.getWidth();
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, width*3/5);
+        imageView.setLayoutParams(layoutParams);
+
         // Here rxJava is necessary, as we seem to be on the main thread, /contra/ data binding docs
+        imageView.setBackgroundColor(ContextCompat.getColor(
+                imageView.getContext(),
+                galleryItem.getColorResId()));
         galleryActivityComponent.getRepository()
                 .getImage(galleryItem.getIndex())
                 // scale bitmap
@@ -37,7 +46,8 @@ public class GalleryImageAdapter {
 //                                dipToPixels(galleryActivityComponent.getDisplayMetrics(), 5);
                         byte[] image = galleryImage.getImage();
                         int itemWidth = galleryItem.getWidth();
-                        return decodeSampledBitmap(image,
+                        return decodeSampledBitmap(
+                                image,
                                 itemWidth,
                                 itemWidth);
 //
