@@ -1,4 +1,4 @@
-package com.anthropicandroid.photogallery.ViewModel;
+package com.anthropicandroid.photogallery.viewmodelz;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;

@@ -2,15 +2,15 @@ package com.anthropicandroid.photogallery;
 
 import android.app.Application;
 
-import com.anthropicandroid.photogallery.InjectionModules.AppModule;
-import com.anthropicandroid.photogallery.InjectionModules.ApplicationComponent;
-import com.anthropicandroid.photogallery.InjectionModules.DaggerApplicationComponent;
-import com.anthropicandroid.photogallery.InjectionModules.DaggerGalleryActivityComponent;
-import com.anthropicandroid.photogallery.InjectionModules.GalleryActivityComponent;
-import com.anthropicandroid.photogallery.InjectionModules.RealmModule;
-import com.anthropicandroid.photogallery.InjectionModules.RepositoryModule;
-import com.anthropicandroid.photogallery.InjectionModules.ScreenMetricsModule;
-import com.anthropicandroid.photogallery.InjectionModules.UserActionHandlersModule;
+import com.anthropicandroid.photogallery.injectionmodulz.AppModule;
+import com.anthropicandroid.photogallery.injectionmodulz.ApplicationComponent;
+import com.anthropicandroid.photogallery.injectionmodulz.DaggerApplicationComponent;
+import com.anthropicandroid.photogallery.injectionmodulz.DaggerGalleryActivityComponent;
+import com.anthropicandroid.photogallery.injectionmodulz.GalleryActivityComponent;
+import com.anthropicandroid.photogallery.injectionmodulz.RealmModule;
+import com.anthropicandroid.photogallery.injectionmodulz.RepositoryModule;
+import com.anthropicandroid.photogallery.injectionmodulz.ScreenMetricsModule;
+import com.anthropicandroid.photogallery.injectionmodulz.UserActionHandlersModule;
 
 /*
  * Created by Andrew Brin on 7/12/2016.

@@ -1,13 +1,13 @@
-package com.anthropicandroid.photogallery.ViewModel;
+package com.anthropicandroid.photogallery.viewmodelz;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.anthropicandroid.photogallery.InjectionModules.GalleryActivityComponent;
 import com.anthropicandroid.photogallery.PhotoGalleryApplication;
 import com.anthropicandroid.photogallery.R;
 import com.anthropicandroid.photogallery.databinding.LayoutActivityGalleryBinding;
+import com.anthropicandroid.photogallery.injectionmodulz.GalleryActivityComponent;
 import com.anthropicandroid.photogallery.model.Repository;
 import com.anthropicandroid.photogallery.model.utils.RepositoryPopulator;
 

@@ -1,4 +1,4 @@
-package com.anthropicandroid.photogallery.InjectionModules;
+package com.anthropicandroid.photogallery.injectionmodulz;
 
 /*
  * Created by Andrew Brin on 7/14/2016.
