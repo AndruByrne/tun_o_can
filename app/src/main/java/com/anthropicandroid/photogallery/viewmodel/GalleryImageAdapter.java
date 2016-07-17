@@ -30,6 +30,8 @@ public class GalleryImageAdapter {
             final ImageView imageView,
             final GalleryItem galleryItem) {
         int width = galleryItem.getWidth();
+
+        // Set image parameters from assigned width
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, width*3/5);
         imageView.setLayoutParams(layoutParams);
 
@@ -43,14 +45,12 @@ public class GalleryImageAdapter {
                 .map(new Func1<GalleryImage, Bitmap>() {
                     @Override
                     public Bitmap call(GalleryImage galleryImage) {
-//                                dipToPixels(galleryActivityComponent.getDisplayMetrics(), 5);
                         byte[] image = galleryImage.getImage();
                         int itemWidth = galleryItem.getWidth();
                         return decodeSampledBitmap(
                                 image,
                                 itemWidth,
                                 itemWidth);
-//
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
