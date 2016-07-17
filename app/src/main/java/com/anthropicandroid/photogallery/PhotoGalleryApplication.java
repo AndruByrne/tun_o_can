@@ -30,7 +30,6 @@ public class PhotoGalleryApplication extends Application {
                 .appModule(new AppModule(this))
                 .realmModule(new RealmModule()) // context required for constructor
                 .repositoryModule(new RepositoryModule())
-                .actionHandlersModule(new ActionHandlersModule())
                 .build();
     }
 
@@ -40,6 +39,7 @@ public class PhotoGalleryApplication extends Application {
             galleryActivityComponent = DaggerGalleryActivityComponent
                     .builder()
                     .applicationComponent(applicationComponent)
+                    .actionHandlersModule(new ActionHandlersModule())
                     .onBackPressedModule(new OnBackPressedModule())
                     .screenMetricsModule(new ScreenMetricsModule())
                     .build();

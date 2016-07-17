@@ -7,6 +7,7 @@ package com.anthropicandroid.photogallery.viewmodel;
 import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -18,36 +19,38 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-import static com.anthropicandroid.photogallery.model.utils.Utils.decodeSampledBitmap;
+import static com.anthropicandroid.photogallery.model.utils.Utils
+        .decodeSampledBitmapAndReturnWithRatio;
 
 public class GalleryImageAdapter {
 
     public static final String TAG = GalleryImageAdapter.class.getSimpleName();
 
-    @BindingAdapter("galleryItem")
+    @BindingAdapter(value={"rawDimen","galleryItem"})
     public static void setImageIndex(
             final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
+            final RawBitmapMeasurement rawBitmapMeasurement,
             final GalleryItem galleryItem) {
         int width = galleryItem.getWidth();
 
         // Set image parameters from assigned width
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, width*3/5);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, width * 3 / 5);
         imageView.setLayoutParams(layoutParams);
 
-        // Here rxJava is necessary, as we seem to be on the main thread, /contra/ data binding docs
         imageView.setBackgroundColor(ContextCompat.getColor(
                 imageView.getContext(),
                 galleryItem.getColorResId()));
+        // Here rxJava is necessary, as we seem to be on the main thread, /contra/ data binding docs
         galleryActivityComponent.getRepository()
                 .getImage(galleryItem.getIndex())
                 // scale bitmap
-                .map(new Func1<GalleryImage, Bitmap>() {
+                .map(new Func1<GalleryImage, Pair<Bitmap, Pair<Integer, Integer>>>() {
                     @Override
-                    public Bitmap call(GalleryImage galleryImage) {
+                    public Pair<Bitmap, Pair<Integer, Integer>> call(GalleryImage galleryImage) {
                         byte[] image = galleryImage.getImage();
                         int itemWidth = galleryItem.getWidth();
-                        return decodeSampledBitmap(
+                        return decodeSampledBitmapAndReturnWithRatio(
                                 image,
                                 itemWidth,
                                 itemWidth);
@@ -55,10 +58,12 @@ public class GalleryImageAdapter {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        new Action1<Bitmap>() {
+                        new Action1<Pair<Bitmap, Pair<Integer, Integer>>>() {
                             @Override
-                            public void call(Bitmap bitmap) {
-                                imageView.setImageBitmap(bitmap);
+                            public void call(Pair<Bitmap, Pair<Integer, Integer>> pair) {
+                                imageView.setImageBitmap(pair.first);
+                                rawBitmapMeasurement.setRawWidth(pair.second.first);
+                                rawBitmapMeasurement.setRawHeight(pair.second.second);
                             }
                         },
                         new Action1<Throwable>() {

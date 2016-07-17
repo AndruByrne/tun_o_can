@@ -62,6 +62,7 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
             dataBinding = DataBindingUtil.bind(rowView);
             // add the binding objects
             dataBinding.setItem(new GalleryItem());
+            dataBinding.setRawBitmapMeasurement(new RawBitmapMeasurement());
             dataBinding.setGalleryActionHandlers(galleryActionHandlers);
         }
 

@@ -8,8 +8,11 @@ import android.util.DisplayMetrics;
 
 import com.anthropicandroid.photogallery.model.Repository;
 import com.anthropicandroid.photogallery.viewmodel.BackPressedRepo;
+import com.anthropicandroid.photogallery.viewmodel.BottomNavActionHandlers;
+import com.anthropicandroid.photogallery.viewmodel.DetailActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.GalleryActivity;
+import com.anthropicandroid.photogallery.viewmodel.GridToDetailAnimator;
 
 import javax.inject.Named;
 
@@ -19,6 +22,8 @@ import dagger.Component;
 @Component(
         dependencies = {ApplicationComponent.class},
         modules = {
+                AnimatorModule.class,
+                ActionHandlersModule.class,
                 OnBackPressedModule.class,
                 ScreenMetricsModule.class}
 )
@@ -28,12 +33,26 @@ public interface GalleryActivityComponent extends android.databinding.DataBindin
 
     BackPressedRepo getBackPressedRepo();
 
+    BottomNavActionHandlers getBottomNavActionHandlers();
+
+    DetailActionHandlers getDetailActionHandlers();
+
     DisplayMetrics getDisplayMetrics();
+
+    GalleryActionHandlers getGalleryActionHandlers();
+
+    GridToDetailAnimator getGridToDetailAnimator();
 
     Repository getRepository();
 
-    @Named("ScreenNarrowest") int getNarrowestScreenDimenInPx();
+    @Named("ScreenNarrowest")
+    int getNarrowestScreenDimenInPx();
 
-    GalleryActionHandlers getGalleryActionHandlers();
+    @Named("ScreenWidth")
+    int getScreenWidthInPx();
+
+    @Named("DetailHeight")
+    int getDetailHeightInPx();
+
 
 }

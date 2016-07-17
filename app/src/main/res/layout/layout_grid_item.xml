@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="rawBitmapMeasurement"
+            type="com.anthropicandroid.photogallery.viewmodel.RawBitmapMeasurement"/>
+
+        <variable
             name="item"
             type="com.anthropicandroid.photogallery.viewmodel.GalleryItem"/>
 
@@ -24,9 +28,10 @@
             android:id="@+id/item_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onTouch="@{galleryActionHandlers::gridItemTouched}"
+            android:onTouch="@{galleryActionHandlers::gridTouched}"
             android:contentDescription="@{item.getDescription()}"
             android:scaleType="centerCrop"
+            app:rawDimen="@{rawBitmapMeasurement}"
             app:galleryItem="@{item}"
             />
     </FrameLayout>

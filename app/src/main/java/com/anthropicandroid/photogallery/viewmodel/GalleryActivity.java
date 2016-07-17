@@ -38,7 +38,9 @@ public class GalleryActivity extends AppCompatActivity {
         // Bootstrap into dependency graph
         galleryActivityComponent.inject(this);
 
-        // set keys for image grid
+        // set action handlers for grid view and app bar
+        activityGalleryBinding.setGalleryActionHandlers(galleryActionHandlers);
+        // set entries for image grid
         activityGalleryBinding.setEntries(RepositoryPopulator.imageIds);
         // set app bar with relative layout base
         setSupportActionBar(activityGalleryBinding.appBar);

@@ -14,17 +14,21 @@
             name="entries"
             type="List&lt;Integer>"/>
 
+        <variable
+            name="galleryActionHandlers"
+            type="com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers"/>
+
     </data>
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinator"
+        android:id="@+id/root_activity_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         tools:context=".viewmodel.GalleryActivity">
 
         <android.support.design.widget.AppBarLayout
-            android:id="@+id/root_activity_layout"
+            android:id="@+id/root_app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="false"
