@@ -1,1 +1,10 @@
 App to explore photo grid<->photo detail transitions
+
+To review, you'll need to:
+1. install Java 1.8
+2. use android studio or intellij
+3. git pull from the repo
+4. ensure there's a local.properties file with a line starting with 'sdk.dir=' followed by the path to your android sdk in the base of the project directory
+5. import the project by its build.gradle
+6. once it is loaded, you need to rebuild the project, so the generated classes will be present
+7. whatever you like after that
