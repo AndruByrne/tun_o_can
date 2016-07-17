@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.anthropicandroid.photogallery.viewmodel.GalleryItem"/>
+            type="com.anthropicandroid.photogallery.ViewModel.GalleryItem"/>
     </data>
 
     <FrameLayout

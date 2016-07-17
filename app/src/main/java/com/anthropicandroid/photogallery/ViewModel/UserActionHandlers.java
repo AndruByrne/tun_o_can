@@ -1,4 +1,4 @@
-package com.anthropicandroid.photogallery.viewmodel;
+package com.anthropicandroid.photogallery.ViewModel;
 
 /*
  * Created by Andrew Brin on 7/12/2016.

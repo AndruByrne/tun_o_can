@@ -1,4 +1,4 @@
-package com.anthropicandroid.photogallery.injectionmodules;
+package com.anthropicandroid.photogallery.InjectionModules;
 
 import android.app.Application;
 
@@ -11,7 +11,6 @@ import dagger.Provides;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rx.Observable;
-import rx.schedulers.Schedulers;
 
 /*
  * Created by Andrew Brin on 7/14/2016.

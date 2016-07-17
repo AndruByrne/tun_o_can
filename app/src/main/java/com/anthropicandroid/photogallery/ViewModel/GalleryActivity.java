@@ -1,13 +1,13 @@
-package com.anthropicandroid.photogallery.viewmodel;
+package com.anthropicandroid.photogallery.ViewModel;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.anthropicandroid.photogallery.InjectionModules.GalleryActivityComponent;
 import com.anthropicandroid.photogallery.PhotoGalleryApplication;
 import com.anthropicandroid.photogallery.R;
 import com.anthropicandroid.photogallery.databinding.LayoutActivityGalleryBinding;
-import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
 import com.anthropicandroid.photogallery.model.Repository;
 import com.anthropicandroid.photogallery.model.utils.RepositoryPopulator;
 
@@ -27,10 +27,13 @@ public class GalleryActivity extends AppCompatActivity {
         GalleryActivityComponent galleryActivityComponent = application
                 .getGalleryActivityComponent();
 
+        // Set default binding component
         DataBindingUtil.setDefaultComponent(galleryActivityComponent);
+        // Inflate activity layout and bind to it
         LayoutActivityGalleryBinding activityGalleryBinding = DataBindingUtil.setContentView(
                 this,
                 R.layout.layout_activity_gallery);
+        // Bootstrap into dependency graph
         galleryActivityComponent.inject(this);
 
         // set keys for image grid
@@ -39,6 +42,8 @@ public class GalleryActivity extends AppCompatActivity {
         activityGalleryBinding.setActionHandlers(userActionHandlers);
         // set app bar with relative layout base
         setSupportActionBar(activityGalleryBinding.appBar);
+        // ask for the layout to control the app bar
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
     }
 
     @Override
@@ -46,5 +51,11 @@ public class GalleryActivity extends AppCompatActivity {
         // release associated modules
         ((PhotoGalleryApplication) getApplication()).releaseGalleryActivityComponent();
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // ask action handlers if there is any animation they'd like reversed
+        super.onBackPressed();
     }
 }
