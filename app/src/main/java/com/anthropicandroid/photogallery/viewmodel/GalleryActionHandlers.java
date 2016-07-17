@@ -12,6 +12,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -19,6 +20,8 @@ import android.widget.RelativeLayout;
 import com.anthropicandroid.photogallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.photogallery.databinding.LayoutGalleryImageBinding;
 import com.anthropicandroid.photogallery.databinding.LayoutImageDetailBinding;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 final public class GalleryActionHandlers {
 
@@ -41,9 +44,9 @@ final public class GalleryActionHandlers {
     public boolean gridTouched(View view, MotionEvent motionEvent) {
 
         // only want tap ups
-        if(!singleTapUpDetector.onTouchEvent(motionEvent)) return false;
+        if (!singleTapUpDetector.onTouchEvent(motionEvent)) return false;
         // don't want onDown
-        if(downCatchDetector.onTouchEvent(motionEvent)) return true;
+        if (downCatchDetector.onTouchEvent(motionEvent)) return true;
 
         Rect currentViewBounds = new Rect();
         LayoutGalleryImageBinding gridItemBinding = DataBindingUtil.findBinding(view);
@@ -57,8 +60,8 @@ final public class GalleryActionHandlers {
         view.getGlobalVisibleRect(currentViewBounds);
 
         // Bind data objects to layout
-        LayoutImageDetailBinding imageDetailBinding = LayoutImageDetailBinding
-                .inflate(activity.getLayoutInflater());
+        LayoutImageDetailBinding imageDetailBinding = LayoutImageDetailBinding.inflate(
+                (LayoutInflater) view.getContext().getSystemService(LAYOUT_INFLATER_SERVICE));
         // set action handlers in data binding
         imageDetailBinding.setDetailActionHandlers(detailActionHandlers);
         // pass along the measurements fo the raw bitmap, for performance
@@ -82,7 +85,7 @@ final public class GalleryActionHandlers {
         return true;
     }
 
-    private class SingleTapUp extends GestureDetector.SimpleOnGestureListener{
+    private class SingleTapUp extends GestureDetector.SimpleOnGestureListener {
         // return true for event we want, and also onDown
         @Override
         public boolean onSingleTapUp(MotionEvent e) { return true; }
@@ -91,7 +94,7 @@ final public class GalleryActionHandlers {
         public boolean onDown(MotionEvent e) { return true; }
     }
 
-    private class DownCatch extends GestureDetector.SimpleOnGestureListener{
+    private class DownCatch extends GestureDetector.SimpleOnGestureListener {
         // return true for onDown so we can eliminate it
         @Override
         public boolean onDown(MotionEvent e) { return true; }

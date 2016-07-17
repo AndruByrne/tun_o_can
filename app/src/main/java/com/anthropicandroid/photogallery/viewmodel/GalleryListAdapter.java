@@ -18,6 +18,8 @@ import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityCompone
 
 import java.util.List;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
 public class GalleryListAdapter extends RecyclerView.Adapter {
 
     public static final String TAG = GalleryListAdapter.class.getSimpleName();
@@ -73,25 +75,27 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.layout_gallery_image,
+        // inflate view
+        LayoutGalleryImageBinding galleryImageBinding = LayoutGalleryImageBinding.inflate(
+                (LayoutInflater) parent.getContext().getSystemService(LAYOUT_INFLATER_SERVICE),
                 parent,
                 false);
-        return new BindingHolder(view, galleryActionHandlers);
+        return new BindingHolder(galleryImageBinding.getRoot(), galleryActionHandlers);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         // Sets item-specific data
         if (holder instanceof BindingHolder) {
-            LayoutGalleryImageBinding galleryImageBinding = ((BindingHolder) holder).getDataBinding();
+            LayoutGalleryImageBinding galleryImageBinding = ((BindingHolder) holder)
+                    .getDataBinding();
             Integer imageIndex = imageIndicies.get(position);
 
             galleryImageBinding.getItem().setWidth(childWidth);
             galleryImageBinding.getItem().setIndex(imageIndex);
-            galleryImageBinding.getItem().setDescription("Photo "+position);
+            galleryImageBinding.getItem().setDescription("Photo " + position);
             galleryImageBinding.getItem().setColorResId(bgColors
-                    .getResourceId(position%8, R.color.colorOrange));
+                    .getResourceId(position % 8, R.color.colorOrange));
         }
     }
 

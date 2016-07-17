@@ -18,6 +18,8 @@ public class BackPressedRepo {
     List<BackPressedHandler> handlers = new ArrayList<>();
 
     public boolean backPressedConsumed() {
+        // Check handlers that have registed themselves and return false only if they are all false
+        // or null
         for (BackPressedHandler handler : Lists.reverse(handlers))
             if (handler != null && handler.backPressedConsumed()) {
                 handlers.remove(handler);
