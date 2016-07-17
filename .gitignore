@@ -35,6 +35,9 @@ captures/
 .idea/
 .idea/workspace.xml
 .idea/libraries
+
 .DS_Store
+
+# imlz
 *.iml
 app/app.iml

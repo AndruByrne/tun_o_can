@@ -1,4 +1,4 @@
-package com.anthropicandroid.photogallery.injectionmodulz;
+package com.anthropicandroid.photogallery.injectionmodules;
 
 import android.app.Application;
 

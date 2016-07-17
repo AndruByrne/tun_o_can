@@ -1,4 +1,4 @@
-package com.anthropicandroid.photogallery.injectionmodulz;
+package com.anthropicandroid.photogallery.injectionmodules;
 
 /*
  * Created by Andrew Brin on 7/12/2016.
@@ -7,8 +7,8 @@ package com.anthropicandroid.photogallery.injectionmodulz;
 import android.util.DisplayMetrics;
 
 import com.anthropicandroid.photogallery.model.Repository;
-import com.anthropicandroid.photogallery.viewmodelz.GalleryActivity;
-import com.anthropicandroid.photogallery.viewmodelz.UserActionHandlers;
+import com.anthropicandroid.photogallery.viewmodel.GalleryActivity;
+import com.anthropicandroid.photogallery.viewmodel.UserActionHandlers;
 
 import javax.inject.Named;
 

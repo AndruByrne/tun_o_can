@@ -1,4 +1,4 @@
-package com.anthropicandroid.photogallery.viewmodelz;
+package com.anthropicandroid.photogallery.viewmodel;
 
 /*
  * Created by Andrew Brin on 7/13/2016.
@@ -11,7 +11,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.anthropicandroid.photogallery.injectionmodulz.GalleryActivityComponent;
+import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
 import com.anthropicandroid.photogallery.model.GalleryImage;
 
 import rx.android.schedulers.AndroidSchedulers;

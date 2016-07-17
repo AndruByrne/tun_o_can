@@ -16,7 +16,7 @@
 
         <variable
             name="action_handlers"
-            type="com.anthropicandroid.photogallery.viewmodelz.UserActionHandlers"/>
+            type="com.anthropicandroid.photogallery.viewmodel.UserActionHandlers"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".viewmodelz.GalleryActivity">
+        tools:context=".viewmodel.GalleryActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/root_activity_layout"
