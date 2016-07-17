@@ -18,9 +18,9 @@ import rx.functions.Func1;
 
 import static com.anthropicandroid.photogallery.model.utils.Utils.decodeSampledBitmap;
 
-public class GridImageAdapter {
+public class GalleryImageAdapter {
 
-    public static final String TAG = GridImageAdapter.class.getSimpleName();
+    public static final String TAG = GalleryImageAdapter.class.getSimpleName();
 
     @BindingAdapter("galleryItem")
     public static void setImageIndex(

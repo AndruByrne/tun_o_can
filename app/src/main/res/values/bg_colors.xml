@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="bg_colors">
+        <item name="1">@color/colorOrange</item>
+        <item name="2">@color/colorCyan</item>
+        <item name="3">@color/colorLightGreen</item>
+        <item name="4">@color/colorPurpleAcc</item>
+        <item name="5">@color/colorRedAcc</item>
+        <item name="6">@color/colorLimeAcc</item>
+        <item name="7">@color/colorGreenAcc</item>
+        <item name="8">@color/colorDeepOrange</item>
+    </array>
+</resources>

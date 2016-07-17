@@ -12,6 +12,7 @@ public class GalleryItem extends BaseObservable {
 
     private int width;
     private int index;
+    private int colorResId;
     private String description;
 
     @Bindable
@@ -44,4 +45,13 @@ public class GalleryItem extends BaseObservable {
         notifyPropertyChanged(BR.description);
     }
 
+    @Bindable
+    public int getColorResId() {
+        return colorResId;
+    }
+
+    public void setColorResId(int color) {
+        this.colorResId = color;
+        notifyPropertyChanged(BR.color);
+    }
 }

@@ -28,7 +28,7 @@ public interface GalleryActivityComponent extends android.databinding.DataBindin
 
     Repository getRepository();
 
-    @Named("ScreenWidth") int getScreenWidthInDp();
+    @Named("ScreenNarrowest") int getNarrowestScreenDimenInPx();
 
     UserActionHandlers getUserActionHandlers();
 

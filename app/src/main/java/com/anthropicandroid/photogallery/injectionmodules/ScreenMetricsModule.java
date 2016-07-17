@@ -5,8 +5,11 @@ package com.anthropicandroid.photogallery.injectionmodules;
  */
 
 import android.app.Application;
-import android.content.res.Configuration;
+import android.content.Context;
+import android.graphics.Point;
 import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
 
 import javax.inject.Named;
 
@@ -18,14 +21,18 @@ public class ScreenMetricsModule {
 
     @Provides
     @GalleryActivityScope
-    @Named("ScreenWidth") int getScreenWidth(Application context){
-        Configuration configuration = context.getResources().getConfiguration();
-        return configuration.screenWidthDp;
+    @Named("ScreenNarrowest")
+    int getNarrowestScreenDimenInPx(Application context) {
+        Point size = new Point();
+        Display defaultDisplay = ((WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        defaultDisplay.getSize(size);
+        return Math.min(size.x, size.y);
     }
 
     @Provides
     @GalleryActivityScope
-    public DisplayMetrics getDisplayMetrics(Application context){
+    public DisplayMetrics getDisplayMetrics(Application context) {
         return context.getResources().getDisplayMetrics();
     }
 
