@@ -14,9 +14,6 @@
             name="entries"
             type="List&lt;Integer>"/>
 
-        <variable
-            name="action_handlers"
-            type="com.anthropicandroid.photogallery.viewmodel.UserActionHandlers"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -57,13 +54,6 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/colorDarkText"/>
 
-                    <Button
-                        android:id="@+id/touchButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:onTouch="@{action_handlers::aTouch}"
-                        android:text="onTouch!"/>
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>

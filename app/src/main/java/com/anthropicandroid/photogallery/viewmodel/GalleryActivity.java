@@ -19,7 +19,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     @Inject BackPressedRepo backPressedRepo;
     @Inject Repository repository;
-    @Inject UserActionHandlers userActionHandlers;
+    @Inject GalleryActionHandlers galleryActionHandlers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,6 @@ public class GalleryActivity extends AppCompatActivity {
 
         // set keys for image grid
         activityGalleryBinding.setEntries(RepositoryPopulator.imageIds);
-        // set the user action handlers for the main view model (use separate one for bottom nav)
-        activityGalleryBinding.setActionHandlers(userActionHandlers);
         // set app bar with relative layout base
         setSupportActionBar(activityGalleryBinding.appBar);
         // ask for the layout to control the app bar

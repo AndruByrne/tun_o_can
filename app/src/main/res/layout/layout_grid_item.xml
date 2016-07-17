@@ -7,6 +7,11 @@
         <variable
             name="item"
             type="com.anthropicandroid.photogallery.viewmodel.GalleryItem"/>
+
+        <variable
+            name="galleryActionHandlers"
+            type="com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers"/>
+
     </data>
 
     <FrameLayout
@@ -19,6 +24,7 @@
             android:id="@+id/item_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:onTouch="@{galleryActionHandlers::gridItemTouched}"
             android:contentDescription="@{item.getDescription()}"
             android:scaleType="centerCrop"
             app:galleryItem="@{item}"

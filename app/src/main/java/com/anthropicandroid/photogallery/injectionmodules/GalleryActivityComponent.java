@@ -8,8 +8,8 @@ import android.util.DisplayMetrics;
 
 import com.anthropicandroid.photogallery.model.Repository;
 import com.anthropicandroid.photogallery.viewmodel.BackPressedRepo;
+import com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.GalleryActivity;
-import com.anthropicandroid.photogallery.viewmodel.UserActionHandlers;
 
 import javax.inject.Named;
 
@@ -34,6 +34,6 @@ public interface GalleryActivityComponent extends android.databinding.DataBindin
 
     @Named("ScreenNarrowest") int getNarrowestScreenDimenInPx();
 
-    UserActionHandlers getUserActionHandlers();
+    GalleryActionHandlers getGalleryActionHandlers();
 
 }

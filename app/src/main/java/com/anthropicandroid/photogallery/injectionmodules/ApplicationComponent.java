@@ -8,7 +8,7 @@ import android.app.Application;
 
 import com.anthropicandroid.photogallery.model.Repository;
 import com.anthropicandroid.photogallery.model.utils.RepositoryPopulator;
-import com.anthropicandroid.photogallery.viewmodel.UserActionHandlers;
+import com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers;
 
 import javax.inject.Singleton;
 
@@ -21,12 +21,12 @@ import rx.Observable;
         AppModule.class,
         RealmModule.class,
         RepositoryModule.class,
-        UserActionHandlersModule.class})
+        ActionHandlersModule.class})
 public interface ApplicationComponent {
 
     Application getApplication();
 
-    UserActionHandlers getUserActionHandlers();
+    GalleryActionHandlers getGalleryActionHandlers();
 
     Observable<Realm> getRealmObs();
 

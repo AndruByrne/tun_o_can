@@ -2,15 +2,16 @@ package com.anthropicandroid.photogallery;
 
 import android.app.Application;
 
+import com.anthropicandroid.photogallery.injectionmodules.ActionHandlersModule;
 import com.anthropicandroid.photogallery.injectionmodules.AppModule;
 import com.anthropicandroid.photogallery.injectionmodules.ApplicationComponent;
 import com.anthropicandroid.photogallery.injectionmodules.DaggerApplicationComponent;
 import com.anthropicandroid.photogallery.injectionmodules.DaggerGalleryActivityComponent;
 import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityComponent;
+import com.anthropicandroid.photogallery.injectionmodules.OnBackPressedModule;
 import com.anthropicandroid.photogallery.injectionmodules.RealmModule;
 import com.anthropicandroid.photogallery.injectionmodules.RepositoryModule;
 import com.anthropicandroid.photogallery.injectionmodules.ScreenMetricsModule;
-import com.anthropicandroid.photogallery.injectionmodules.UserActionHandlersModule;
 
 /*
  * Created by Andrew Brin on 7/12/2016.
@@ -29,7 +30,7 @@ public class PhotoGalleryApplication extends Application {
                 .appModule(new AppModule(this))
                 .realmModule(new RealmModule()) // context required for constructor
                 .repositoryModule(new RepositoryModule())
-                .userActionHandlersModule(new UserActionHandlersModule())
+                .actionHandlersModule(new ActionHandlersModule())
                 .build();
     }
 
@@ -39,6 +40,7 @@ public class PhotoGalleryApplication extends Application {
             galleryActivityComponent = DaggerGalleryActivityComponent
                     .builder()
                     .applicationComponent(applicationComponent)
+                    .onBackPressedModule(new OnBackPressedModule())
                     .screenMetricsModule(new ScreenMetricsModule())
                     .build();
         }

@@ -4,7 +4,7 @@ package com.anthropicandroid.photogallery.injectionmodules;
  * Created by Andrew Brin on 7/12/2016.
  */
 
-import com.anthropicandroid.photogallery.viewmodel.UserActionHandlers;
+import com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers;
 
 import javax.inject.Singleton;
 
@@ -12,10 +12,10 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class UserActionHandlersModule {
+public class ActionHandlersModule {
     @Provides
     @Singleton
-    UserActionHandlers getUserActionHandlers(){
-        return new UserActionHandlers();
+    GalleryActionHandlers getGalleryActionHandlers(){
+        return new GalleryActionHandlers();
     }
 }

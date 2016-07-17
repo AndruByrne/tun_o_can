@@ -21,11 +21,17 @@ import java.util.List;
 public class GalleryListAdapter extends RecyclerView.Adapter {
 
     public static final String TAG = GalleryListAdapter.class.getSimpleName();
+    private GalleryActionHandlers galleryActionHandlers;
     private int childWidth;
     private TypedArray bgColors;
     private List<Integer> imageIndicies;
 
-    public GalleryListAdapter(int childWidth, TypedArray bgColors, List<Integer> imageIndicies) {
+    public GalleryListAdapter(
+            GalleryActionHandlers galleryActionHandlers,
+            int childWidth,
+            TypedArray bgColors,
+            List<Integer> imageIndicies) {
+        this.galleryActionHandlers = galleryActionHandlers;
         // class constructed by an annotated static function
         this.childWidth = childWidth;
         this.bgColors = bgColors;
@@ -40,6 +46,7 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
             List<Integer> imageIndicies) {
         // create and populate list adapter and give it to the view
         view.setAdapter(new GalleryListAdapter(
+                galleryActivityComponent.getGalleryActionHandlers(),
                 galleryActivityComponent.getNarrowestScreenDimenInPx() / numSpans,
                 view.getContext().getResources().obtainTypedArray(R.array.bg_colors),
                 imageIndicies));
@@ -49,11 +56,13 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
 
         private LayoutGridItemBinding dataBinding;
 
-        public BindingHolder(View rowView) {
+        public BindingHolder(View rowView, GalleryActionHandlers galleryActionHandlers) {
             // get tie-in to this view's databinding
             super(rowView);
             dataBinding = DataBindingUtil.bind(rowView);
+            // add the binding objects
             dataBinding.setItem(new GalleryItem());
+            dataBinding.setGalleryActionHandlers(galleryActionHandlers);
         }
 
         public LayoutGridItemBinding getDataBinding() {
@@ -67,12 +76,12 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
                 R.layout.layout_grid_item,
                 parent,
                 false);
-        return new BindingHolder(view);
+        return new BindingHolder(view, galleryActionHandlers);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        // Sets viewmodel index
+        // Sets item-specific data
         if (holder instanceof BindingHolder) {
             LayoutGridItemBinding itemBinding = ((BindingHolder) holder).getDataBinding();
             Integer imageIndex = imageIndicies.get(position);
@@ -80,8 +89,8 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
             itemBinding.getItem().setWidth(childWidth);
             itemBinding.getItem().setIndex(imageIndex);
             itemBinding.getItem().setDescription("Photo "+position);
-            itemBinding.getItem().setColorResId(
-                    bgColors.getResourceId(position%8, R.color.colorOrange));
+            itemBinding.getItem().setColorResId(bgColors
+                    .getResourceId(position%8, R.color.colorOrange));
         }
     }
 
