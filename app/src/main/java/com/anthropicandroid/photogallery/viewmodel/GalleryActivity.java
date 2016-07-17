@@ -16,8 +16,10 @@ import javax.inject.Inject;
 public class GalleryActivity extends AppCompatActivity {
 
     public static final String TAG = GalleryActivity.class.getSimpleName();
-    @Inject UserActionHandlers userActionHandlers;
+
+    @Inject BackPressedRepo backPressedRepo;
     @Inject Repository repository;
+    @Inject UserActionHandlers userActionHandlers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class GalleryActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // ask action handlers if there is any animation they'd like reversed
-        super.onBackPressed();
+        if (!backPressedRepo.backPressedConsumed())
+            super.onBackPressed();
     }
 }

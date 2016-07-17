@@ -7,6 +7,7 @@ package com.anthropicandroid.photogallery.injectionmodules;
 import android.util.DisplayMetrics;
 
 import com.anthropicandroid.photogallery.model.Repository;
+import com.anthropicandroid.photogallery.viewmodel.BackPressedRepo;
 import com.anthropicandroid.photogallery.viewmodel.GalleryActivity;
 import com.anthropicandroid.photogallery.viewmodel.UserActionHandlers;
 
@@ -18,11 +19,14 @@ import dagger.Component;
 @Component(
         dependencies = {ApplicationComponent.class},
         modules = {
+                OnBackPressedModule.class,
                 ScreenMetricsModule.class}
 )
 public interface GalleryActivityComponent extends android.databinding.DataBindingComponent {
 
     void inject(GalleryActivity galleryActivity);
+
+    BackPressedRepo getBackPressedRepo();
 
     DisplayMetrics getDisplayMetrics();
 
