@@ -7,6 +7,8 @@ package com.anthropicandroid.photogallery.injectionmodules;
 import com.anthropicandroid.photogallery.viewmodel.BackPressedRepo;
 import com.anthropicandroid.photogallery.viewmodel.GalleryToDetailAnimator;
 
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -15,7 +17,9 @@ public class AnimatorModule {
 
     @Provides
     @GalleryActivityScope
-    GalleryToDetailAnimator getGridToDetailAnimator(BackPressedRepo backPressedRepo){
-        return new GalleryToDetailAnimator(backPressedRepo);
+    GalleryToDetailAnimator getGridToDetailAnimator(
+            BackPressedRepo backPressedRepo,
+            @Named("StatusBarHeight") int statusBarHeight) {
+        return new GalleryToDetailAnimator(backPressedRepo, statusBarHeight);
     }
 }

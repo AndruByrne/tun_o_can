@@ -54,5 +54,6 @@ public interface GalleryActivityComponent extends android.databinding.DataBindin
     @Named("DetailHeight")
     int getDetailHeightInPx();
 
-
+    @Named("StatusBarHeight")
+    int getStatusBarHeight();
 }

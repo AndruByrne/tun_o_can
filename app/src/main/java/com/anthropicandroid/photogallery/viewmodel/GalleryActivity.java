@@ -20,6 +20,7 @@ public class GalleryActivity extends AppCompatActivity {
     @Inject BackPressedRepo backPressedRepo;
     @Inject Repository repository;
     @Inject GalleryActionHandlers galleryActionHandlers;
+    @Inject DetailActionHandlers detailActionHandlers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,9 @@ public class GalleryActivity extends AppCompatActivity {
 
         // set action handlers for grid view and app bar
         activityGalleryBinding.setGalleryActionHandlers(galleryActionHandlers);
+        // and detail view
+        activityGalleryBinding.setDetailActionHandlers(detailActionHandlers);
+        activityGalleryBinding.setAlphaDetailImage(new DetailImage());
         // set entries for image grid
         activityGalleryBinding.setEntries(RepositoryPopulator.imageIds);
         // set app bar with relative layout base

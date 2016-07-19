@@ -34,7 +34,8 @@ public class GalleryImageAdapter {
         int width = galleryItem.getWidth();
 
         // Set image parameters from assigned width
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, width * 3 / 5);
+        final int imageBoundsHeight = width * 3 / 5;
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, imageBoundsHeight);
         imageView.setLayoutParams(layoutParams);
 
         imageView.setBackgroundColor(ContextCompat.getColor(
@@ -52,7 +53,7 @@ public class GalleryImageAdapter {
                         return decodeSampledBitmapAndReturnWithRatio(
                                 image,
                                 itemWidth,
-                                itemWidth);
+                                imageBoundsHeight);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

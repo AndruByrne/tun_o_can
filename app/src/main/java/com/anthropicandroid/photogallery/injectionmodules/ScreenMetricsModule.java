@@ -43,7 +43,7 @@ public class ScreenMetricsModule {
     int getDetailHeightInPx(
             @Named("ScreenSize") Point size,
             @Named("ActionBarHeight") int actionBarHeight) {
-        return size.y - actionBarHeight*2;
+        return size.y - actionBarHeight * 2;
     }
 
     @Provides
@@ -55,7 +55,7 @@ public class ScreenMetricsModule {
     @Provides
     @GalleryActivityScope
     @Named("ScreenSize")
-    Point getSize(Application context){
+    Point getSize(Application context) {
         Point size = new Point();
         Display defaultDisplay = ((WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -66,13 +66,27 @@ public class ScreenMetricsModule {
     @Provides
     @GalleryActivityScope
     @Named("ActionBarHeight")
-    int getActionBarHeight(Application context){
+    int getActionBarHeight(Application context) {
         TypedValue value = new TypedValue();
-        if(context.getTheme().resolveAttribute(android.R.attr.actionBarSize, value, true))
+        if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, value, true))
             return TypedValue.complexToDimensionPixelSize(
                     value.data,
                     context.getResources().getDisplayMetrics());
         Log.e(TAG, "trouble getting action bar height attribute");
         return 0;
+    }
+
+    @Provides
+    @GalleryActivityScope
+    @Named("StatusBarHeight")
+    int getStatusBarHeight(Application context) {
+        int resId = context.getResources().getIdentifier(
+                "status_bar_height",
+                "dimen",
+                "android");
+        if (resId == 0) {
+            Log.e(TAG, "resId of status bar height is 0");
+            return 0;
+        } else return context.getResources().getDimensionPixelSize(resId);
     }
 }

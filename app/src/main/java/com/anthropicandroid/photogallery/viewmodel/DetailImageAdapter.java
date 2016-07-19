@@ -21,20 +21,21 @@ public class DetailImageAdapter {
 
     public static final String TAG = DetailImageAdapter.class.getSimpleName();
 
-    @BindingAdapter(value = {"rawBitmapDimen", "detailImage"})
+    @BindingAdapter(value = {"detailImage", "rawBitmapDimen"})
     public static void setDetailImage(
             final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
-            final RawBitmapMeasurement rawBitmapMeasurement,
-            final Integer detailIndex) {
+            final Integer detailIndex,
+            final RawBitmapMeasurement rawBitmapMeasurement) {
 
-//        final LayoutGridItemBinding gridItemBinding = DataBindingUtil.findBinding(imageView);
+        // pipe for image data
         galleryActivityComponent.getRepository()
                 .getImage(detailIndex)
                 // scale
                 .map(new Func1<GalleryImage, Bitmap>() {
                     @Override
                     public Bitmap call(GalleryImage galleryImage) {
+                        // Should null-check this, because user may click on image placeholder
                         return Utils.decodeSampledBitmapWithPredicate(
                                 galleryImage.getImage(),
                                 rawBitmapMeasurement.getRawWidth(),
@@ -50,6 +51,9 @@ public class DetailImageAdapter {
                             @Override
                             public void call(Bitmap bitmap) {
                                 imageView.setImageBitmap(bitmap);
+                                Log.d(TAG, "set image bitmap: "+(bitmap!=null)+" on image view " +
+                                        "with height:  "+imageView.getHeight()+"  and width: " +
+                                        ""+imageView.getWidth());
                             }
                         },
                         new Action1<Throwable>() {
@@ -58,6 +62,7 @@ public class DetailImageAdapter {
                                 Log.e(
                                         TAG,
                                         "error populating detail view: " + throwable.getMessage());
+                                throwable.printStackTrace();
                             }
                         }
                 );

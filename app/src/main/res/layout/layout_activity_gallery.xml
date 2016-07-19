@@ -18,6 +18,18 @@
             name="galleryActionHandlers"
             type="com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers"/>
 
+        <variable
+            name="alphaDetailImage"
+            type="com.anthropicandroid.photogallery.viewmodel.DetailImage"/>
+
+        <variable
+            name="omegaDetailImage"
+            type="com.anthropicandroid.photogallery.viewmodel.DetailImage"/>
+
+        <variable
+            name="detailActionHandlers"
+            type="com.anthropicandroid.photogallery.viewmodel.DetailActionHandlers"/>
+
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -41,7 +53,7 @@
                 android:layout_alignParentTop="true"
                 android:background="?android:attr/colorPrimary"
                 android:elevation="@dimen/app_bar_elevation"
-                app:layout_scrollFlags="enterAlways">
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <RelativeLayout
                     android:id="@+id/toolbar_layout"
@@ -72,7 +84,46 @@
             app:numSpans="@{Integer.valueOf(2)}"
             app:gridEntries="@{entries}"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            android:minHeight="90dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <FrameLayout
+            android:id="@+id/alpha_detail_matting_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorJustBlack"
+            android:gravity="center"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/alpha_detail_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:detailImage="@{alphaDetailImage.getDetailIndex}"
+            app:rawBitmapDimen="@{alphaDetailImage.getRawBitmapMeasurement()}"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            />
+
+        <FrameLayout
+            android:id="@+id/omega_detail_matting_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorJustBlack"
+            android:gravity="center"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/omega_detail_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:detailImage="@{omegaDetailImage.getDetailIndex}"
+            app:rawBitmapDimen="@{omegaDetailImage.getRawBitmapMeasurement()}"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

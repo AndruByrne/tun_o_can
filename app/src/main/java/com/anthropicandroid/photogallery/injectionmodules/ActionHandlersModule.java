@@ -22,7 +22,7 @@ public class ActionHandlersModule {
             GalleryToDetailAnimator galleryToDetailAnimator,
             Application context,
             DetailActionHandlers detailActionHandlers) {
-        return new GalleryActionHandlers(galleryToDetailAnimator, context, detailActionHandlers);
+        return new GalleryActionHandlers(galleryToDetailAnimator, context);
     }
 
     @Provides
