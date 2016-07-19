@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.anthropicandroid.photogallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.photogallery.databinding.LayoutGalleryImageBinding;
+import com.anthropicandroid.photogallery.viewmodel.animation.GalleryToDetailAnimator;
 
 final public class GalleryActionHandlers {
 
@@ -41,20 +42,21 @@ final public class GalleryActionHandlers {
         LayoutGalleryImageBinding gridItemBinding = DataBindingUtil.findBinding(view);
         LayoutActivityGalleryBinding activityGalleryBinding = DataBindingUtil
                 .findBinding((View) view.getParent().getParent());
+        GalleryItem galleryItem = gridItemBinding.getItem();
+        DetailImage detailImage = activityGalleryBinding.getAlphaDetailImage();
 
         // measure current view
         view.getGlobalVisibleRect(currentViewBounds);
 
         // pass along the measurements for the raw bitmap
-        activityGalleryBinding.getAlphaDetailImage().setRawBitmapMeasurement
-                (gridItemBinding
-                .getRawBitmapMeasurement());
+        detailImage.setRawBitmapMeasurement(galleryItem.getRawBitmapMeasurement());
         // set detailIndex in data binding
-        activityGalleryBinding.getAlphaDetailImage().setDetailIndex(gridItemBinding.getItem()
-                .getIndex());
+        detailImage.setDetailIndex(galleryItem.getIndex());
+        // set description in data binding
+        detailImage.setDescription(galleryItem.getDescription());
 
         // animate the detail in
-        RawBitmapMeasurement rawBitmapMeasurement = activityGalleryBinding.getAlphaDetailImage()
+        RawBitmapMeasurement rawBitmapMeasurement = detailImage
                 .getRawBitmapMeasurement();
         animator.zoomToReplace(
                 currentViewBounds,
@@ -66,6 +68,10 @@ final public class GalleryActionHandlers {
                 activityGalleryBinding.galleryGrid);
         Log.d(TAG, "finished handler tasks");
         return true;
+    }
+
+    public void returnToGallery(View view){
+        animator.returnToGallery();
     }
 
     private class SingleTapUp extends GestureDetector.SimpleOnGestureListener {

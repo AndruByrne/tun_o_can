@@ -1,4 +1,4 @@
-package com.anthropicandroid.photogallery.viewmodel;
+package com.anthropicandroid.photogallery.viewmodel.animation;
 
 /*
  * Created by Andrew Brin on 7/17/2016.
@@ -12,9 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+
+import com.anthropicandroid.photogallery.viewmodel.BackPressedRepo;
 
 public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandler {
 
@@ -74,7 +76,6 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
             Rect targetRect) {
         // Ratio of image starting width to screen width
         float widthRatio = (float) currentRect.width() / targetRect.width();
-        Log.d(TAG, " we have a image rati, and it is: "+trueImageRatio);
         // image anim init
         newImage.setScaleX(widthRatio);
         newImage.setScaleY(widthRatio);
@@ -90,16 +91,16 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
         newImage.setLeft(startingLeft);
         newImage.setRight(startingLeft + currentRect.width());
         newImage.setVisibility(View.VISIBLE);
-        newImage.setElevation(20);
+        newImage.setElevation(8);
         newImage.animate()
                 .y((targetRect.height()-(targetRect.width()/trueImageRatio))/2)
                 .x(targetRect.left)
                 .scaleX(1)
                 .scaleY(1)
-                .z(25)
-                .setListener(getLoggingListener(newImage, "new image"))
-                .setInterpolator(new LinearInterpolator())
-                .setDuration(1000);
+                .z(12)
+//                .setListener(getLoggingListener(newImage, "new image"))
+                .setDuration(1000)
+                .setInterpolator(new LinearInterpolator());
     }
 
     private void detailImageMattingAnim(
@@ -118,25 +119,21 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
         mattingLayout.setBottom(offsetY);
         mattingLayout.setLeft(offsetX);
         mattingLayout.setRight(offsetX);
-        mattingLayout.setZ(0);
-        mattingLayout.setPivotX(rawX);
-        mattingLayout.setPivotY(rawY);
+        mattingLayout.setZ(6);
         mattingLayout.setAlpha(1);
         mattingLayout.requestFocus();
         mattingLayout.setVisibility(View.VISIBLE);
-
-        Log.d(TAG, " pivot X: "+mattingLayout.getPivotX()+" pivot Y: "+mattingLayout.getPivotY());
 
 //         perform background animation
         mattingLayout.animate()
                 .x(targetRect.left)
                 .y(targetRect.top)
-                .z(15)
+                .z(10)
                 .scaleX(1f)
                 .scaleY(1f)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setDuration(500)
+                .setInterpolator(new DecelerateInterpolator(2f));
 //                .setListener(getLoggingListener(mattingLayout, animationName))
-                .setDuration(250);
     }
 
     @NonNull
@@ -186,5 +183,9 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
 
             }
         };
+    }
+
+    public void returnToGallery() {
+
     }
 }

@@ -12,7 +12,8 @@ import com.anthropicandroid.photogallery.viewmodel.BottomNavActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.DetailActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.GalleryActivity;
-import com.anthropicandroid.photogallery.viewmodel.GalleryToDetailAnimator;
+import com.anthropicandroid.photogallery.viewmodel.animation.GalleryToDetailAnimator;
+import com.anthropicandroid.photogallery.viewmodel.animation.ToolBarFlippingAnimator;
 
 import javax.inject.Named;
 
@@ -56,4 +57,6 @@ public interface GalleryActivityComponent extends android.databinding.DataBindin
 
     @Named("StatusBarHeight")
     int getStatusBarHeight();
+
+    ToolBarFlippingAnimator getToolBarFlippingAnimator();
 }

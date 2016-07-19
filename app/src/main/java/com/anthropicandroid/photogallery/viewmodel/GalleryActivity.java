@@ -30,6 +30,8 @@ public class GalleryActivity extends AppCompatActivity {
         GalleryActivityComponent galleryActivityComponent = application
                 .getGalleryActivityComponent();
 
+        // Set camera distance
+//        float scale = getResources().getDisplayMetrics().density;
         // Set default binding component
         DataBindingUtil.setDefaultComponent(galleryActivityComponent);
         // Inflate activity layout and bind to it
@@ -38,6 +40,8 @@ public class GalleryActivity extends AppCompatActivity {
                 R.layout.layout_activity_gallery);
         // Bootstrap into dependency graph
         galleryActivityComponent.inject(this);
+
+//        activityGalleryBinding.rootActivityLayout.setCameraDistance(9001 * scale);
 
         // set action handlers for grid view and app bar
         activityGalleryBinding.setGalleryActionHandlers(galleryActionHandlers);
@@ -48,6 +52,7 @@ public class GalleryActivity extends AppCompatActivity {
         activityGalleryBinding.setEntries(RepositoryPopulator.imageIds);
         // set app bar with relative layout base
         setSupportActionBar(activityGalleryBinding.appBar);
+        activityGalleryBinding.appBar.setContentInsetsAbsolute(0, 0);
         // ask for the layout to control the app bar
         getSupportActionBar().setDisplayShowCustomEnabled(true);
     }

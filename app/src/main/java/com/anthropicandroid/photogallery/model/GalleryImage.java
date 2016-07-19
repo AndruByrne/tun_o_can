@@ -16,6 +16,8 @@ public class GalleryImage extends RealmObject {
     @Required
     private byte[] thumbnail;
 
+    private String description;
+
     public int getIndex() { return index; }
 
     public void setIndex(int index) { this.index = index; }
@@ -24,4 +26,7 @@ public class GalleryImage extends RealmObject {
 
     public void setImage(byte[] thumbnail) { this.thumbnail = thumbnail; }
 
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
 }

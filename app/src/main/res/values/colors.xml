@@ -5,6 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorJustBlack">#000000</color>
     <color name="colorDarkText">#000000</color>
+    <color name="colorLightText">#fafafa</color>
+    <color name="colorMatteGray">#424242</color>
     <color name="colorOrange">#ff6d00</color>
     <color name="colorLightGreen">#64dd17</color>
     <color name="colorPurpleAcc">#d500f9</color>

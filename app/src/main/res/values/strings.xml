@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PhotoGallery</string>
     <string name="gallery_label">Image Gallery</string>
+    <string name="default_image_detail_title">Image Detail</string>
 </resources>

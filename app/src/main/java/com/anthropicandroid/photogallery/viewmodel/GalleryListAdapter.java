@@ -64,7 +64,6 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
             dataBinding = DataBindingUtil.bind(rowView);
             // add the binding objects
             dataBinding.setItem(new GalleryItem());
-            dataBinding.setRawBitmapMeasurement(new RawBitmapMeasurement());
             dataBinding.setGalleryActionHandlers(galleryActionHandlers);
         }
 
@@ -91,10 +90,12 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
                     .getDataBinding();
             Integer imageIndex = imageIndicies.get(position);
 
-            galleryImageBinding.getItem().setWidth(childWidth);
-            galleryImageBinding.getItem().setIndex(imageIndex);
-            galleryImageBinding.getItem().setDescription("Photo " + position);
-            galleryImageBinding.getItem().setColorResId(bgColors
+            GalleryItem galleryItem = galleryImageBinding.getItem();
+            galleryItem.setRawBitmapMeasurement(new RawBitmapMeasurement());
+            galleryItem.setWidth(childWidth);
+            galleryItem.setIndex(imageIndex);
+            galleryItem.setDescription("Photo " + position);
+            galleryItem.setColorResId(bgColors
                     .getResourceId(position % 8, R.color.colorOrange));
         }
     }

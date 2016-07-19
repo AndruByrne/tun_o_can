@@ -14,6 +14,7 @@ public class GalleryItem extends BaseObservable {
     private int index;
     private int colorResId;
     private String description;
+    private RawBitmapMeasurement rawBitmapMeasurement;
 
     @Bindable
     public int getWidth() {
@@ -53,5 +54,15 @@ public class GalleryItem extends BaseObservable {
     public void setColorResId(int color) {
         this.colorResId = color;
         notifyPropertyChanged(BR.colorResId);
+    }
+
+    @Bindable
+    public RawBitmapMeasurement getRawBitmapMeasurement() {
+        return rawBitmapMeasurement;
+    }
+
+    public void setRawBitmapMeasurement(RawBitmapMeasurement rawBitmapMeasurement) {
+        this.rawBitmapMeasurement = rawBitmapMeasurement;
+        notifyPropertyChanged(BR.rawBitmapMeasurement);
     }
 }

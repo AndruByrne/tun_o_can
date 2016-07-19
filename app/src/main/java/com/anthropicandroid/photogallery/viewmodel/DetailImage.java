@@ -8,10 +8,21 @@ import com.anthropicandroid.photogallery.BR;
 /*
  * Created by Andrew Brin on 7/18/2016.
  */
-public class DetailImage extends BaseObservable{
+public class DetailImage extends BaseObservable {
 
+    String description;
     Integer detailIndex;
     RawBitmapMeasurement rawBitmapMeasurement;
+
+    @Bindable
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+        notifyPropertyChanged(BR.description);
+    }
 
     @Bindable
     public Integer getDetailIndex() {

@@ -44,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="false"
+            app:layout_behavior="com.anthropicandroid.photogallery.viewmodel.animation.ToolbarFlippingBehavior"
             >
 
             <android.support.v7.widget.Toolbar
@@ -51,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 android:layout_alignParentTop="true"
-                android:background="?android:attr/colorPrimary"
+                android:background="@color/colorDarkText"
                 android:elevation="@dimen/app_bar_elevation"
                 app:layout_scrollFlags="scroll|enterAlways">
 
@@ -59,6 +60,8 @@
                     android:id="@+id/toolbar_layout"
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
+                    android:elevation="8dp"
+                    android:background="?android:attr/colorPrimary"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -71,6 +74,35 @@
                         android:textColor="@color/colorDarkText"/>
 
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/toolbar_flip_side"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:elevation="6dp"
+                    android:background="@color/colorMatteGray"
+                    >
+
+                    <TextView
+                        android:id="@+id/detail_title_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/default_image_detail_title"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/colorLightText"/>
+
+                    <Button
+                        android:id="@+id/button_return_to_gallery"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/ic_clear_black_24dp"
+                        android:layout_centerVertical="true"
+                        android:onClick="@{galleryActionHandlers::returnToGallery}"
+                        android:tint="@color/colorLightText"/>
+                </RelativeLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
@@ -79,13 +111,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@android:color/white"
+            android:minHeight="90dp"
             android:padding="10dp"
-            app:spanCount="2"
-            app:numSpans="@{Integer.valueOf(2)}"
             app:gridEntries="@{entries}"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
-            android:minHeight="90dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:numSpans="@{Integer.valueOf(2)}"
+            app:spanCount="2"/>
 
         <FrameLayout
             android:id="@+id/alpha_detail_matting_layout"
@@ -100,10 +132,10 @@
             android:id="@+id/alpha_detail_image_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:detailImage="@{alphaDetailImage.getDetailIndex}"
-            app:rawBitmapDimen="@{alphaDetailImage.getRawBitmapMeasurement()}"
             android:scaleType="centerInside"
             android:visibility="gone"
+            app:detailImage="@{alphaDetailImage.getDetailIndex}"
+            app:rawBitmapDimen="@{alphaDetailImage.getRawBitmapMeasurement()}"
             />
 
         <FrameLayout
@@ -119,10 +151,10 @@
             android:id="@+id/omega_detail_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:detailImage="@{omegaDetailImage.getDetailIndex}"
-            app:rawBitmapDimen="@{omegaDetailImage.getRawBitmapMeasurement()}"
             android:scaleType="centerInside"
             android:visibility="gone"
+            app:detailImage="@{omegaDetailImage.getDetailIndex}"
+            app:rawBitmapDimen="@{omegaDetailImage.getRawBitmapMeasurement()}"
             />
 
     </android.support.design.widget.CoordinatorLayout>

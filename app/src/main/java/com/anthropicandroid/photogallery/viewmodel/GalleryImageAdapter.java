@@ -25,11 +25,10 @@ public class GalleryImageAdapter {
 
     public static final String TAG = GalleryImageAdapter.class.getSimpleName();
 
-    @BindingAdapter(value={"rawDimen","galleryItem"})
+    @BindingAdapter("galleryItem")
     public static void setImageIndex(
             final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
-            final RawBitmapMeasurement rawBitmapMeasurement,
             final GalleryItem galleryItem) {
         int width = galleryItem.getWidth();
 
@@ -45,25 +44,38 @@ public class GalleryImageAdapter {
         galleryActivityComponent.getRepository()
                 .getImage(galleryItem.getIndex())
                 // scale bitmap
-                .map(new Func1<com.anthropicandroid.photogallery.model.GalleryImage, Pair<Bitmap, Pair<Integer, Integer>>>() {
+                .map(new Func1<com.anthropicandroid.photogallery.model.GalleryImage, GalleryImageHolder>() {
                     @Override
-                    public Pair<Bitmap, Pair<Integer, Integer>> call(com.anthropicandroid.photogallery.model.GalleryImage galleryImage) {
+                    public GalleryImageHolder call(com.anthropicandroid.photogallery.model.GalleryImage galleryImage) {
                         byte[] image = galleryImage.getImage();
                         int itemWidth = galleryItem.getWidth();
-                        return decodeSampledBitmapAndReturnWithRatio(
+                        Pair<Bitmap, Pair<Integer, Integer>> bitmapFields =
+                                decodeSampledBitmapAndReturnWithRatio(
                                 image,
                                 itemWidth,
                                 imageBoundsHeight);
+                        return new GalleryImageHolder(bitmapFields.first, bitmapFields.second,
+                                galleryImage.getDescription());
+                    }
+                })
+                .doOnNext(new Action1<GalleryImageHolder>() {
+                    @Override
+                    public void call(GalleryImageHolder galleryImageHolder) {
+                        RawBitmapMeasurement rawBitmapMeasurement = galleryItem
+                                .getRawBitmapMeasurement();
+
+                        galleryItem.setDescription(galleryImageHolder.description);
+                        rawBitmapMeasurement.setRawWidth(galleryImageHolder.rawMeasurements.first);
+                        rawBitmapMeasurement.setRawHeight(galleryImageHolder.rawMeasurements.second);
+
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        new Action1<Pair<Bitmap, Pair<Integer, Integer>>>() {
+                        new Action1<GalleryImageHolder>() {
                             @Override
-                            public void call(Pair<Bitmap, Pair<Integer, Integer>> pair) {
-                                imageView.setImageBitmap(pair.first);
-                                rawBitmapMeasurement.setRawWidth(pair.second.first);
-                                rawBitmapMeasurement.setRawHeight(pair.second.second);
+                            public void call(GalleryImageHolder galleryImageHolder) {
+                                imageView.setImageBitmap(galleryImageHolder.image);
                             }
                         },
                         new Action1<Throwable>() {
@@ -74,5 +86,20 @@ public class GalleryImageAdapter {
                                 throwable.printStackTrace();
                             }
                         });
+    }
+
+    private static class GalleryImageHolder{
+        Bitmap image;
+        Pair<Integer, Integer> rawMeasurements;
+        String description;
+
+        public GalleryImageHolder(
+                Bitmap image,
+                Pair<Integer, Integer> rawMeasurements,
+                String description) {
+            this.image = image;
+            this.rawMeasurements = rawMeasurements;
+            this.description = description;
+        }
     }
 }
