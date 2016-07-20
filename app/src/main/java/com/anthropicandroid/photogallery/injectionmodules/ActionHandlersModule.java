@@ -6,9 +6,11 @@ package com.anthropicandroid.photogallery.injectionmodules;
 
 import android.app.Application;
 
+import com.anthropicandroid.photogallery.viewmodel.BackPressedRepo;
 import com.anthropicandroid.photogallery.viewmodel.BottomNavActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.DetailActionHandlers;
 import com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers;
+import com.anthropicandroid.photogallery.viewmodel.animation.DetailToGalleryAnimator;
 import com.anthropicandroid.photogallery.viewmodel.animation.GalleryToDetailAnimator;
 
 import dagger.Module;
@@ -34,9 +36,17 @@ public class ActionHandlersModule {
 
     @Provides
     @GalleryActivityScope
-    DetailActionHandlers getDetailActionHandlers(Application context) {
+    DetailActionHandlers getDetailActionHandlers(
+            Application context,
+            BackPressedRepo backPressedRepo,
+            GalleryToDetailAnimator galleryToDetailAnimator,
+            DetailToGalleryAnimator detailToGalleryAnimator) {
         // dummy class; no actions from nav bar
-        return new DetailActionHandlers(context);
+        return new DetailActionHandlers(
+                context,
+                backPressedRepo,
+                galleryToDetailAnimator,
+                detailToGalleryAnimator);
     }
 
 }

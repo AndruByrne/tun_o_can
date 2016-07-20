@@ -3,6 +3,7 @@ package com.anthropicandroid.photogallery;
 import android.app.Application;
 
 import com.anthropicandroid.photogallery.injectionmodules.ActionHandlersModule;
+import com.anthropicandroid.photogallery.injectionmodules.AnimatorModule;
 import com.anthropicandroid.photogallery.injectionmodules.AppModule;
 import com.anthropicandroid.photogallery.injectionmodules.ApplicationComponent;
 import com.anthropicandroid.photogallery.injectionmodules.DaggerApplicationComponent;
@@ -34,12 +35,13 @@ public class PhotoGalleryApplication extends Application {
     }
 
     public GalleryActivityComponent getGalleryActivityComponent() {
-        // create component to be ties to the activity lifespan
+        // create component to be tied to the activity lifespan
         if (galleryActivityComponent == null) {
             galleryActivityComponent = DaggerGalleryActivityComponent
                     .builder()
                     .applicationComponent(applicationComponent)
                     .actionHandlersModule(new ActionHandlersModule())
+                    .animatorModule(new AnimatorModule())
                     .onBackPressedModule(new OnBackPressedModule())
                     .screenMetricsModule(new ScreenMetricsModule())
                     .build();

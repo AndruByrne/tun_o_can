@@ -7,7 +7,7 @@ package com.anthropicandroid.photogallery.viewmodel;
 import android.app.Application;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +22,7 @@ final public class GalleryActionHandlers {
     private GalleryToDetailAnimator animator;
     private final GestureDetector singleTapUpDetector;
     private final GestureDetector downCatchDetector;
+    private LayoutActivityGalleryBinding activityGalleryBinding;
 
     public GalleryActionHandlers(
             GalleryToDetailAnimator animator,
@@ -31,17 +32,34 @@ final public class GalleryActionHandlers {
         downCatchDetector = new GestureDetector(context, new DownCatch());
     }
 
+    public void selectImageForIndex(int index) {
+        RecyclerView galleryGrid = activityGalleryBinding.galleryGrid;
+        RecyclerView.LayoutManager layoutManager = galleryGrid.getLayoutManager();
+        layoutManager.scrollToPosition(index);
+        View view = layoutManager.getChildAt(index);
+        Rect rect = new Rect();
+        view.getGlobalVisibleRect(rect);
+        bindDataAndAnimate(view, rect.left+rect.width()/2, rect.top+rect.height()/2);
+    }
+
+
     public boolean gridTouched(View view, MotionEvent motionEvent) {
 
         // only want tap ups
         if (!singleTapUpDetector.onTouchEvent(motionEvent)) return false;
         // don't want onDown
         if (downCatchDetector.onTouchEvent(motionEvent)) return true;
+        float rawX = motionEvent.getRawX();
+        float rawY = motionEvent.getRawY();
+        return bindDataAndAnimate(view, (int)rawX, (int)rawY);
+    }
 
+    private boolean bindDataAndAnimate(View view, int rawX, int rawY) {
         Rect currentViewBounds = new Rect();
         LayoutGalleryImageBinding gridItemBinding = DataBindingUtil.findBinding(view);
-        LayoutActivityGalleryBinding activityGalleryBinding = DataBindingUtil
-                .findBinding((View) view.getParent().getParent());
+        if (activityGalleryBinding == null)
+            activityGalleryBinding = DataBindingUtil
+                    .findBinding((View) view.getParent().getParent());
         GalleryItem galleryItem = gridItemBinding.getItem();
         DetailImage detailImage = activityGalleryBinding.getAlphaDetailImage();
 
@@ -62,16 +80,12 @@ final public class GalleryActionHandlers {
                 currentViewBounds,
                 activityGalleryBinding.alphaDetailMattingLayout,
                 activityGalleryBinding.alphaDetailImageView,
-                (float)rawBitmapMeasurement.getRawWidth() /
+                (float) rawBitmapMeasurement.getRawWidth() /
                         rawBitmapMeasurement.getRawHeight(),
-                        motionEvent,
+                rawY,
+                rawX,
                 activityGalleryBinding.galleryGrid);
-        Log.d(TAG, "finished handler tasks");
         return true;
-    }
-
-    public void returnToGallery(View view){
-        animator.returnToGallery();
     }
 
     private class SingleTapUp extends GestureDetector.SimpleOnGestureListener {

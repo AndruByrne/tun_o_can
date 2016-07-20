@@ -7,6 +7,7 @@ package com.anthropicandroid.photogallery.injectionmodules;
 import android.app.Application;
 
 import com.anthropicandroid.photogallery.viewmodel.BackPressedRepo;
+import com.anthropicandroid.photogallery.viewmodel.animation.DetailToGalleryAnimator;
 import com.anthropicandroid.photogallery.viewmodel.animation.GalleryToDetailAnimator;
 import com.anthropicandroid.photogallery.viewmodel.animation.ToolBarFlippingAnimator;
 
@@ -20,15 +21,31 @@ public class AnimatorModule {
 
     @Provides
     @GalleryActivityScope
-    GalleryToDetailAnimator getGridToDetailAnimator(
+    GalleryToDetailAnimator getGalleryToDetailAnimator(
             BackPressedRepo backPressedRepo,
-            @Named("StatusBarHeight") int statusBarHeight) {
-        return new GalleryToDetailAnimator(backPressedRepo, statusBarHeight);
+            @Named("StatusBarHeight") int statusBarHeight,
+            DetailToGalleryAnimator detailToGalleryAnimator) {
+        return new GalleryToDetailAnimator(
+                backPressedRepo,
+                detailToGalleryAnimator,
+                statusBarHeight);
     }
 
     @Provides
     @GalleryActivityScope
-    ToolBarFlippingAnimator getToolBarFlippingAnimator(Application context){
-        return new ToolBarFlippingAnimator(context);
+    DetailToGalleryAnimator getDetailToGalleryAnimator(
+            @Named("StatusBarHeight") int statusBarHeight,
+            @Named("DetailHeight") int imageViewHeight,
+            @Named("ScreenWidth") int screenWidth) {
+        return new DetailToGalleryAnimator(statusBarHeight, imageViewHeight, screenWidth);
+    }
+
+    @Provides
+    @GalleryActivityScope
+    ToolBarFlippingAnimator getToolBarFlippingAnimator(
+            Application context,
+            @Named("StatusBarHeight") int statusBarHeight,
+            @Named("ActionBarHeight") int actionBarHeight) {
+        return new ToolBarFlippingAnimator(context, statusBarHeight, actionBarHeight);
     }
 }

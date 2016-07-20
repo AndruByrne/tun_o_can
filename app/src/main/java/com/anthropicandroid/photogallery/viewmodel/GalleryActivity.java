@@ -11,6 +11,8 @@ import com.anthropicandroid.photogallery.injectionmodules.GalleryActivityCompone
 import com.anthropicandroid.photogallery.model.Repository;
 import com.anthropicandroid.photogallery.model.utils.RepositoryPopulator;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 public class GalleryActivity extends AppCompatActivity {
@@ -29,9 +31,9 @@ public class GalleryActivity extends AppCompatActivity {
         PhotoGalleryApplication application = (PhotoGalleryApplication) getApplication();
         GalleryActivityComponent galleryActivityComponent = application
                 .getGalleryActivityComponent();
-
         // Set camera distance
-//        float scale = getResources().getDisplayMetrics().density;
+        float scale = getResources().getDisplayMetrics().density;
+
         // Set default binding component
         DataBindingUtil.setDefaultComponent(galleryActivityComponent);
         // Inflate activity layout and bind to it
@@ -41,7 +43,7 @@ public class GalleryActivity extends AppCompatActivity {
         // Bootstrap into dependency graph
         galleryActivityComponent.inject(this);
 
-//        activityGalleryBinding.rootActivityLayout.setCameraDistance(9001 * scale);
+        activityGalleryBinding.rootActivityLayout.setCameraDistance(9001 * scale);
 
         // set action handlers for grid view and app bar
         activityGalleryBinding.setGalleryActionHandlers(galleryActionHandlers);
@@ -49,7 +51,7 @@ public class GalleryActivity extends AppCompatActivity {
         activityGalleryBinding.setDetailActionHandlers(detailActionHandlers);
         activityGalleryBinding.setAlphaDetailImage(new DetailImage());
         // set entries for image grid
-        activityGalleryBinding.setEntries(RepositoryPopulator.imageIds);
+        activityGalleryBinding.setEntries(new ArrayList<>(RepositoryPopulator.imageIds.keySet()));
         // set app bar with relative layout base
         setSupportActionBar(activityGalleryBinding.appBar);
         activityGalleryBinding.appBar.setContentInsetsAbsolute(0, 0);

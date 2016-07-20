@@ -42,7 +42,7 @@ public interface GalleryActivityComponent extends android.databinding.DataBindin
 
     GalleryActionHandlers getGalleryActionHandlers();
 
-    GalleryToDetailAnimator getGridToDetailAnimator();
+    GalleryToDetailAnimator getGalleryToDetailAnimator();
 
     Repository getRepository();
 

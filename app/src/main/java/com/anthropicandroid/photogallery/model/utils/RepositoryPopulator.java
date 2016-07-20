@@ -10,7 +10,8 @@ import com.anthropicandroid.photogallery.R;
 import com.anthropicandroid.photogallery.model.GalleryImage;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.realm.Realm;
 import rx.Observable;
@@ -29,15 +30,16 @@ public class RepositoryPopulator implements Realm.Transaction {
     public static final String TAG = RepositoryPopulator.class.getSimpleName();
     private Application context;
 
-    public static ArrayList<Integer> imageIds = new ArrayList<Integer>() {{
-        add(R.drawable.lounge);
-        add(R.drawable.louge);
-        add(R.drawable.logo);
-        add(R.drawable.hive);
-        add(R.drawable.air);
-        add(R.drawable.desks);
-        add(R.drawable.racecar);
-        add(R.drawable.mountainview);
+    // I see the warning, but don't think this is the bottlneck in this class
+    public static HashMap<Integer, String> imageIds = new HashMap<Integer, String>(){{
+        put(R.drawable.lounge, "Lounge");
+        put(R.drawable.louge, "Louge");
+        put(R.drawable.logo, "Logo");
+        put(R.drawable.hive, "Hive");
+        put(R.drawable.air, "Air");
+        put(R.drawable.desks, "Desks");
+        put(R.drawable.racecar, "Racecar");
+        put(R.drawable.mountainview, "Mountain View");
     }};
 
     public RepositoryPopulator(Application context) {
@@ -47,13 +49,13 @@ public class RepositoryPopulator implements Realm.Transaction {
     @Override
     public void execute(final Realm realm) {
         if (realm.where(GalleryImage.class).findAll().size() > 6) return;
-        Observable<Integer> imageIdObs = Observable.from(imageIds);
+        Observable<Map.Entry<Integer, String>> imageIdObs = Observable.from(imageIds.entrySet());
         Observable<byte[]> imageObs = imageIdObs
                 // get Image
-                .map(new Func1<Integer, Bitmap>() {
+                .map(new Func1<Map.Entry<Integer, String>, Bitmap>() {
                     @Override
-                    public Bitmap call(Integer imageId) {
-                        return BitmapFactory.decodeResource(context.getResources(), imageId);
+                    public Bitmap call(Map.Entry<Integer, String> imageId) {
+                        return BitmapFactory.decodeResource(context.getResources(), imageId.getKey());
                     }
                 })
                 .map(new Func1<Bitmap, byte[]>() {
@@ -67,20 +69,23 @@ public class RepositoryPopulator implements Realm.Transaction {
 
         // save images to repository
         Observable
-                .zip(imageIdObs, imageObs, new Func2<Integer, byte[], Pair<Integer, byte[]>>() {
+                .zip(imageIdObs, imageObs, new Func2<Map.Entry<Integer, String>, byte[], Pair<Map.Entry<Integer, String>, byte[]>>() {
                     @Override
-                    public Pair<Integer, byte[]> call(Integer imageId, byte[] image) {
+                    public Pair<Map.Entry<Integer, String>, byte[]> call(Map.Entry<Integer, String> imageId, byte[]
+                            image) {
                         return new Pair<>(imageId, image);
                     }
                 })
                 .subscribe(
-                        new Action1<Pair<Integer, byte[]>>() {
+                        new Action1<Pair<Map.Entry<Integer, String>, byte[]>>() {
                             @Override
-                            public void call(Pair<Integer, byte[]> imageData) {
+                            public void call(Pair<Map.Entry<Integer, String>, byte[]> imageData) {
                                 Log.d(TAG, "id is: " + imageData.first + " and image is " +
                                         "" + imageData.second.length + " long");
+                                // Yes this is ugly; it's the last thing I wrote =]
                                 final GalleryImage galleryImage = new GalleryImage();
-                                galleryImage.setIndex(imageData.first);
+                                galleryImage.setIndex(imageData.first.getKey());
+                                galleryImage.setDescription(imageData.first.getValue());
                                 galleryImage.setImage(imageData.second);
                                 GalleryImage image = realm.copyToRealmOrUpdate(
                                         galleryImage);

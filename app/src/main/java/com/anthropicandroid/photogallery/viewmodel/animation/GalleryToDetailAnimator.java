@@ -5,33 +5,43 @@ package com.anthropicandroid.photogallery.viewmodel.animation;
  */
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.databinding.DataBindingUtil;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+import com.anthropicandroid.photogallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.photogallery.viewmodel.BackPressedRepo;
 
 public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandler {
 
     public static final String TAG = GalleryToDetailAnimator.class.getSimpleName();
+    public static final int DURATION = 700;
+    public static final int HALF_DURATION = DURATION/2;
     private BackPressedRepo backPressedRepo;
+    private DetailToGalleryAnimator detailToGalleryAnimator;
     private int statusBarHeight;
+    private LayoutActivityGalleryBinding binding;
 
-    public GalleryToDetailAnimator(BackPressedRepo backPressedRepo, int statusBarHeight) {
+    public GalleryToDetailAnimator(
+            BackPressedRepo backPressedRepo,
+            DetailToGalleryAnimator detailToGalleryAnimator,
+            int statusBarHeight) {
         this.backPressedRepo = backPressedRepo;
+        this.detailToGalleryAnimator = detailToGalleryAnimator;
         this.statusBarHeight = statusBarHeight;
     }
 
     @Override
     public boolean backPressedConsumed() {
-        return false;
+        return detailToGalleryAnimator.returnToGallery(binding);
     }
 
 
@@ -40,36 +50,29 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
             View mattingLayout,
             ImageView newImage,
             float trueImageRatio,
-            MotionEvent motionEvent,
+            int rawY,
+            int rawX,
             RecyclerView galleryGrid) {
+        // hold a reference to the data binding to request unanimation
+        binding = DataBindingUtil.findBinding(galleryGrid);
         // get rect to draw into
         Rect targetRect = new Rect();
         Point targetOffset = new Point();
-        Log.d(TAG, "current rect reporting at "
-                + " top: " + currentRect.top
-                + " bottom: " + currentRect.bottom
-                + " height: " + currentRect.height()
-                + " left: " + currentRect.left
-                + " right: " + currentRect.right
-                + " width: " + currentRect.width()
-        );
         if (!galleryGrid.getGlobalVisibleRect(targetRect, targetOffset)) return;
         targetRect.offset(-targetOffset.x, statusBarHeight - targetOffset.y);
-        int rawY = (int) motionEvent.getRawY();
-        int rawX = (int) motionEvent.getRawX();
-        // get ratio of image height to width
-        detailImageImageAnim(currentRect, newImage, trueImageRatio, targetRect);
-
-        detailImageMattingAnim(mattingLayout, targetRect, rawY, rawX);
-
-//        animator.start();
-
         // get imageview animation
+        detailImageAnim(currentRect, newImage, trueImageRatio, targetRect);
+
+        // get animation for fast matte
+        detailMattingAnim(mattingLayout, targetRect, rawY, rawX);
+
+        detailToGalleryAnimator.recentRect(currentRect);
+        backPressedRepo.addHandler(this);
 
 
     }
 
-    private void detailImageImageAnim(
+    private void detailImageAnim(
             Rect currentRect,
             ImageView newImage,
             float trueImageRatio,
@@ -98,17 +101,17 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
                 .scaleX(1)
                 .scaleY(1)
                 .z(12)
+                .setListener(getTacticalListener(newImage))
 //                .setListener(getLoggingListener(newImage, "new image"))
-                .setDuration(1000)
+                .setDuration(DURATION)
                 .setInterpolator(new LinearInterpolator());
     }
 
-    private void detailImageMattingAnim(
-            View mattingLayout,
+    private void detailMattingAnim(
+            final View mattingLayout,
             Rect targetRect,
             int rawY,
             int rawX) {// matting anim init
-        String animationName = "matting";
         int mattingWidthScaleShift = mattingLayout.getWidth() / 2;
         int mattingHeightScaleShift = mattingLayout.getHeight() / 2;
         int offsetY = rawY - mattingHeightScaleShift;
@@ -124,16 +127,36 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
         mattingLayout.requestFocus();
         mattingLayout.setVisibility(View.VISIBLE);
 
-//         perform background animation
+        // I do not like this way of animating at all; regular animation objects are better
+
+        // Perform background animation from touch point
         mattingLayout.animate()
                 .x(targetRect.left)
                 .y(targetRect.top)
-                .z(10)
+                .z(8)
                 .scaleX(1f)
                 .scaleY(1f)
-                .setDuration(500)
+                .setDuration(HALF_DURATION)
+                .setListener(getTacticalListener(mattingLayout))
                 .setInterpolator(new DecelerateInterpolator(2f));
 //                .setListener(getLoggingListener(mattingLayout, animationName))
+    }
+
+    @NonNull
+    private static AnimatorListenerAdapter getTacticalListener(final View view) {
+        return new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setFocusable(true);
+                super.onAnimationEnd(animation);
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                view.setFocusable(false);
+                super.onAnimationStart(animation);
+            }
+        };
     }
 
     @NonNull
@@ -185,7 +208,4 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
         };
     }
 
-    public void returnToGallery() {
-
-    }
 }

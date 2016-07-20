@@ -36,6 +36,7 @@ public class DetailImageAdapter {
                     @Override
                     public Bitmap call(GalleryImage galleryImage) {
                         // Should null-check this, because user may click on image placeholder
+                        imageView.setContentDescription(galleryImage.getDescription());
                         return Utils.decodeSampledBitmapWithPredicate(
                                 galleryImage.getImage(),
                                 rawBitmapMeasurement.getRawWidth(),
@@ -51,9 +52,6 @@ public class DetailImageAdapter {
                             @Override
                             public void call(Bitmap bitmap) {
                                 imageView.setImageBitmap(bitmap);
-                                Log.d(TAG, "set image bitmap: "+(bitmap!=null)+" on image view " +
-                                        "with height:  "+imageView.getHeight()+"  and width: " +
-                                        ""+imageView.getWidth());
                             }
                         },
                         new Action1<Throwable>() {

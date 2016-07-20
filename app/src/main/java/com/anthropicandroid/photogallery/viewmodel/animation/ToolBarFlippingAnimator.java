@@ -5,8 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Application;
-import android.databinding.DataBindingUtil;
-import android.support.design.widget.AppBarLayout;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -18,16 +18,26 @@ import com.anthropicandroid.photogallery.databinding.LayoutActivityGalleryBindin
 public class ToolBarFlippingAnimator {
 
 
+    public static final int FULL_DURATION = 1000;
+    public static final int HALF_DURATION = FULL_DURATION/2;
     public static final String TAG = ToolBarFlippingAnimator.class.getSimpleName();
-    public static final int HALF_DURATION = 1000;
-    public static final int FULL_DURATION = 2000;
     private Application context;
+    private int statusBarHeight;
+    private int actionBarHeight;
+    private LayoutActivityGalleryBinding galleryBinding;
 
-    public ToolBarFlippingAnimator(Application context) { this.context = context;}
+    public ToolBarFlippingAnimator(
+            Application context,
+            int statusBarHeight,
+            int actionBarHeight) {
+        this.context = context;
+        this.statusBarHeight = statusBarHeight;
+        this.actionBarHeight = actionBarHeight;
+    }
 
-    public void flipToDetail(final AppBarLayout appBarLayout) {
+    public void flipToDetail(final LayoutActivityGalleryBinding galleryBinding) {
+        this.galleryBinding = galleryBinding;
         // Get animated fields from data binding
-        LayoutActivityGalleryBinding galleryBinding = DataBindingUtil.findBinding(appBarLayout);
         final String description = galleryBinding.getAlphaDetailImage().getDescription();
         RelativeLayout toolbarLayout = galleryBinding.toolbarLayout;
         final RelativeLayout toolbarFlipSide = galleryBinding.toolbarFlipSide;
@@ -77,6 +87,8 @@ public class ToolBarFlippingAnimator {
             @Override
             public void onAnimationStart(Animator animation) {
                 toolbarFlipSide.setVisibility(View.VISIBLE);
+                galleryBinding.detailTitleField.setText(galleryBinding.getAlphaDetailImage()
+                        .getDescription());
             }
         });
         return animatorSet;
@@ -110,7 +122,47 @@ public class ToolBarFlippingAnimator {
         return animatorSet;
     }
 
-    public void flipToGallery(AppBarLayout appBarLayout) {
-        return;
+    public void flipToGallery(LayoutActivityGalleryBinding binding) {
+        // NYI
+    }
+
+    public void pullUpNavBar(final LayoutActivityGalleryBinding binding) {
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet
+                .play(ObjectAnimator.ofFloat(
+                        binding.bottomNavBar,
+                        View.TRANSLATION_Y,
+                        actionBarHeight,
+                        0));
+        animatorSet.setDuration(HALF_DURATION);
+        animatorSet.setStartDelay(HALF_DURATION);
+        animatorSet.setInterpolator(new LinearOutSlowInInterpolator());
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Log.d(TAG, "bottom nav ani ended with top: "+binding.bottomNavBar.getY()
+                +" and height: "+ binding.bottomNavBar.getHeight());
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+            }
+        });
+        animatorSet.start();
+    }
+
+    public void pushDownNavBar(LayoutActivityGalleryBinding binding) {
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet
+                .play(ObjectAnimator.ofFloat(
+                        binding.bottomNavBar,
+                        View.TRANSLATION_Y,
+                        0,
+                        2*actionBarHeight));
+        animatorSet.setDuration(HALF_DURATION);
+        animatorSet.setStartDelay(HALF_DURATION);
+        animatorSet.setInterpolator(new LinearOutSlowInInterpolator());
+        animatorSet.start();
     }
 }

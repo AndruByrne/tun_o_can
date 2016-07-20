@@ -23,10 +23,6 @@
             type="com.anthropicandroid.photogallery.viewmodel.DetailImage"/>
 
         <variable
-            name="omegaDetailImage"
-            type="com.anthropicandroid.photogallery.viewmodel.DetailImage"/>
-
-        <variable
             name="detailActionHandlers"
             type="com.anthropicandroid.photogallery.viewmodel.DetailActionHandlers"/>
 
@@ -44,7 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="false"
-            app:layout_behavior="com.anthropicandroid.photogallery.viewmodel.animation.ToolbarFlippingBehavior"
             >
 
             <android.support.v7.widget.Toolbar
@@ -60,8 +55,8 @@
                     android:id="@+id/toolbar_layout"
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
-                    android:elevation="8dp"
                     android:background="?android:attr/colorPrimary"
+                    android:elevation="8dp"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -79,8 +74,8 @@
                     android:id="@+id/toolbar_flip_side"
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
-                    android:elevation="6dp"
                     android:background="@color/colorMatteGray"
+                    android:elevation="6dp"
                     >
 
                     <TextView
@@ -95,12 +90,12 @@
                     <Button
                         android:id="@+id/button_return_to_gallery"
                         style="?android:attr/borderlessButtonStyle"
-                        android:layout_alignParentEnd="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerHorizontal="true"
                         android:drawableTop="@drawable/ic_clear_black_24dp"
-                        android:layout_centerVertical="true"
-                        android:onClick="@{galleryActionHandlers::returnToGallery}"
+                        android:onClick="@{detailActionHandlers::returnToGallery}"
                         android:tint="@color/colorLightText"/>
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
@@ -126,6 +121,7 @@
             android:background="@color/colorJustBlack"
             android:gravity="center"
             android:visibility="gone"
+            app:layout_behavior="com.anthropicandroid.photogallery.viewmodel.animation.ImageDismissingBehavior"
             />
 
         <ImageView
@@ -138,24 +134,67 @@
             app:rawBitmapDimen="@{alphaDetailImage.getRawBitmapMeasurement()}"
             />
 
-        <FrameLayout
-            android:id="@+id/omega_detail_matting_layout"
+        <LinearLayout
+            android:id="@+id/bottom_nav_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorJustBlack"
-            android:gravity="center"
-            android:visibility="gone"
-            />
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:elevation="16dp"
+            android:translationY="?android:attr/actionBarSize"
+            android:background="@color/colorMatteGray"
+            app:layout_behavior="com.anthropicandroid.photogallery.viewmodel.animation.ToolbarFlippingBehavior"
+            >
 
-        <ImageView
-            android:id="@+id/omega_detail_image_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:visibility="gone"
-            app:detailImage="@{omegaDetailImage.getDetailIndex}"
-            app:rawBitmapDimen="@{omegaDetailImage.getRawBitmapMeasurement()}"
-            />
+            <Button
+                android:id="@+id/plus_one"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:drawableTint="@color/colorLightText"
+                android:drawableTop="@drawable/ic_plus_one_black_24dp"
+                />
+
+            <Button
+                android:id="@+id/document"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:drawableTint="@color/colorLightText"
+                android:drawableTop="@drawable/ic_message_black_24dp"
+                />
+
+            <Button
+                android:id="@+id/just_plus"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:drawableTint="@color/colorLightText"
+                android:drawableTop="@drawable/ic_add_black_24dp"
+                />
+
+            <Button
+                android:id="@+id/forward"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_share_backwards_black_24dp"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:drawableTint="@color/colorLightText"
+                android:scaleX="-1"
+                />
+        </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>
