@@ -94,6 +94,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerHorizontal="true"
+                        android:layout_margin="4dp"
                         android:drawableTop="@drawable/ic_clear_black_24dp"
                         android:onClick="@{detailActionHandlers::returnToGallery}"
                         android:tint="@color/colorLightText"/>
