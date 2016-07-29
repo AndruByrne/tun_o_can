@@ -6,37 +6,39 @@ package com.anthropicandroid.photogallery.viewmodel.animation;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+import com.anthropicandroid.photogallery.R;
 import com.anthropicandroid.photogallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.photogallery.viewmodel.BackPressedRepo;
 
 public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandler {
 
     public static final String TAG = GalleryToDetailAnimator.class.getSimpleName();
-    public static final int DURATION = 700;
-    public static final int HALF_DURATION = DURATION/2;
     private BackPressedRepo backPressedRepo;
     private DetailToGalleryAnimator detailToGalleryAnimator;
     private int statusBarHeight;
+    private Resources resources;
     private LayoutActivityGalleryBinding binding;
 
     public GalleryToDetailAnimator(
             BackPressedRepo backPressedRepo,
             DetailToGalleryAnimator detailToGalleryAnimator,
-            int statusBarHeight) {
+            int statusBarHeight,
+            Resources resources) {
         this.backPressedRepo = backPressedRepo;
         this.detailToGalleryAnimator = detailToGalleryAnimator;
         this.statusBarHeight = statusBarHeight;
+        this.resources = resources;
     }
 
     @Override
@@ -89,21 +91,22 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
         // the X axis is similar; 0 centers a former match_parent shunk to a pint in the middle
         // of the screen, 1/2 screen to the left to start on left side
         int startingLeft = (2 * currentRect.left - targetRect.width() + currentRect.width()) / 2;
-        newImage.setTop(startingTop);
-        newImage.setBottom(startingTop + currentRect.height());
-        newImage.setLeft(startingLeft);
-        newImage.setRight(startingLeft + currentRect.width());
+        newImage.setY(startingTop);
+        newImage.setX(startingLeft);
+        newImage.setZ(resources.getInteger(R.integer.z_position_detail_image_start));
         newImage.setVisibility(View.VISIBLE);
-        newImage.setElevation(8);
+
         newImage.animate()
-                .y((targetRect.height()-(targetRect.width()/trueImageRatio))/2)
-                .x(targetRect.left)
+                .translationY((targetRect.height() - (targetRect.width() / trueImageRatio)) / 2)
+                .translationX(targetRect.left)
+                .translationZ(resources.getInteger(R.integer.z_position_detail_image_emd))
                 .scaleX(1)
                 .scaleY(1)
-                .z(12)
                 .setListener(getTacticalListener(newImage))
-//                .setListener(getLoggingListener(newImage, "new image"))
-                .setDuration(DURATION)
+                .setStartDelay(resources.getInteger(R.integer.duration_gallery_to_detail)
+                        / 4)
+                .setDuration(resources.getInteger(R.integer.duration_gallery_to_detail)
+                        * 3 / 4)
                 .setInterpolator(new LinearInterpolator());
     }
 
@@ -111,19 +114,21 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
             final View mattingLayout,
             Rect targetRect,
             int rawY,
-            int rawX) {// matting anim init
+            int rawX) {
+        // matting anim init
         int mattingWidthScaleShift = mattingLayout.getWidth() / 2;
         int mattingHeightScaleShift = mattingLayout.getHeight() / 2;
         int offsetY = rawY - mattingHeightScaleShift;
         int offsetX = rawX - mattingWidthScaleShift;
+
         mattingLayout.setScaleX(0);
         mattingLayout.setScaleY(0);
-        mattingLayout.setTop(offsetY);
-        mattingLayout.setBottom(offsetY);
-        mattingLayout.setLeft(offsetX);
-        mattingLayout.setRight(offsetX);
-        mattingLayout.setZ(6);
+        mattingLayout.setY(offsetY);
+        mattingLayout.setX(offsetX);
+        mattingLayout.setZ(resources.getInteger(R.integer.z_position_matting_start));
         mattingLayout.setAlpha(1);
+        mattingLayout.setPivotX(rawX);
+        mattingLayout.setPivotY(rawY);
         mattingLayout.requestFocus();
         mattingLayout.setVisibility(View.VISIBLE);
 
@@ -133,13 +138,12 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
         mattingLayout.animate()
                 .x(targetRect.left)
                 .y(targetRect.top)
-                .z(8)
+                .z(resources.getInteger(R.integer.z_position_matting_end))
                 .scaleX(1f)
                 .scaleY(1f)
-                .setDuration(HALF_DURATION)
+                .setDuration(resources.getInteger(R.integer.duration_gallery_to_detail))
                 .setListener(getTacticalListener(mattingLayout))
                 .setInterpolator(new DecelerateInterpolator(2f));
-//                .setListener(getLoggingListener(mattingLayout, animationName))
     }
 
     @NonNull
@@ -158,54 +162,4 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
             }
         };
     }
-
-    @NonNull
-    private Animator.AnimatorListener getLoggingListener(
-            final View view,
-            final String animationName) {
-        return new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-                Log.d(
-                        TAG,
-                        "@ start of " + animationName + " anim, z: " + view.getZ()
-                                + " visibility: " + view.getVisibility()
-                                + " alpha: " + view.getAlpha()
-                                + " scaleX " + view.getScaleX()
-                                + " scaleY " + view.getScaleY()
-                                + " top: " + view.getTop()
-                                + " bottom: " + view.getBottom()
-                                + " left: " + view.getLeft()
-                                + "right: " + view.getRight());
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                view.requestFocus();
-                view.findFocus();
-                Log.d(
-                        TAG,
-                        "@ end of " + animationName + "  anim, z: " + view.getZ()
-                                + " visibility: " + view.getVisibility()
-                                + " alpha: " + view.getAlpha()
-                                + " scaleX " + view.getScaleX()
-                                + " scaleY " + view.getScaleY()
-                                + " top: " + view.getTop()
-                                + " bottom: " + view.getBottom()
-                                + " left: " + view.getLeft()
-                                + "right: " + view.getRight());
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        };
-    }
-
 }

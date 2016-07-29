@@ -97,10 +97,10 @@ public class ImageDismissingBehavior extends SwipeDismissBehavior<FrameLayout> {
         dependency.setScaleY(1);
         child.setScaleX(1);
         child.setScaleY(1);
-        dependency.setTop(1);
-        dependency.setLeft(1);
-        child.setTop(1);
-        child.setLeft(1);
+        dependency.setTop(0);
+        dependency.setLeft(0);
+        child.setTop(0);
+        child.setLeft(0);
         // tell the onBackPressedRepo not to worry about this one
         activityComponent.getBackPressedRepo().releaseHandler(activityComponent
                 .getGalleryToDetailAnimator());

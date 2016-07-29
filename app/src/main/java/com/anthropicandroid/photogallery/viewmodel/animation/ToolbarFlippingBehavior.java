@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -39,7 +38,8 @@ public class ToolbarFlippingBehavior extends CoordinatorLayout.Behavior<LinearLa
     public boolean onDependentViewChanged(
             CoordinatorLayout parent, LinearLayout layout, View dependency) {
         // if the view has become GONE, we are going back to the gallery
-        if (dependency.getZ() < 7 && flippedToDetail) {
+        if (flippedToDetail &&
+                (dependency.getZ() < 9.7f || dependency.getVisibility() == View.GONE)) {
             // unflip
             LayoutActivityGalleryBinding binding = DataBindingUtil.findBinding(layout);
             animator.flipToGallery(binding);
@@ -48,8 +48,7 @@ public class ToolbarFlippingBehavior extends CoordinatorLayout.Behavior<LinearLa
             return true;
         }
         // if the view is getting close
-        if (!flippedToDetail && dependency.getZ()>7) {
-            Log.d(TAG, "got one call hwere");
+        if (!flippedToDetail && dependency.getZ() > 9.7f) {
             // do flip animation on toolbar
             LayoutActivityGalleryBinding galleryBinding = DataBindingUtil.findBinding(layout);
             animator.flipToDetail(galleryBinding);

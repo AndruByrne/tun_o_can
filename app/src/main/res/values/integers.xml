@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="app_title_rotation_duration">2000</integer>
-    <integer name="app_title_rotation_duration_half">1000</integer>
+    <integer name="duration_app_title_rotation">666</integer>
+    <integer name="duration_detail_to_gallery_animator">300</integer>
+    <integer name="z_position_matting_start">8</integer>
+    <integer name="z_position_matting_end">10</integer>
+    <integer name="duration_gallery_to_detail">666</integer>
+    <integer name="z_position_detail_image_start">10</integer>
+    <integer name="z_position_detail_image_emd">14</integer>
 
 </resources>

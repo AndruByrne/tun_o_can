@@ -51,54 +51,59 @@
                 android:elevation="@dimen/app_bar_elevation"
                 app:layout_scrollFlags="scroll|enterAlways">
 
-                <RelativeLayout
-                    android:id="@+id/toolbar_layout"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="?android:attr/actionBarSize"
-                    android:background="?android:attr/colorPrimary"
-                    android:elevation="8dp"
-                    android:gravity="center_vertical">
+                    android:layout_height="?android:attr/actionBarSize">
 
-                    <TextView
-                        android:id="@+id/app_title_field"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/gallery_label"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/colorDarkText"/>
+                    <RelativeLayout
+                        android:id="@+id/toolbar_flip_side"
+                        android:layout_width="match_parent"
+                        android:layout_height="?android:attr/actionBarSize"
+                        android:background="@color/colorMatteGray"
+                        android:elevation="14dp"
+                        >
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/detail_title_field"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/default_image_detail_title"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/colorLightText"/>
 
-                <RelativeLayout
-                    android:id="@+id/toolbar_flip_side"
-                    android:layout_width="match_parent"
-                    android:layout_height="?android:attr/actionBarSize"
-                    android:background="@color/colorMatteGray"
-                    android:elevation="6dp"
-                    >
+                        <Button
+                            android:id="@+id/button_return_to_gallery"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="4dp"
+                            android:drawableTop="@drawable/ic_clear_black_24dp"
+                            android:onClick="@{detailActionHandlers::returnToGallery}"
+                            android:tint="@color/colorLightText"/>
+                    </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/detail_title_field"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/default_image_detail_title"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/colorLightText"/>
+                    <RelativeLayout
+                        android:id="@+id/toolbar_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="?android:attr/actionBarSize"
+                        android:background="?android:attr/colorPrimary"
+                        android:elevation="14dp"
+                        android:gravity="center_vertical">
 
-                    <Button
-                        android:id="@+id/button_return_to_gallery"
-                        style="?android:attr/borderlessButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_margin="4dp"
-                        android:drawableTop="@drawable/ic_clear_black_24dp"
-                        android:onClick="@{detailActionHandlers::returnToGallery}"
-                        android:tint="@color/colorLightText"/>
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/app_title_field"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/gallery_label"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/colorDarkText"/>
+
+                    </RelativeLayout>
+                </FrameLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
@@ -121,7 +126,7 @@
             android:layout_height="match_parent"
             android:background="@color/colorJustBlack"
             android:gravity="center"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_behavior="com.anthropicandroid.photogallery.viewmodel.animation.ImageDismissingBehavior"
             />
 
@@ -140,10 +145,9 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="bottom"
-            android:gravity="bottom"
+            android:background="@color/colorMatteGray"
             android:elevation="16dp"
             android:translationY="?android:attr/actionBarSize"
-            android:background="@color/colorMatteGray"
             app:layout_behavior="com.anthropicandroid.photogallery.viewmodel.animation.ToolbarFlippingBehavior"
             >
 
@@ -152,9 +156,9 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginTop="8dp"
                 android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
                 android:drawableTop="@drawable/ic_plus_one_black_24dp"
                 />
@@ -164,9 +168,9 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginTop="8dp"
                 android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
                 android:drawableTop="@drawable/ic_message_black_24dp"
                 />
@@ -176,9 +180,9 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginTop="8dp"
                 android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
                 android:drawableTop="@drawable/ic_add_black_24dp"
                 />
@@ -188,11 +192,11 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_share_backwards_black_24dp"
-                android:layout_marginTop="8dp"
                 android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
+                android:drawableTop="@drawable/ic_share_backwards_black_24dp"
                 android:scaleX="-1"
                 />
         </LinearLayout>

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.anthropicandroid.photogallery.R;
 import com.anthropicandroid.photogallery.databinding.LayoutActivityGalleryBinding;
 
 /*
@@ -19,15 +21,18 @@ import com.anthropicandroid.photogallery.databinding.LayoutActivityGalleryBindin
 public class DetailToGalleryAnimator {
 
     private Rect currentRect;
+    private Resources resources;
     private int imageViewHeight;
     private int statusBarHeight;
     private int screenWidth;
     private LayoutActivityGalleryBinding binding;
 
     public DetailToGalleryAnimator(
+            Resources resources,
             int statusBarHeight,
             int imageViewHeight,
             int screenWidth) {
+        this.resources = resources;
         this.imageViewHeight = imageViewHeight;
         this.statusBarHeight = statusBarHeight;
         this.screenWidth = screenWidth;
@@ -42,7 +47,7 @@ public class DetailToGalleryAnimator {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(getImageAnim(binding.alphaDetailImageView, currentRect))
                 .with(getMattingAnim(binding.alphaDetailMattingLayout, currentRect));
-        animatorSet.setDuration(300);
+        animatorSet.setDuration(resources.getInteger(R.integer.duration_detail_to_gallery_animator));
         animatorSet.addListener(getActionListener());
         animatorSet.start();
         binding.alphaDetailImageView.setImageBitmap(null);
@@ -54,7 +59,11 @@ public class DetailToGalleryAnimator {
     private AnimatorSet getMattingAnim(FrameLayout frameLayout, Rect currentRect) {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet
-                .play(ObjectAnimator.ofFloat(frameLayout, View.Z, 12, 8))
+                .play(ObjectAnimator.ofFloat(
+                        frameLayout,
+                        View.Z,
+                        resources.getInteger(R.integer.z_position_matting_end),
+                        resources.getInteger(R.integer.z_position_matting_start)))
                 .with(ObjectAnimator.ofFloat(
                         frameLayout,
                         View.X,
