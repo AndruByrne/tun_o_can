@@ -16,15 +16,15 @@
 
         <variable
             name="galleryActionHandlers"
-            type="com.anthropicandroid.patterngallery.viewmodel.GalleryActionHandlers"/>
+            type="com.anthropicandroid.patterngallery.presenters.GalleryActionHandlers"/>
 
         <variable
             name="alphaDetailImage"
-            type="com.anthropicandroid.patterngallery.viewmodel.DetailImage"/>
+            type="com.anthropicandroid.patterngallery.entities.ui.DetailImage"/>
 
         <variable
             name="detailActionHandlers"
-            type="com.anthropicandroid.patterngallery.viewmodel.DetailActionHandlers"/>
+            type="com.anthropicandroid.patterngallery.presenters.DetailActionHandlers"/>
 
     </data>
 
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".viewmodel.GalleryActivity">
+        tools:context=".routers.gallery.GalleryActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/root_app_bar_layout"
@@ -127,7 +127,7 @@
             android:background="@color/colorJustBlack"
             android:gravity="center"
             android:visibility="invisible"
-            app:layout_behavior="com.anthropicandroid.patterngallery.viewmodel.animation.ImageDismissingBehavior"
+            app:layout_behavior="com.anthropicandroid.patterngallery.view.animation.ImageDismissingBehavior"
             />
 
         <ImageView
@@ -148,7 +148,7 @@
             android:background="@color/colorMatteGray"
             android:elevation="16dp"
             android:translationY="?android:attr/actionBarSize"
-            app:layout_behavior="com.anthropicandroid.patterngallery.viewmodel.animation.ToolbarFlippingBehavior"
+            app:layout_behavior="com.anthropicandroid.patterngallery.view.animation.ToolbarFlippingBehavior"
             >
 
             <Button
