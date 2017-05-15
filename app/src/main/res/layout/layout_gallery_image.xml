@@ -6,11 +6,11 @@
 
         <variable
             name="item"
-            type="com.anthropicandroid.photogallery.viewmodel.GalleryItem"/>
+            type="com.anthropicandroid.patterngallery.viewmodel.GalleryItem"/>
 
         <variable
             name="galleryActionHandlers"
-            type="com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers"/>
+            type="com.anthropicandroid.patterngallery.viewmodel.GalleryActionHandlers"/>
 
     </data>
 

@@ -16,15 +16,15 @@
 
         <variable
             name="galleryActionHandlers"
-            type="com.anthropicandroid.photogallery.viewmodel.GalleryActionHandlers"/>
+            type="com.anthropicandroid.patterngallery.viewmodel.GalleryActionHandlers"/>
 
         <variable
             name="alphaDetailImage"
-            type="com.anthropicandroid.photogallery.viewmodel.DetailImage"/>
+            type="com.anthropicandroid.patterngallery.viewmodel.DetailImage"/>
 
         <variable
             name="detailActionHandlers"
-            type="com.anthropicandroid.photogallery.viewmodel.DetailActionHandlers"/>
+            type="com.anthropicandroid.patterngallery.viewmodel.DetailActionHandlers"/>
 
     </data>
 
@@ -127,7 +127,7 @@
             android:background="@color/colorJustBlack"
             android:gravity="center"
             android:visibility="invisible"
-            app:layout_behavior="com.anthropicandroid.photogallery.viewmodel.animation.ImageDismissingBehavior"
+            app:layout_behavior="com.anthropicandroid.patterngallery.viewmodel.animation.ImageDismissingBehavior"
             />
 
         <ImageView
@@ -148,7 +148,7 @@
             android:background="@color/colorMatteGray"
             android:elevation="16dp"
             android:translationY="?android:attr/actionBarSize"
-            app:layout_behavior="com.anthropicandroid.photogallery.viewmodel.animation.ToolbarFlippingBehavior"
+            app:layout_behavior="com.anthropicandroid.patterngallery.viewmodel.animation.ToolbarFlippingBehavior"
             >
 
             <Button

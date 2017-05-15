@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PhotoGallery</string>
-    <string name="gallery_label">Image Gallery</string>
-    <string name="default_image_detail_title">Image Detail</string>
+    <string name="app_name">Tun-O-Can</string>
+    <string name="gallery_label">Pattern Gallery</string>
+    <string name="default_image_detail_title">Pattern Detail</string>
 </resources>
