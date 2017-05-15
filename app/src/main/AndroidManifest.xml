@@ -3,7 +3,7 @@
           package="com.anthropicandroid.patterngallery">
 
     <application
-        android:name="com.anthropicandroid.patterngallery.PatternGalleryApplication"
+        android:name=".interactors.startup.PatternGalleryApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +11,7 @@
         android:theme="@style/GalleryTheme">
 
         <activity
-            android:name="com.anthropicandroid.patterngallery.viewmodel.GalleryActivity"
+            android:name=".routers.gallery.GalleryActivity"
             android:label="@string/gallery_label"
             android:screenOrientation="portrait">
             <intent-filter>
