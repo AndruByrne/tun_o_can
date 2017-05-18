@@ -23,7 +23,10 @@ public class BackPressedRepo {
         ListIterator<BackPressedHandler> iterator = handlers.listIterator(handlers.size());
         while (iterator.hasPrevious()) {
             BackPressedHandler handler = iterator.previous();
-            if (handler != null && handler.backPressedConsumed()) {
+            if (
+                    handler != null &&
+                            handler.backPressedConsumed()
+                    ) {
                 handlers.remove(handler);
                 return true;
             }

@@ -21,7 +21,10 @@ public class RealmModule {
 
     @Provides
     @Singleton
-    Observable<Realm> getRealmObs(Application context, RepositoryPopulator repositoryPopulator) {
+    Observable<Realm> getRealmObs(
+            Application context,
+            RepositoryPopulator repositoryPopulator
+    ) {
         RealmConfiguration realmConfiguration = new RealmConfiguration
                 .Builder(context)
                 .initialData(repositoryPopulator)

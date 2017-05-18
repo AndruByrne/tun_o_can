@@ -29,24 +29,33 @@ final public class GalleryActionHandlers {
 
     public GalleryActionHandlers(
             GalleryToDetailAnimator animator,
-            Application context) {
+            Application context
+    ) {
         this.animator = animator;
         singleTapUpDetector = new GestureDetector(context, new SingleTapUp());
         downCatchDetector = new GestureDetector(context, new DownCatch());
     }
 
-    public void selectImageForIndex(int index) {
+    public void selectImageForIndex(
+            int index
+    ) {
         RecyclerView galleryGrid = activityGalleryBinding.galleryGrid;
         RecyclerView.LayoutManager layoutManager = galleryGrid.getLayoutManager();
         layoutManager.scrollToPosition(index);
         View view = layoutManager.getChildAt(index);
         Rect rect = new Rect();
         view.getGlobalVisibleRect(rect);
-        bindDataAndAnimate(view, rect.left+rect.width()/2, rect.top+rect.height()/2);
+        bindDataAndAnimate(
+                view,
+                rect.centerX(),
+                rect.centerY());
     }
 
 
-    public boolean gridTouched(View view, MotionEvent motionEvent) {
+    public boolean gridTouched(
+            View view,
+            MotionEvent motionEvent
+    ) {
 
         // only want tap ups
         if (!singleTapUpDetector.onTouchEvent(motionEvent)) return false;
@@ -54,14 +63,20 @@ final public class GalleryActionHandlers {
         if (downCatchDetector.onTouchEvent(motionEvent)) return true;
         float rawX = motionEvent.getRawX();
         float rawY = motionEvent.getRawY();
-        return bindDataAndAnimate(view, (int)rawX, (int)rawY);
+        return bindDataAndAnimate(
+                view,
+                (int)rawX,
+                (int)rawY);
     }
 
-    private boolean bindDataAndAnimate(View view, int rawX, int rawY) {
+    private boolean bindDataAndAnimate(
+            View view,
+            int rawX,
+            int rawY
+    ) {
         Rect currentViewBounds = new Rect();
         LayoutGalleryImageBinding gridItemBinding = DataBindingUtil.findBinding(view);
-        if (activityGalleryBinding == null)
-            activityGalleryBinding = DataBindingUtil
+        if (activityGalleryBinding == null) activityGalleryBinding = DataBindingUtil
                     .findBinding((View) view.getParent().getParent());
         GalleryItem galleryItem = gridItemBinding.getItem();
         DetailImage detailImage = activityGalleryBinding.getAlphaDetailImage();
@@ -79,6 +94,7 @@ final public class GalleryActionHandlers {
         // animate the detail in
         RawBitmapMeasurement rawBitmapMeasurement = detailImage
                 .getRawBitmapMeasurement();
+        //  TODO: discuss the identity between the animator and the handlers; maybe a useful concept
         animator.zoomToReplace(
                 currentViewBounds,
                 activityGalleryBinding.alphaDetailMattingLayout,
