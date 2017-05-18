@@ -38,8 +38,10 @@ public class ToolbarFlippingBehavior extends CoordinatorLayout.Behavior<LinearLa
     public boolean onDependentViewChanged(
             CoordinatorLayout parent, LinearLayout layout, View dependency) {
         // if the view has become GONE, we are going back to the gallery
-        if (flippedToDetail &&
-                (dependency.getZ() < 9.7f || dependency.getVisibility() == View.GONE)) {
+        if (
+                flippedToDetail &&
+                        (dependency.getZ() < 9.7f || dependency.getVisibility() == View.GONE)
+                ) {
             // unflip
             LayoutActivityGalleryBinding binding = DataBindingUtil.findBinding(layout);
             animator.flipToGallery(binding);
