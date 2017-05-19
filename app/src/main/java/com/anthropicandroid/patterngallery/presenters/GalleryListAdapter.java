@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutGalleryImageBinding;
+import com.anthropicandroid.patterngallery.entities.ui.GalleryItemViewModel;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
-import com.anthropicandroid.patterngallery.entities.ui.GalleryItem;
 import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
 
 import java.util.List;
@@ -65,7 +65,7 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
             super(rowView);
             dataBinding = DataBindingUtil.bind(rowView);
             // add the binding objects
-            dataBinding.setItem(new GalleryItem());
+            dataBinding.setViewModel(new GalleryItemViewModel());
             dataBinding.setGalleryActionHandlers(galleryActionHandlers);
         }
 
@@ -92,12 +92,12 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
                     .getDataBinding();
             Integer imageIndex = imageIndicies.get(position);
 
-            GalleryItem galleryItem = galleryImageBinding.getItem();
-            galleryItem.setRawBitmapMeasurement(new RawBitmapMeasurement());
-            galleryItem.setWidth(childWidth);
-            galleryItem.setIndex(imageIndex);
-            galleryItem.setDescription("Photo " + position);
-            galleryItem.setColorResId(bgColors
+            GalleryItemViewModel galleryItemViewModel = galleryImageBinding.getViewModel();
+            galleryItemViewModel.setRawBitmapMeasurement(new RawBitmapMeasurement());
+            galleryItemViewModel.setWidth(childWidth);
+            galleryItemViewModel.setIndex(imageIndex);
+            galleryItemViewModel.setDescription("Photo " + position);
+            galleryItemViewModel.setColorResId(bgColors
                     .getResourceId(position % 8, R.color.colorOrange));
         }
     }

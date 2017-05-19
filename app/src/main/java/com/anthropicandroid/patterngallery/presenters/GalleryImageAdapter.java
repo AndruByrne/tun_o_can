@@ -14,7 +14,7 @@ import android.widget.ImageView;
 
 import com.anthropicandroid.patterngallery.entities.framework.GalleryImage;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
-import com.anthropicandroid.patterngallery.entities.ui.GalleryItem;
+import com.anthropicandroid.patterngallery.entities.ui.GalleryItemViewModel;
 import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -28,12 +28,13 @@ public class GalleryImageAdapter {
 
     public static final String TAG = GalleryImageAdapter.class.getSimpleName();
 
-    @BindingAdapter("galleryItem")
+    @BindingAdapter("galleryItemViewModel")
     public static void setImageIndex(
             final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
-            final GalleryItem galleryItem) {
-        int width = galleryItem.getWidth();
+            final GalleryItemViewModel galleryItemViewModel
+    ) {
+        int width = galleryItemViewModel.getWidth();
 
         // Set image parameters from assigned width
         final int imageBoundsHeight = width * 3 / 5;
@@ -42,16 +43,16 @@ public class GalleryImageAdapter {
 
         imageView.setBackgroundColor(ContextCompat.getColor(
                 imageView.getContext(),
-                galleryItem.getColorResId()));
+                galleryItemViewModel.getColorResId()));
         // Here rxJava is necessary, as we seem to be on the main thread, /contra/ data binding docs
         galleryActivityComponent.getRepository()
-                .getImage(galleryItem.getIndex())
+                .getImage(galleryItemViewModel.getIndex())
                 // scale bitmap
                 .map(new Func1<GalleryImage, GalleryImageHolder>() {
                     @Override
                     public GalleryImageHolder call(GalleryImage galleryImage) {
                         byte[] image = galleryImage.getImage();
-                        int itemWidth = galleryItem.getWidth();
+                        int itemWidth = galleryItemViewModel.getWidth();
                         Pair<Bitmap, Pair<Integer, Integer>> bitmapFields =
                                 decodeSampledBitmapAndReturnWithRatio(
                                 image,
@@ -64,10 +65,10 @@ public class GalleryImageAdapter {
                 .doOnNext(new Action1<GalleryImageHolder>() {
                     @Override
                     public void call(GalleryImageHolder galleryImageHolder) {
-                        RawBitmapMeasurement rawBitmapMeasurement = galleryItem
+                        RawBitmapMeasurement rawBitmapMeasurement = galleryItemViewModel
                                 .getRawBitmapMeasurement();
 
-                        galleryItem.setDescription(galleryImageHolder.description);
+                        galleryItemViewModel.setDescription(galleryImageHolder.description);
                         rawBitmapMeasurement.setRawWidth(galleryImageHolder.rawMeasurements.first);
                         rawBitmapMeasurement.setRawHeight(galleryImageHolder.rawMeasurements.second);
 
@@ -99,7 +100,8 @@ public class GalleryImageAdapter {
         public GalleryImageHolder(
                 Bitmap image,
                 Pair<Integer, Integer> rawMeasurements,
-                String description) {
+                String description
+        ) {
             this.image = image;
             this.rawMeasurements = rawMeasurements;
             this.description = description;
