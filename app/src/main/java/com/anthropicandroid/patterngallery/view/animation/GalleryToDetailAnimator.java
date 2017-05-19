@@ -107,7 +107,7 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
                 .translationZ(resources.getInteger(R.integer.z_position_detail_image_emd))
                 .scaleX(1)
                 .scaleY(1)
-                .setListener(getTacticalListener(newImage))
+                .setListener(getNoFocusWhileAnimatingListener(newImage))
                 .setStartDelay(resources.getInteger(R.integer.duration_gallery_to_detail)
                         / 4)
                 .setDuration(resources.getInteger(R.integer.duration_gallery_to_detail)
@@ -148,12 +148,12 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
                 .scaleX(1f)
                 .scaleY(1f)
                 .setDuration(resources.getInteger(R.integer.duration_gallery_to_detail))
-                .setListener(getTacticalListener(mattingLayout))
+                .setListener(getNoFocusWhileAnimatingListener(mattingLayout))
                 .setInterpolator(new DecelerateInterpolator(2f));
     }
 
     @NonNull
-    private static AnimatorListenerAdapter getTacticalListener(
+    private static AnimatorListenerAdapter getNoFocusWhileAnimatingListener(
             final View view
     ) {
         return new AnimatorListenerAdapter() {
