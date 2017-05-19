@@ -15,13 +15,17 @@ import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityCompon
  * Created by Andrew Brin on 7/19/2016.
  */
 
-public class ToolbarFlippingBehavior extends CoordinatorLayout.Behavior<LinearLayout> {
+public class ToolbarFlippingBehavior
+        extends CoordinatorLayout.Behavior<LinearLayout> {
 
     public static final String TAG = ToolbarFlippingBehavior.class.getSimpleName();
     private boolean flippedToDetail;
     private final ToolBarFlippingAnimator animator;
 
-    public ToolbarFlippingBehavior(Context context, AttributeSet attrs) {
+    public ToolbarFlippingBehavior(
+            Context context,
+            AttributeSet attrs
+    ) {
         super(context, attrs);
         GalleryActivityComponent activityComponent = (GalleryActivityComponent)
                 DataBindingUtil.getDefaultComponent();
@@ -30,13 +34,19 @@ public class ToolbarFlippingBehavior extends CoordinatorLayout.Behavior<LinearLa
 
     @Override
     public boolean layoutDependsOn(
-            CoordinatorLayout parent, LinearLayout layout, View dependency) {
+            CoordinatorLayout parent,
+            LinearLayout layout,
+            View dependency
+    ) {
         return dependency instanceof FrameLayout;
     }
 
     @Override
     public boolean onDependentViewChanged(
-            CoordinatorLayout parent, LinearLayout layout, View dependency) {
+            CoordinatorLayout parent,
+            LinearLayout layout,
+            View dependency
+    ) {
         // if the view has become GONE, we are going back to the gallery
         if (
                 flippedToDetail &&
@@ -50,7 +60,10 @@ public class ToolbarFlippingBehavior extends CoordinatorLayout.Behavior<LinearLa
             return true;
         }
         // if the view is getting close
-        if (!flippedToDetail && dependency.getZ() > 9.7f) {
+        if (
+                !flippedToDetail &&
+                        dependency.getZ() > 9.7f
+                ) {
             // do flip animation on toolbar
             LayoutActivityGalleryBinding galleryBinding = DataBindingUtil.findBinding(layout);
             animator.flipToDetail(galleryBinding);

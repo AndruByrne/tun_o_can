@@ -8,7 +8,8 @@ import com.anthropicandroid.patterngallery.BR;
 /*
  * Created by Andrew Brin on 7/18/2016.
  */
-public class DetailImage extends BaseObservable {
+public class DetailImage
+        extends BaseObservable {
 
     String description;
     Integer detailIndex;

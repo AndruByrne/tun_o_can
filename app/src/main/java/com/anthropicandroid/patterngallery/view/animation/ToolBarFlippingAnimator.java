@@ -32,7 +32,8 @@ public class ToolBarFlippingAnimator {
     public ToolBarFlippingAnimator(
             Resources resources,
             int statusBarHeight,
-            int actionBarHeight) {
+            int actionBarHeight
+    ) {
         this.resources = resources;
         this.statusBarHeight = statusBarHeight;
         this.actionBarHeight = actionBarHeight;
@@ -43,8 +44,9 @@ public class ToolBarFlippingAnimator {
     public void flipToDetail(final LayoutActivityGalleryBinding galleryBinding) {
         this.galleryBinding = galleryBinding;
         // Get animated fields from data binding
-        final String description = galleryBinding.getAlphaDetailImage().getDescription();
-        RelativeLayout toolbarLayout = galleryBinding.toolbarLayout;
+        final String description = galleryBinding.getAlphaDetailImage()
+                .getDescription();
+        RelativeLayout       toolbarLayout   = galleryBinding.toolbarLayout;
         final RelativeLayout toolbarFlipSide = galleryBinding.toolbarFlipSide;
 
         // spin and dissappear
@@ -148,7 +150,7 @@ public class ToolBarFlippingAnimator {
             @Override
             public void onAnimationStart(Animator animation) {
                 galleryBinding.detailTitleField.setText(galleryBinding.getAlphaDetailImage()
-                        .getDescription());
+                                                                .getDescription());
             }
         });
         return animatorSet;

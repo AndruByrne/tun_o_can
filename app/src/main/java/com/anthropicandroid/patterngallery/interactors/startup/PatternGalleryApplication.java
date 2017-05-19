@@ -16,7 +16,8 @@ import com.anthropicandroid.patterngallery.view.ScreenMetricsModule;
 /*
  * Created by Andrew Brin on 7/12/2016.
  */
-public class PatternGalleryApplication extends Application {
+public class PatternGalleryApplication
+        extends Application {
 
     private ApplicationComponent applicationComponent;
     private GalleryActivityComponent galleryActivityComponent;

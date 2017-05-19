@@ -20,7 +20,8 @@ import java.util.List;
 /*
  * Created by Andrew Brin on 7/19/2016.
  */
-public class ImageDismissingBehavior extends SwipeDismissBehavior<FrameLayout> {
+public class ImageDismissingBehavior
+        extends SwipeDismissBehavior<FrameLayout> {
 
     public static final String TAG = ImageDismissingBehavior.class.getSimpleName();
     // I have some doubt as to whether this will work; it doesn't have a native XML constructor
@@ -28,7 +29,10 @@ public class ImageDismissingBehavior extends SwipeDismissBehavior<FrameLayout> {
     private int rentMeasureRight = 0;
     private int rentMeasureLeft;
 
-    public ImageDismissingBehavior(Context context, AttributeSet attrs) {
+    public ImageDismissingBehavior(
+            Context context,
+            AttributeSet attrs
+    ) {
         super();
     }
 
@@ -97,9 +101,9 @@ public class ImageDismissingBehavior extends SwipeDismissBehavior<FrameLayout> {
                 .getGalleryActionHandlers();
         LayoutActivityGalleryBinding binding = DataBindingUtil.findBinding(child);
         // get the next picture to show
-        Integer currentIndex = binding.getAlphaDetailImage().getDetailIndex();
-        List<Integer> entries = binding.getEntries();
-        int nextIndex = (currentIndex + 1) % entries.size();
+        Integer       currentIndex = binding.getAlphaDetailImage().getDetailIndex();
+        List<Integer> entries      = binding.getEntries();
+        int           nextIndex    = (currentIndex + 1) % entries.size();
         // clean up our mess
         dependency.setAlpha(1);
         child.setAlpha(1);
@@ -113,7 +117,7 @@ public class ImageDismissingBehavior extends SwipeDismissBehavior<FrameLayout> {
         child.setLeft(0);
         // tell the onBackPressedRepo not to worry about this one
         activityComponent.getBackPressedRepo().releaseHandler(activityComponent
-                .getGalleryToDetailAnimator());
+                                                                      .getGalleryToDetailAnimator());
         actionHandlers.selectImageForIndex(nextIndex);
     }
 

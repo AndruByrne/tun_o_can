@@ -21,7 +21,8 @@ public class ActionHandlersModule {
     GalleryActionHandlers getGalleryActionHandlers(
             GalleryToDetailAnimator galleryToDetailAnimator,
             Application context,
-            DetailActionHandlers detailActionHandlers) {
+            DetailActionHandlers detailActionHandlers
+    ) {
         return new GalleryActionHandlers(galleryToDetailAnimator, context);
     }
 
@@ -38,7 +39,8 @@ public class ActionHandlersModule {
             Application context,
             BackPressedRepo backPressedRepo,
             GalleryToDetailAnimator galleryToDetailAnimator,
-            DetailToGalleryAnimator detailToGalleryAnimator) {
+            DetailToGalleryAnimator detailToGalleryAnimator
+    ) {
         // dummy class; no actions from nav bar
         return new DetailActionHandlers(
                 context,

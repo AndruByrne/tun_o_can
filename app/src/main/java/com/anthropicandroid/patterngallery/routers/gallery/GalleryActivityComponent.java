@@ -30,7 +30,8 @@ import dagger.Component;
                 OnBackPressedModule.class,
                 ScreenMetricsModule.class}
 )
-public interface GalleryActivityComponent extends android.databinding.DataBindingComponent {
+public interface GalleryActivityComponent
+        extends android.databinding.DataBindingComponent {
 
     void inject(GalleryActivity galleryActivity);
 

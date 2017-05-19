@@ -17,7 +17,8 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class GalleryActivity extends AppCompatActivity {
+public class GalleryActivity
+        extends AppCompatActivity {
 
     public static final String TAG = GalleryActivity.class.getSimpleName();
 
