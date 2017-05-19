@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="item"
-            type="com.anthropicandroid.patterngallery.entities.ui.GalleryItem"/>
+            name="viewModel"
+            type="com.anthropicandroid.patterngallery.entities.ui.GalleryItemViewModel"/>
 
         <variable
             name="galleryActionHandlers"
@@ -27,9 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:onTouch="@{galleryActionHandlers::gridTouched}"
-            android:contentDescription="@{item.getDescription()}"
+            android:contentDescription="@{viewModel.getDescription()}"
             android:scaleType="centerCrop"
-            app:galleryItem="@{item}"
+            app:galleryItemViewModel="@{viewModel}"
             />
     </FrameLayout>
 </layout>
