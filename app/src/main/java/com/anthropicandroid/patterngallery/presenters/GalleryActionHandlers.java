@@ -15,7 +15,7 @@ import android.view.View;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.patterngallery.databinding.LayoutGalleryImageBinding;
 import com.anthropicandroid.patterngallery.entities.ui.DetailImage;
-import com.anthropicandroid.patterngallery.entities.ui.GalleryItem;
+import com.anthropicandroid.patterngallery.entities.ui.GalleryItemViewModel;
 import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
 import com.anthropicandroid.patterngallery.view.animation.GalleryToDetailAnimator;
 
@@ -76,20 +76,20 @@ final public class GalleryActionHandlers {
         if (activityGalleryBinding == null) activityGalleryBinding = DataBindingUtil
                 .findBinding((View) view.getParent().getParent());
 
-        LayoutGalleryImageBinding gridItemBinding      = DataBindingUtil.findBinding(view);
-        GalleryItem               galleryItem          = gridItemBinding.getItem();
-        DetailImage               detailImage          = activityGalleryBinding.getAlphaDetailImage();
-        Rect                      currentViewBounds    = new Rect();
+        LayoutGalleryImageBinding        gridItemBinding      = DataBindingUtil.findBinding(view);
+        GalleryItem.GalleryItemViewModel galleryItemViewModel = gridItemBinding.getViewModel();
+        DetailImage                      detailImage          = activityGalleryBinding.getAlphaDetailImage();
+        Rect                             currentViewBounds    = new Rect();
 
         // measure current view
         view.getGlobalVisibleRect(currentViewBounds);
 
         // pass along the measurements for the raw bitmap
-        detailImage.setRawBitmapMeasurement(galleryItem.getRawBitmapMeasurement());
+        detailImage.setRawBitmapMeasurement(galleryItemViewModel.getRawBitmapMeasurement());
         // set detailIndex in data binding
-        detailImage.setDetailIndex(galleryItem.getIndex());
+        detailImage.setDetailIndex(galleryItemViewModel.getIndex());
         // set description in data binding
-        detailImage.setDescription(galleryItem.getDescription());
+        detailImage.setDescription(galleryItemViewModel.getDescription());
 
         // animate the detail in
         RawBitmapMeasurement rawBitmapMeasurement = detailImage
@@ -101,7 +101,8 @@ final public class GalleryActionHandlers {
                 activityGalleryBinding.alphaDetailImageView,
                 (float) rawBitmapMeasurement.getRawWidth() /
                         rawBitmapMeasurement.getRawHeight(),
-                clickRawX, clickRawY,
+                clickRawX,
+                clickRawY,
                 activityGalleryBinding.galleryGrid);
         return true;
     }
