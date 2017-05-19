@@ -53,7 +53,7 @@ public class DetailToGalleryAnimator {
         animatorSet.play(getImageAnim(binding.alphaDetailImageView, currentRect))
                 .with(getMattingAnim(binding.alphaDetailMattingLayout, currentRect));
         animatorSet.setDuration(resources.getInteger(R.integer
-                .duration_detail_to_gallery_animator));
+                                                             .duration_detail_to_gallery_animator));
         animatorSet.addListener(getActionListener(binding));
         animatorSet.start();
         binding.alphaDetailImageView.setImageBitmap(null);

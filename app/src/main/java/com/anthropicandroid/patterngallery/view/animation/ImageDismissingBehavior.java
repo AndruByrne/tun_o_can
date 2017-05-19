@@ -101,9 +101,9 @@ public class ImageDismissingBehavior
                 .getGalleryActionHandlers();
         LayoutActivityGalleryBinding binding = DataBindingUtil.findBinding(child);
         // get the next picture to show
-        Integer currentIndex  = binding.getAlphaDetailImage().getDetailIndex();
-        List<Integer> entries = binding.getEntries();
-        int nextIndex         = (currentIndex + 1) % entries.size();
+        Integer       currentIndex = binding.getAlphaDetailImage().getDetailIndex();
+        List<Integer> entries      = binding.getEntries();
+        int           nextIndex    = (currentIndex + 1) % entries.size();
         // clean up our mess
         dependency.setAlpha(1);
         child.setAlpha(1);
@@ -117,7 +117,7 @@ public class ImageDismissingBehavior
         child.setLeft(0);
         // tell the onBackPressedRepo not to worry about this one
         activityComponent.getBackPressedRepo().releaseHandler(activityComponent
-                .getGalleryToDetailAnimator());
+                                                                      .getGalleryToDetailAnimator());
         actionHandlers.selectImageForIndex(nextIndex);
     }
 

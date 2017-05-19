@@ -37,8 +37,8 @@ public class GalleryImageAdapter {
         int width = galleryItemViewModel.getWidth();
 
         // Set image parameters from assigned width
-        final int                imageBoundsHeight = width * 3 / 5;
-        FrameLayout.LayoutParams layoutParams      = new FrameLayout.LayoutParams(
+        final int imageBoundsHeight = width * 3 / 5;
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                 width,
                 imageBoundsHeight);
         imageView.setLayoutParams(layoutParams);
@@ -61,7 +61,7 @@ public class GalleryImageAdapter {
                                         itemWidth,
                                         imageBoundsHeight);
                         return new GalleryImageHolder(bitmapFields.first, bitmapFields.second,
-                                galleryImage.getDescription());
+                                                      galleryImage.getDescription());
                     }
                 })
                 .doOnNext(new Action1<GalleryImageHolder>() {
@@ -73,7 +73,7 @@ public class GalleryImageAdapter {
                         galleryItemViewModel.setDescription(galleryImageHolder.description);
                         rawBitmapMeasurement.setRawWidth(galleryImageHolder.rawMeasurements.first);
                         rawBitmapMeasurement.setRawHeight(galleryImageHolder.rawMeasurements
-                                .second);
+                                                                  .second);
 
                     }
                 })

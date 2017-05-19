@@ -44,7 +44,7 @@ public class ToolBarFlippingAnimator {
     public void flipToDetail(final LayoutActivityGalleryBinding galleryBinding) {
         this.galleryBinding = galleryBinding;
         // Get animated fields from data binding
-        final String         description     = galleryBinding.getAlphaDetailImage()
+        final String description = galleryBinding.getAlphaDetailImage()
                 .getDescription();
         RelativeLayout       toolbarLayout   = galleryBinding.toolbarLayout;
         final RelativeLayout toolbarFlipSide = galleryBinding.toolbarFlipSide;
@@ -150,7 +150,7 @@ public class ToolBarFlippingAnimator {
             @Override
             public void onAnimationStart(Animator animation) {
                 galleryBinding.detailTitleField.setText(galleryBinding.getAlphaDetailImage()
-                        .getDescription());
+                                                                .getDescription());
             }
         });
         return animatorSet;

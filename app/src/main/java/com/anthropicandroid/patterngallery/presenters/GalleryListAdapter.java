@@ -113,7 +113,7 @@ public class GalleryListAdapter
             galleryItemViewModel.setIndex(imageIndex);
             galleryItemViewModel.setDescription("Photo " + position);
             galleryItemViewModel.setColorResId(bgColors
-                    .getResourceId(position % 8, R.color.colorOrange));
+                                                       .getResourceId(position % 8, R.color.colorOrange));
         }
     }
 

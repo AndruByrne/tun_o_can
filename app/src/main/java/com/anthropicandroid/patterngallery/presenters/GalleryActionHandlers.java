@@ -77,8 +77,7 @@ final public class GalleryActionHandlers {
 
         LayoutGalleryImageBinding gridItemBinding      = DataBindingUtil.findBinding(view);
         GalleryItemViewModel      galleryItemViewModel = gridItemBinding.getViewModel();
-        DetailImage               detailImage          = activityGalleryBinding
-                .getAlphaDetailImage();
+        DetailImage               detailImage          = activityGalleryBinding.getAlphaDetailImage();
         Rect                      currentViewBounds    = new Rect();
 
         // measure current view

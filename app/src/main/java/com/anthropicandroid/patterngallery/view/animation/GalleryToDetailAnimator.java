@@ -112,9 +112,9 @@ public class GalleryToDetailAnimator
                 .scaleY(1)
                 .setListener(getNoFocusWhileAnimatingListener(newImage))
                 .setStartDelay(resources.getInteger(R.integer.duration_gallery_to_detail)
-                        / 4)
+                                       / 4)
                 .setDuration(resources.getInteger(R.integer.duration_gallery_to_detail)
-                        * 3 / 4)
+                                     * 3 / 4)
                 .setInterpolator(new LinearInterpolator());
     }
 

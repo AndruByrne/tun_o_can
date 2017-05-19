@@ -51,7 +51,7 @@ public class BitmapUtils {
         BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length, options);
 
         // Raw height and width of image
-        final int width = options.outWidth;
+        final int width  = options.outWidth;
         final int height = options.outHeight;
 
         // Calculate inSampleSize

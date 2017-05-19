@@ -34,9 +34,7 @@ public class DetailActionHandlers {
             View view
     ) {
         // give animator a hook to the UI
-        detailToGalleryAnimator.returnToGallery((LayoutActivityGalleryBinding) DataBindingUtil
-                .findBinding(
-                view));
+        detailToGalleryAnimator.returnToGallery((LayoutActivityGalleryBinding) DataBindingUtil.findBinding(view));
         // release the g3d anim
         backPressedRepo.releaseHandler(galleryToDetailAnimator);
     }
