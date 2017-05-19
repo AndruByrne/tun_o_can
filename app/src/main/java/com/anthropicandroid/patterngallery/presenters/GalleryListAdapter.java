@@ -22,7 +22,8 @@ import java.util.List;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
-public class GalleryListAdapter extends RecyclerView.Adapter {
+public class GalleryListAdapter
+        extends RecyclerView.Adapter {
 
     public static final String TAG = GalleryListAdapter.class.getSimpleName();
     private GalleryActionHandlers galleryActionHandlers;
@@ -34,7 +35,8 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
             GalleryActionHandlers galleryActionHandlers,
             int childWidth,
             TypedArray bgColors,
-            List<Integer> imageIndicies) {
+            List<Integer> imageIndicies
+    ) {
         this.galleryActionHandlers = galleryActionHandlers;
         // class constructed by an annotated static function
         this.childWidth = childWidth;
@@ -42,12 +44,15 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
         this.imageIndicies = imageIndicies;
     }
 
-    @BindingAdapter(value = {"numSpans", "gridEntries"})
+    @BindingAdapter(value = {
+            "numSpans",
+            "gridEntries"})
     public static void setEntries(
             GalleryActivityComponent galleryActivityComponent,
             RecyclerView view,
             Integer numSpans,
-            List<Integer> imageIndicies) {
+            List<Integer> imageIndicies
+    ) {
         // create and populate list adapter and give it to the view
         view.setAdapter(new GalleryListAdapter(
                 galleryActivityComponent.getGalleryActionHandlers(),
@@ -56,11 +61,15 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
                 imageIndicies));
     }
 
-    public static class BindingHolder extends RecyclerView.ViewHolder {
+    public static class BindingHolder
+            extends RecyclerView.ViewHolder {
 
         private LayoutGalleryImageBinding dataBinding;
 
-        public BindingHolder(View rowView, GalleryActionHandlers galleryActionHandlers) {
+        public BindingHolder(
+                View rowView,
+                GalleryActionHandlers galleryActionHandlers
+        ) {
             // get tie-in to this view's databinding
             super(rowView);
             dataBinding = DataBindingUtil.bind(rowView);
@@ -75,7 +84,10 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(
+            ViewGroup parent,
+            int viewType
+    ) {
         // inflate view
         LayoutGalleryImageBinding galleryImageBinding = LayoutGalleryImageBinding.inflate(
                 (LayoutInflater) parent.getContext().getSystemService(LAYOUT_INFLATER_SERVICE),
@@ -85,7 +97,10 @@ public class GalleryListAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(
+            RecyclerView.ViewHolder holder,
+            int position
+    ) {
         // Sets item-specific data
         if (holder instanceof BindingHolder) {
             LayoutGalleryImageBinding galleryImageBinding = ((BindingHolder) holder)

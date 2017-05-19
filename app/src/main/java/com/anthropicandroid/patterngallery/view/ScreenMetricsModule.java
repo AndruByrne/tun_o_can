@@ -44,7 +44,8 @@ public class ScreenMetricsModule {
     @Named("DetailHeight")
     int getDetailHeightInPx(
             @Named("ScreenSize") Point size,
-            @Named("ActionBarHeight") int actionBarHeight) {
+            @Named("ActionBarHeight") int actionBarHeight
+    ) {
         return size.y - actionBarHeight * 2;
     }
 

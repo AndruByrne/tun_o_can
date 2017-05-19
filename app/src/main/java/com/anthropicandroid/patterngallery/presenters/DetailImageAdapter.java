@@ -22,12 +22,15 @@ public class DetailImageAdapter {
 
     public static final String TAG = DetailImageAdapter.class.getSimpleName();
 
-    @BindingAdapter(value = {"detailImage", "rawBitmapDimen"})
+    @BindingAdapter(value = {
+            "detailImage",
+            "rawBitmapDimen"})
     public static void setDetailImage(
             final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
             final Integer detailIndex,
-            final RawBitmapMeasurement rawBitmapMeasurement) {
+            final RawBitmapMeasurement rawBitmapMeasurement
+    ) {
 
         // pipe for image data
         galleryActivityComponent.getRepository()

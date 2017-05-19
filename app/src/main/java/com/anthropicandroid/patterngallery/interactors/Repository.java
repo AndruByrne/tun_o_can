@@ -22,7 +22,7 @@ public class Repository {
     }
 
     public Observable<GalleryImage> getImage(final Integer imageIndex) {
-        if(imageIndex == null) return Observable.empty();
+        if (imageIndex == null) return Observable.empty();
         return realmObservable
                 // Get Observable of RealmResults for index.
                 .flatMap(new Func1<Realm, Observable<RealmResults<GalleryImage>>>() {
@@ -51,7 +51,7 @@ public class Repository {
     }
 
     public Boolean addImage(final GalleryImage galleryImage) {
-        if(galleryImage == null) return false;
+        if (galleryImage == null) return false;
         // Unused; repo populator does this with transaction bounding in its "Transaction" closure
         return realmObservable
                 .flatMap(new Func1<Realm, Observable<Boolean>>() {

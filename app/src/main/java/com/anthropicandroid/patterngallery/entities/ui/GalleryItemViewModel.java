@@ -8,7 +8,8 @@ import com.android.databinding.library.baseAdapters.BR;
 /*
  * Created by Andrew Brin on 7/16/2016.
  */
-public class GalleryItemViewModel extends BaseObservable {
+public class GalleryItemViewModel
+        extends BaseObservable {
 
     private int width;
     private int index;

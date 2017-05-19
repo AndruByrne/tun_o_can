@@ -21,7 +21,8 @@ import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.patterngallery.routers.gallery.BackPressedRepo;
 
-public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandler {
+public class GalleryToDetailAnimator
+        implements BackPressedRepo.BackPressedHandler {
 
     public static final String TAG = GalleryToDetailAnimator.class.getSimpleName();
     private BackPressedRepo backPressedRepo;
@@ -60,7 +61,7 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
         // hold a reference to the data binding to request unanimation
         binding = DataBindingUtil.findBinding(galleryGrid);
         // get rect to draw into
-        Rect targetRect = new Rect();
+        Rect  targetRect   = new Rect();
         Point targetOffset = new Point();
         if (galleryGrid.getGlobalVisibleRect(targetRect, targetOffset)) {
             targetRect.offset(-targetOffset.x, statusBarHeight - targetOffset.y);
@@ -124,10 +125,10 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
             int clickRawY
     ) {
         // matting anim init
-        int mattingWidthScaleShift = mattingLayout.getWidth() / 2;
+        int mattingWidthScaleShift  = mattingLayout.getWidth() / 2;
         int mattingHeightScaleShift = mattingLayout.getHeight() / 2;
-        int offsetY = clickRawY - mattingHeightScaleShift;
-        int offsetX = clickRawX - mattingWidthScaleShift;
+        int offsetY                 = clickRawY - mattingHeightScaleShift;
+        int offsetX                 = clickRawX - mattingWidthScaleShift;
 
         mattingLayout.setScaleX(0);
         mattingLayout.setScaleY(0);

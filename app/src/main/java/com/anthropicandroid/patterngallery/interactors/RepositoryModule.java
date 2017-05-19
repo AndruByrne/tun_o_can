@@ -21,13 +21,14 @@ public class RepositoryModule {
     @Provides
     @Singleton
     Repository getRepository(
-            Observable<Realm> realmObservable) {
+            Observable<Realm> realmObservable
+    ) {
         return new Repository(realmObservable);
     }
 
     @Provides
     @Singleton
-    RepositoryPopulator getRepositoryPopulator(Application context){
+    RepositoryPopulator getRepositoryPopulator(Application context) {
         return new RepositoryPopulator(context);
     }
 }

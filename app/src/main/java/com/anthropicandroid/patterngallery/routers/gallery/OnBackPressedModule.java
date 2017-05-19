@@ -12,7 +12,7 @@ public class OnBackPressedModule {
 
     @Provides
     @GalleryActivityScope
-    BackPressedRepo getBackPressedRepo(){
+    BackPressedRepo getBackPressedRepo() {
         return new BackPressedRepo();
     }
 }

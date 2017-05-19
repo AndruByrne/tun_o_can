@@ -23,7 +23,8 @@ public class AnimatorModule {
             BackPressedRepo backPressedRepo,
             @Named("StatusBarHeight") int statusBarHeight,
             DetailToGalleryAnimator detailToGalleryAnimator,
-            Application context) {
+            Application context
+    ) {
         return new GalleryToDetailAnimator(
                 backPressedRepo,
                 detailToGalleryAnimator,
@@ -37,7 +38,8 @@ public class AnimatorModule {
             @Named("StatusBarHeight") int statusBarHeight,
             @Named("DetailHeight") int imageViewHeight,
             @Named("ScreenWidth") int screenWidth,
-            Application context) {
+            Application context
+    ) {
         return new DetailToGalleryAnimator(
                 context.getResources(), statusBarHeight,
                 imageViewHeight,
@@ -50,7 +52,8 @@ public class AnimatorModule {
     ToolBarFlippingAnimator getToolBarFlippingAnimator(
             Application context,
             @Named("StatusBarHeight") int statusBarHeight,
-            @Named("ActionBarHeight") int actionBarHeight) {
+            @Named("ActionBarHeight") int actionBarHeight
+    ) {
         return new ToolBarFlippingAnimator(
                 context.getResources(),
                 statusBarHeight,
