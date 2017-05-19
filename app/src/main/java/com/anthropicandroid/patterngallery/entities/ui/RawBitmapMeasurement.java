@@ -10,7 +10,8 @@ import android.databinding.Bindable;
 
 import com.anthropicandroid.patterngallery.BR;
 
-public class RawBitmapMeasurement extends BaseObservable {
+public class RawBitmapMeasurement
+        extends BaseObservable {
 
     public static final String TAG = RawBitmapMeasurement.class.getSimpleName();
     private int rawWidth;

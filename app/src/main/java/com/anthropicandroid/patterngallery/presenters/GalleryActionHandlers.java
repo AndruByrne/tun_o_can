@@ -39,11 +39,12 @@ final public class GalleryActionHandlers {
     public void selectImageForIndex(
             int index
     ) {
-        RecyclerView galleryGrid = activityGalleryBinding.galleryGrid;
+        RecyclerView               galleryGrid   = activityGalleryBinding.galleryGrid;
         RecyclerView.LayoutManager layoutManager = galleryGrid.getLayoutManager();
+        View                       view          = layoutManager.getChildAt(index);
+        Rect                       rect          = new Rect();
+
         layoutManager.scrollToPosition(index);
-        View view = layoutManager.getChildAt(index);
-        Rect rect = new Rect();
         view.getGlobalVisibleRect(rect);
         bindDataAndAnimate(
                 view,
@@ -72,12 +73,13 @@ final public class GalleryActionHandlers {
             int clickRawX,
             int clickRawY
     ) {
-        Rect currentViewBounds = new Rect();
-        LayoutGalleryImageBinding gridItemBinding = DataBindingUtil.findBinding(view);
         if (activityGalleryBinding == null) activityGalleryBinding = DataBindingUtil
                 .findBinding((View) view.getParent().getParent());
-        GalleryItem galleryItem = gridItemBinding.getItem();
-        DetailImage detailImage = activityGalleryBinding.getAlphaDetailImage();
+
+        LayoutGalleryImageBinding gridItemBinding      = DataBindingUtil.findBinding(view);
+        GalleryItem               galleryItem          = gridItemBinding.getItem();
+        DetailImage               detailImage          = activityGalleryBinding.getAlphaDetailImage();
+        Rect                      currentViewBounds    = new Rect();
 
         // measure current view
         view.getGlobalVisibleRect(currentViewBounds);
@@ -104,7 +106,8 @@ final public class GalleryActionHandlers {
         return true;
     }
 
-    private class SingleTapUp extends GestureDetector.SimpleOnGestureListener {
+    private class SingleTapUp
+            extends GestureDetector.SimpleOnGestureListener {
         // return true for event we want, and also onDown
         @Override
         public boolean onSingleTapUp(MotionEvent e) { return true; }
@@ -113,7 +116,8 @@ final public class GalleryActionHandlers {
         public boolean onDown(MotionEvent e) { return true; }
     }
 
-    private class DownCatch extends GestureDetector.SimpleOnGestureListener {
+    private class DownCatch
+            extends GestureDetector.SimpleOnGestureListener {
         // return true for onDown so we can eliminate it
         @Override
         public boolean onDown(MotionEvent e) { return true; }

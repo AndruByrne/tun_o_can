@@ -19,13 +19,14 @@ public class BitmapUtils {
             final int outWidth,
             final int outHeight,
             int reqWidth,
-            int reqHeight) {
+            int reqHeight
+    ) {
         int inSampleSize = 1;
 
         if (outHeight > reqHeight || outWidth > reqWidth) {
 
             final int halfHeight = outHeight / 2;
-            final int halfWidth = outWidth / 2;
+            final int halfWidth  = outWidth / 2;
 
             // Calculate the largest inSampleSize value that is a power of 2 and keeps both
             // height and width larger than the requested height and width.
@@ -41,7 +42,8 @@ public class BitmapUtils {
     public static Pair<Bitmap, Pair<Integer, Integer>> decodeSampledBitmapAndReturnWithRatio(
             byte[] bitmapBytes,
             int reqWidth,
-            int reqHeight) {
+            int reqHeight
+    ) {
 
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -49,7 +51,7 @@ public class BitmapUtils {
         BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length, options);
 
         // Raw height and width of image
-        final int width = options.outWidth;
+        final int width  = options.outWidth;
         final int height = options.outHeight;
 
         // Calculate inSampleSize
@@ -59,7 +61,7 @@ public class BitmapUtils {
         options.inJustDecodeBounds = false;
         return new Pair<>(
                 BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length, options),
-                new Pair<>(width,height));
+                new Pair<>(width, height));
     }
 
     public static Bitmap decodeSampledBitmapWithPredicate(
@@ -67,7 +69,8 @@ public class BitmapUtils {
             final int knownWidth,
             final int knownHeight,
             int reqWidth,
-            int reqHeight) {
+            int reqHeight
+    ) {
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
 
@@ -79,7 +82,10 @@ public class BitmapUtils {
         return BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length, options);
     }
 
-    public static int dipToPixels(DisplayMetrics metrics, float dipValue) {
+    public static int dipToPixels(
+            DisplayMetrics metrics,
+            float dipValue
+    ) {
         // Converts DP to Pixels
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }

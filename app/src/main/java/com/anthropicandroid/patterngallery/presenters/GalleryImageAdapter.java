@@ -37,7 +37,9 @@ public class GalleryImageAdapter {
 
         // Set image parameters from assigned width
         final int imageBoundsHeight = width * 3 / 5;
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, imageBoundsHeight);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                width,
+                imageBoundsHeight);
         imageView.setLayoutParams(layoutParams);
 
         imageView.setBackgroundColor(ContextCompat.getColor(
@@ -50,15 +52,15 @@ public class GalleryImageAdapter {
                 .map(new Func1<GalleryImage, GalleryImageHolder>() {
                     @Override
                     public GalleryImageHolder call(GalleryImage galleryImage) {
-                        byte[] image = galleryImage.getImage();
-                        int itemWidth = galleryItem.getWidth();
+                        byte[] image     = galleryImage.getImage();
+                        int    itemWidth = galleryItem.getWidth();
                         Pair<Bitmap, Pair<Integer, Integer>> bitmapFields =
                                 decodeSampledBitmapAndReturnWithRatio(
-                                image,
-                                itemWidth,
-                                imageBoundsHeight);
+                                        image,
+                                        itemWidth,
+                                        imageBoundsHeight);
                         return new GalleryImageHolder(bitmapFields.first, bitmapFields.second,
-                                galleryImage.getDescription());
+                                                      galleryImage.getDescription());
                     }
                 })
                 .doOnNext(new Action1<GalleryImageHolder>() {
@@ -69,7 +71,8 @@ public class GalleryImageAdapter {
 
                         galleryItem.setDescription(galleryImageHolder.description);
                         rawBitmapMeasurement.setRawWidth(galleryImageHolder.rawMeasurements.first);
-                        rawBitmapMeasurement.setRawHeight(galleryImageHolder.rawMeasurements.second);
+                        rawBitmapMeasurement.setRawHeight(galleryImageHolder.rawMeasurements
+                                                                  .second);
 
                     }
                 })
@@ -91,7 +94,7 @@ public class GalleryImageAdapter {
                         });
     }
 
-    private static class GalleryImageHolder{
+    private static class GalleryImageHolder {
         Bitmap image;
         Pair<Integer, Integer> rawMeasurements;
         String description;

@@ -23,7 +23,8 @@ import rx.functions.Func2;
 /*
  * Created by Andrew Brin on 7/14/2016.
  */
-public class RepositoryPopulator implements Realm.Transaction {
+public class RepositoryPopulator
+        implements Realm.Transaction {
 
     public static final int ALL_THE_QUALITY = 100;
     public static final int QUALITY = ALL_THE_QUALITY;
@@ -31,7 +32,7 @@ public class RepositoryPopulator implements Realm.Transaction {
     private Application context;
 
     // I see the warning, but don't think this is the bottlneck in this class
-    public static HashMap<Integer, String> imageIds = new HashMap<Integer, String>(){{
+    public static HashMap<Integer, String> imageIds = new HashMap<Integer, String>() {{
         put(R.drawable.lounge, "Lounge");
         put(R.drawable.louge, "Louge");
         put(R.drawable.logo, "Logo");
@@ -55,7 +56,9 @@ public class RepositoryPopulator implements Realm.Transaction {
                 .map(new Func1<Map.Entry<Integer, String>, Bitmap>() {
                     @Override
                     public Bitmap call(Map.Entry<Integer, String> imageId) {
-                        return BitmapFactory.decodeResource(context.getResources(), imageId.getKey());
+                        return BitmapFactory.decodeResource(
+                                context.getResources(),
+                                imageId.getKey());
                     }
                 })
                 .map(new Func1<Bitmap, byte[]>() {
@@ -69,13 +72,20 @@ public class RepositoryPopulator implements Realm.Transaction {
 
         // save images to repository
         Observable
-                .zip(imageIdObs, imageObs, new Func2<Map.Entry<Integer, String>, byte[], Pair<Map.Entry<Integer, String>, byte[]>>() {
-                    @Override
-                    public Pair<Map.Entry<Integer, String>, byte[]> call(Map.Entry<Integer, String> imageId, byte[]
-                            image) {
-                        return new Pair<>(imageId, image);
-                    }
-                })
+                .zip(
+                        imageIdObs,
+                        imageObs,
+                        new Func2<Map.Entry<Integer, String>, byte[], Pair<Map.Entry<Integer,
+                                String>, byte[]>>() {
+                            @Override
+                            public Pair<Map.Entry<Integer, String>, byte[]> call(
+                                    Map.Entry<Integer, String> imageId,
+                                    byte[]
+                                            image
+                            ) {
+                                return new Pair<>(imageId, image);
+                            }
+                        })
                 .subscribe(
                         new Action1<Pair<Map.Entry<Integer, String>, byte[]>>() {
                             @Override
