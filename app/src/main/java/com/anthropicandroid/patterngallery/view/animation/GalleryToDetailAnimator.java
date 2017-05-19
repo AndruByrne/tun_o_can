@@ -62,19 +62,21 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
         // get rect to draw into
         Rect targetRect = new Rect();
         Point targetOffset = new Point();
-        if (!galleryGrid.getGlobalVisibleRect(targetRect, targetOffset)) return;
-        targetRect.offset(-targetOffset.x, statusBarHeight - targetOffset.y);
-        // get imageview animation
-        detailImageAnim(currentRect, newImage, trueImageRatio, targetRect);
+        if (galleryGrid.getGlobalVisibleRect(targetRect, targetOffset)) {
+            targetRect.offset(-targetOffset.x, statusBarHeight - targetOffset.y);
+            // get imageview animation
+            detailImageAnim(currentRect, newImage, trueImageRatio, targetRect);
 
-        // get animation for fast matte
-        detailMattingAnim(
-                mattingLayout,
-                targetRect,
-                clickRawX, clickRawY
-        );
-        detailToGalleryAnimator.storeRecentRect(currentRect);
-        backPressedRepo.addHandler(this);
+            // get animation for fast matte
+            detailMattingAnim(
+                    mattingLayout,
+                    targetRect,
+                    clickRawX,
+                    clickRawY
+            );
+            detailToGalleryAnimator.storeRecentRect(currentRect);
+            backPressedRepo.addHandler(this);
+        }
     }
 
     private void detailImageAnim(
