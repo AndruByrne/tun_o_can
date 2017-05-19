@@ -21,7 +21,9 @@ public class GalleryItem extends BaseObservable {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(
+            int width
+    ) {
         this.width = width;
         notifyPropertyChanged(BR.width);
     }
@@ -31,7 +33,9 @@ public class GalleryItem extends BaseObservable {
         return index;
     }
 
-    public void setIndex(int index) {
+    public void setIndex(
+            int index
+    ) {
         this.index = index;
         notifyPropertyChanged(BR.index);
     }
@@ -41,7 +45,9 @@ public class GalleryItem extends BaseObservable {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(
+            String description
+    ) {
         this.description = description;
         notifyPropertyChanged(BR.description);
     }
@@ -61,7 +67,9 @@ public class GalleryItem extends BaseObservable {
         return rawBitmapMeasurement;
     }
 
-    public void setRawBitmapMeasurement(RawBitmapMeasurement rawBitmapMeasurement) {
+    public void setRawBitmapMeasurement(
+            RawBitmapMeasurement rawBitmapMeasurement
+    ) {
         this.rawBitmapMeasurement = rawBitmapMeasurement;
         notifyPropertyChanged(BR.rawBitmapMeasurement);
     }

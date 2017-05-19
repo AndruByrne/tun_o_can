@@ -53,8 +53,8 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
             View mattingLayout,
             ImageView newImage,
             float trueImageRatio,
-            int rawY,
-            int rawX,
+            int clickRawX,
+            int clickRawY,
             RecyclerView galleryGrid
     ) {
         // hold a reference to the data binding to request unanimation
@@ -71,8 +71,8 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
         detailMattingAnim(
                 mattingLayout,
                 targetRect,
-                rawY,
-                rawX);
+                clickRawX, clickRawY
+        );
         detailToGalleryAnimator.storeRecentRect(currentRect);
         backPressedRepo.addHandler(this);
     }
@@ -107,7 +107,7 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
                 .translationZ(resources.getInteger(R.integer.z_position_detail_image_emd))
                 .scaleX(1)
                 .scaleY(1)
-                .setListener(getTacticalListener(newImage))
+                .setListener(getNoFocusWhileAnimatingListener(newImage))
                 .setStartDelay(resources.getInteger(R.integer.duration_gallery_to_detail)
                         / 4)
                 .setDuration(resources.getInteger(R.integer.duration_gallery_to_detail)
@@ -118,13 +118,14 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
     private void detailMattingAnim(
             final View mattingLayout,
             Rect targetRect,
-            int rawY,
-            int rawX) {
+            int clickRawX,
+            int clickRawY
+    ) {
         // matting anim init
         int mattingWidthScaleShift = mattingLayout.getWidth() / 2;
         int mattingHeightScaleShift = mattingLayout.getHeight() / 2;
-        int offsetY = rawY - mattingHeightScaleShift;
-        int offsetX = rawX - mattingWidthScaleShift;
+        int offsetY = clickRawY - mattingHeightScaleShift;
+        int offsetX = clickRawX - mattingWidthScaleShift;
 
         mattingLayout.setScaleX(0);
         mattingLayout.setScaleY(0);
@@ -132,8 +133,8 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
         mattingLayout.setX(offsetX);
         mattingLayout.setZ(resources.getInteger(R.integer.z_position_matting_start));
         mattingLayout.setAlpha(1);
-        mattingLayout.setPivotX(rawX);
-        mattingLayout.setPivotY(rawY);
+        mattingLayout.setPivotX(clickRawX);
+        mattingLayout.setPivotY(clickRawY);
         mattingLayout.requestFocus();
         mattingLayout.setVisibility(View.VISIBLE);
 
@@ -147,12 +148,12 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
                 .scaleX(1f)
                 .scaleY(1f)
                 .setDuration(resources.getInteger(R.integer.duration_gallery_to_detail))
-                .setListener(getTacticalListener(mattingLayout))
+                .setListener(getNoFocusWhileAnimatingListener(mattingLayout))
                 .setInterpolator(new DecelerateInterpolator(2f));
     }
 
     @NonNull
-    private static AnimatorListenerAdapter getTacticalListener(
+    private static AnimatorListenerAdapter getNoFocusWhileAnimatingListener(
             final View view
     ) {
         return new AnimatorListenerAdapter() {
