@@ -61,23 +61,21 @@ final public class GalleryActionHandlers {
         if (!singleTapUpDetector.onTouchEvent(motionEvent)) return false;
         // don't want onDown
         if (downCatchDetector.onTouchEvent(motionEvent)) return true;
-        float rawX = motionEvent.getRawX();
-        float rawY = motionEvent.getRawY();
         return bindDataAndAnimate(
                 view,
-                (int)rawX,
-                (int)rawY);
+                (int) motionEvent.getRawX(),
+                (int) motionEvent.getRawY());
     }
 
     private boolean bindDataAndAnimate(
             View view,
-            int rawX,
-            int rawY
+            int clickRawX,
+            int clickRawY
     ) {
         Rect currentViewBounds = new Rect();
         LayoutGalleryImageBinding gridItemBinding = DataBindingUtil.findBinding(view);
         if (activityGalleryBinding == null) activityGalleryBinding = DataBindingUtil
-                    .findBinding((View) view.getParent().getParent());
+                .findBinding((View) view.getParent().getParent());
         GalleryItem galleryItem = gridItemBinding.getItem();
         DetailImage detailImage = activityGalleryBinding.getAlphaDetailImage();
 
@@ -101,8 +99,7 @@ final public class GalleryActionHandlers {
                 activityGalleryBinding.alphaDetailImageView,
                 (float) rawBitmapMeasurement.getRawWidth() /
                         rawBitmapMeasurement.getRawHeight(),
-                rawY,
-                rawX,
+                clickRawX, clickRawY,
                 activityGalleryBinding.galleryGrid);
         return true;
     }
