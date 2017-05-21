@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
@@ -38,7 +39,7 @@ public class ToolbarFlippingBehavior
             LinearLayout layout,
             View dependency
     ) {
-        return dependency instanceof FrameLayout;
+        return dependency instanceof RelativeLayout;
     }
 
     @Override
