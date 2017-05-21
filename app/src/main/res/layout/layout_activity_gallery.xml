@@ -120,15 +120,49 @@
             app:numSpans="@{Integer.valueOf(2)}"
             app:spanCount="2"/>
 
-        <FrameLayout
+        <RelativeLayout
             android:id="@+id/alpha_detail_matting_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorJustBlack"
-            android:gravity="center"
+            android:background="@color/colorPrimaryDark"
             android:visibility="invisible"
             app:layout_behavior="com.anthropicandroid.patterngallery.view.animation.ImageDismissingBehavior"
-            />
+            >
+            <Button
+                android:id="@+id/abscissaBox"
+                android:layout_width="@dimen/a_o_box_width"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:textSize="@dimen/a_o_box_text_size"
+                android:background="@color/colorDarkText"
+                android:text="1337"
+                />
+            <Button
+                android:id="@+id/ordinalBox"
+                android:layout_width="@dimen/a_o_box_width"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:textSize="@dimen/a_o_box_text_size"
+                android:background="@color/colorDarkText"
+                android:text="7331"
+                />
+            <ImageView
+                android:id="@+id/width_meter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/abscissaBox"
+                android:src="@android:drawable/divider_horizontal_bright"
+                />
+            <ImageView
+                android:id="@+id/chord_outline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/width_meter"
+                android:src=""
+                />
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/alpha_detail_image_view"

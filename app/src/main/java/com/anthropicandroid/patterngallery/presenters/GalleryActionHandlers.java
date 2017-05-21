@@ -91,8 +91,7 @@ final public class GalleryActionHandlers {
         detailImage.setDescription(galleryItemViewModel.getDescription());
 
         // animate the detail in
-        RawBitmapMeasurement rawBitmapMeasurement = detailImage
-                .getRawBitmapMeasurement();
+        RawBitmapMeasurement rawBitmapMeasurement = detailImage.getRawBitmapMeasurement();
         //  TODO: discuss the identity between the animator and the handlers; maybe a useful concept
         animator.zoomToReplace(
                 currentViewBounds,
