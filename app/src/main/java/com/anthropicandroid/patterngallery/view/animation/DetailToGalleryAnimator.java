@@ -50,13 +50,13 @@ public class DetailToGalleryAnimator {
         }
 
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.play(getImageAnim(binding.alphaDetailImageView, currentRect))
+        animatorSet.play(getImageAnim(binding.svgDetail, currentRect))
                 .with(getMattingAnim(binding.alphaDetailMattingLayout, currentRect));
         animatorSet.setDuration(resources.getInteger(R.integer
                                                              .duration_detail_to_gallery_animator));
         animatorSet.addListener(getActionListener(binding));
         animatorSet.start();
-        binding.alphaDetailImageView.setImageBitmap(null);
+        binding.svgDetail.setImageBitmap(null);
         return true;
     }
 
@@ -117,8 +117,8 @@ public class DetailToGalleryAnimator {
             @Override
             public void onAnimationEnd(Animator animation) {
                 binding.alphaDetailMattingLayout.setVisibility(View.GONE);
-                binding.alphaDetailImageView.setVisibility(View.GONE);
-                binding.alphaDetailImageView.setImageBitmap(null);
+                binding.svgDetail.setVisibility(View.GONE);
+                binding.svgDetail.setImageBitmap(null);
                 super.onAnimationEnd(animation);
             }
 

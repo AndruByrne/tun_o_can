@@ -19,8 +19,8 @@
             type="com.anthropicandroid.patterngallery.presenters.GalleryActionHandlers"/>
 
         <variable
-            name="alphaDetailImage"
-            type="com.anthropicandroid.patterngallery.entities.ui.DetailImage"/>
+            name="svgDetailViewModel"
+            type="com.anthropicandroid.patterngallery.entities.ui.SVGDetailViewModel"/>
 
         <variable
             name="detailActionHandlers"
@@ -131,13 +131,12 @@
             />
 
         <ImageView
-            android:id="@+id/alpha_detail_image_view"
+            android:id="@+id/svg_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
             android:visibility="gone"
-            app:detailImage="@{alphaDetailImage.getDetailIndex}"
-            app:rawBitmapDimen="@{alphaDetailImage.getRawBitmapMeasurement()}"
+            app:svgDetailViewModel="@{svgDetailViewModel}"
             />
 
         <LinearLayout
