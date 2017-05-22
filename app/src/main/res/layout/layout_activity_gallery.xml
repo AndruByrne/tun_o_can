@@ -126,7 +126,6 @@
             android:layout_height="match_parent"
             android:background="@color/colorPrimaryDark"
             android:visibility="invisible"
-            app:layout_behavior="com.anthropicandroid.patterngallery.view.animation.ImageDismissingBehavior"
             >
 
             <Button
