@@ -8,7 +8,7 @@ import com.anthropicandroid.patterngallery.BR;
 /*
  * Created by Andrew Brin on 7/18/2016.
  */
-public class DetailImage
+public class SVGDetailViewModel
         extends BaseObservable {
 
     String description;

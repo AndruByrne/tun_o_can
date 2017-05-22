@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.anthropicandroid.patterngallery.entities.ui.SVGDetailViewModel;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
 import com.anthropicandroid.patterngallery.entities.framework.GalleryImage;
 import com.anthropicandroid.patterngallery.view.BitmapUtils;
@@ -18,23 +19,22 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-public class DetailImageAdapter {
+public class SVGDetailAdapter {
 
-    public static final String TAG = DetailImageAdapter.class.getSimpleName();
+    public static final String TAG = SVGDetailAdapter.class.getSimpleName();
 
-    @BindingAdapter(value = {
-            "detailImage",
-            "rawBitmapDimen"})
-    public static void setDetailImage(
+    @BindingAdapter("svgDetailViewModel")
+    public static void setSVGDetailViewModel(
             final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
-            final Integer detailIndex,
-            final RawBitmapMeasurement rawBitmapMeasurement
+            final SVGDetailViewModel svgDetailViewModel
     ) {
+
+        final RawBitmapMeasurement rawBitmapMeasurement = svgDetailViewModel.getRawBitmapMeasurement();
 
         // pipe for image data
         galleryActivityComponent.getRepository()
-                .getImage(detailIndex)
+                .getImage(svgDetailViewModel.getDetailIndex())
                 // scale
                 .map(new Func1<GalleryImage, Bitmap>() {
                     @Override
