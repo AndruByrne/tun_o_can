@@ -61,7 +61,10 @@ public class ToolbarFlippingBehavior
             return true;
         }
         // if the view is getting close
-        if (!flippedToDetail && dependency.getZ() > 9.7f) {
+        if (
+                !flippedToDetail &&
+                        dependency.getZ() > 9.7f
+                ) {
             // do flip animation on toolbar
             LayoutActivityGalleryBinding galleryBinding = DataBindingUtil.findBinding(layout);
             animator.flipToDetail(galleryBinding);
