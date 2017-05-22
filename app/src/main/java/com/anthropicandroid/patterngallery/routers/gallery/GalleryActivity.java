@@ -11,7 +11,7 @@ import com.anthropicandroid.patterngallery.interactors.Repository;
 import com.anthropicandroid.patterngallery.interactors.startup.RepositoryPopulator;
 import com.anthropicandroid.patterngallery.presenters.DetailActionHandlers;
 import com.anthropicandroid.patterngallery.presenters.GalleryActionHandlers;
-import com.anthropicandroid.patterngallery.entities.ui.DetailImage;
+import com.anthropicandroid.patterngallery.entities.ui.SVGDetailViewModel;
 
 import java.util.ArrayList;
 
@@ -52,7 +52,7 @@ public class GalleryActivity
         activityGalleryBinding.setGalleryActionHandlers(galleryActionHandlers);
         // and detail view
         activityGalleryBinding.setDetailActionHandlers(detailActionHandlers);
-        activityGalleryBinding.setAlphaDetailImage(new DetailImage());
+        activityGalleryBinding.setSvgDetailViewModel(new SVGDetailViewModel());
         // set entries for image grid
         activityGalleryBinding.setEntries(new ArrayList<>(RepositoryPopulator.imageIds.keySet()));
         // set app bar with relative layout base

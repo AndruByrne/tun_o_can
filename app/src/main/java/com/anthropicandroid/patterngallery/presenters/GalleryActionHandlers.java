@@ -7,14 +7,13 @@ package com.anthropicandroid.patterngallery.presenters;
 import android.app.Application;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.patterngallery.databinding.LayoutGalleryImageBinding;
-import com.anthropicandroid.patterngallery.entities.ui.DetailImage;
+import com.anthropicandroid.patterngallery.entities.ui.SVGDetailViewModel;
 import com.anthropicandroid.patterngallery.entities.ui.GalleryItemViewModel;
 import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
 import com.anthropicandroid.patterngallery.view.animation.GalleryToDetailAnimator;
@@ -61,26 +60,26 @@ final public class GalleryActionHandlers {
 
         LayoutGalleryImageBinding gridItemBinding      = DataBindingUtil.findBinding(view);
         GalleryItemViewModel      galleryItemViewModel = gridItemBinding.getViewModel();
-        DetailImage               detailImage          = activityGalleryBinding.getAlphaDetailImage();
+        SVGDetailViewModel        svgDetailViewModel   = activityGalleryBinding.getSvgDetailViewModel();
         Rect                      currentViewBounds    = new Rect();
 
         // measure current view
         view.getGlobalVisibleRect(currentViewBounds);
 
         // pass along the measurements for the raw bitmap
-        detailImage.setRawBitmapMeasurement(galleryItemViewModel.getRawBitmapMeasurement());
+        svgDetailViewModel.setRawBitmapMeasurement(galleryItemViewModel.getRawBitmapMeasurement());
         // set detailIndex in data binding
-        detailImage.setDetailIndex(galleryItemViewModel.getIndex());
+        svgDetailViewModel.setDetailIndex(galleryItemViewModel.getIndex());
         // set description in data binding
-        detailImage.setDescription(galleryItemViewModel.getDescription());
+        svgDetailViewModel.setDescription(galleryItemViewModel.getDescription());
 
         // animate the detail in
-        RawBitmapMeasurement rawBitmapMeasurement = detailImage.getRawBitmapMeasurement();
+        RawBitmapMeasurement rawBitmapMeasurement = svgDetailViewModel.getRawBitmapMeasurement();
         //  TODO: discuss the identity between the animator and the handlers; maybe a useful concept
         animator.zoomToReplace(
                 currentViewBounds,
                 activityGalleryBinding.alphaDetailMattingLayout,
-                activityGalleryBinding.alphaDetailImageView,
+                activityGalleryBinding.svgDetail,
                 (float) rawBitmapMeasurement.getRawWidth() /
                         rawBitmapMeasurement.getRawHeight(),
                 clickRawX,
