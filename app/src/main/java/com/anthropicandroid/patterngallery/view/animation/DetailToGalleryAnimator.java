@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
@@ -61,28 +62,28 @@ public class DetailToGalleryAnimator {
     }
 
     private AnimatorSet getMattingAnim(
-            FrameLayout frameLayout,
+            RelativeLayout relativeLayout,
             Rect currentRect
     ) {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet
                 .play(ObjectAnimator.ofFloat(
-                        frameLayout,
+                        relativeLayout,
                         View.Z,
                         resources.getInteger(R.integer.z_position_matting_end),
                         resources.getInteger(R.integer.z_position_matting_start)))
                 .with(ObjectAnimator.ofFloat(
-                        frameLayout,
+                        relativeLayout,
                         View.X,
                         0,
                         currentRect.left - screenWidth / 2))
                 .with(ObjectAnimator.ofFloat(
-                        frameLayout,
+                        relativeLayout,
                         View.Y,
                         statusBarHeight,
                         currentRect.top + currentRect.height() - imageViewHeight / 2))
-                .with(ObjectAnimator.ofFloat(frameLayout, View.SCALE_X, 0))
-                .with(ObjectAnimator.ofFloat(frameLayout, View.SCALE_Y, 0));
+                .with(ObjectAnimator.ofFloat(relativeLayout, View.SCALE_X, 0))
+                .with(ObjectAnimator.ofFloat(relativeLayout, View.SCALE_Y, 0));
         return animatorSet;
     }
 

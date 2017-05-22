@@ -128,26 +128,29 @@
             android:visibility="invisible"
             app:layout_behavior="com.anthropicandroid.patterngallery.view.animation.ImageDismissingBehavior"
             >
+
             <Button
                 android:id="@+id/abscissaBox"
                 android:layout_width="@dimen/a_o_box_width"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:textSize="@dimen/a_o_box_text_size"
                 android:background="@color/colorDarkText"
                 android:text="1337"
+                android:textSize="@dimen/a_o_box_text_size"
                 />
+
             <Button
                 android:id="@+id/ordinalBox"
                 android:layout_width="@dimen/a_o_box_width"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:textSize="@dimen/a_o_box_text_size"
                 android:background="@color/colorDarkText"
                 android:text="7331"
+                android:textSize="@dimen/a_o_box_text_size"
                 />
+
             <ImageView
                 android:id="@+id/width_meter"
                 android:layout_width="match_parent"
@@ -155,13 +158,26 @@
                 android:layout_below="@id/abscissaBox"
                 android:src="@android:drawable/divider_horizontal_bright"
                 />
+
             <ImageView
                 android:id="@+id/chord_outline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/width_meter"
-                android:src=""
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_chord_outline_100dp"
                 />
+
+            <ImageView
+                android:layout_width="@dimen/value_picker_height"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/chord_outline"
+                android:tint="@color/colorLightText"
+                android:src="@android:drawable/zoom_plate"
+                />
+
         </RelativeLayout>
 
         <ImageView

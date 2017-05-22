@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
@@ -21,7 +22,7 @@ import java.util.List;
  * Created by Andrew Brin on 7/19/2016.
  */
 public class ImageDismissingBehavior
-        extends SwipeDismissBehavior<FrameLayout> {
+        extends SwipeDismissBehavior<RelativeLayout> {
 
     public static final String TAG = ImageDismissingBehavior.class.getSimpleName();
     // I have some doubt as to whether this will work; it doesn't have a native XML constructor
@@ -44,7 +45,7 @@ public class ImageDismissingBehavior
     @Override
     public boolean layoutDependsOn(
             CoordinatorLayout parent,
-            FrameLayout child,
+            RelativeLayout child,
             View dependency
     ) {
         return dependency instanceof ImageView;
@@ -61,7 +62,7 @@ public class ImageDismissingBehavior
     @Override
     public boolean onDependentViewChanged(
             CoordinatorLayout parent,
-            FrameLayout child,
+            RelativeLayout child,
             View dependency
     ) {
         // Focus is serving as an excellent flag; I was considering using a data binding var
@@ -91,7 +92,7 @@ public class ImageDismissingBehavior
     @Override
     public void onDependentViewRemoved(
             CoordinatorLayout parent,
-            FrameLayout child,
+            RelativeLayout child,
             View dependency
     ) {
         Log.d(TAG, "dependent view removed");
