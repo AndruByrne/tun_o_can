@@ -41,9 +41,10 @@ final public class GalleryActionHandlers {
     ) {
         RecyclerView               galleryGrid   = activityGalleryBinding.galleryGrid;
         RecyclerView.LayoutManager layoutManager = galleryGrid.getLayoutManager();
+        View                       view          = layoutManager.getChildAt(index);
+        Rect                       rect          = new Rect();
+
         layoutManager.scrollToPosition(index);
-        View view = layoutManager.getChildAt(index);
-        Rect rect = new Rect();
         view.getGlobalVisibleRect(rect);
         bindDataAndAnimate(
                 view,
