@@ -4,7 +4,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="app_bar_elevation">4dp</dimen>
     <dimen name="a_o_box_text_size">11sp</dimen>
-    <dimen name="a_o_box_width">10dp</dimen>
+    <dimen name="a_o_box_width">80dp</dimen>
     <dimen name="value_picker_height">20dp</dimen>
+    <dimen name="cartesian_meter_width">5dp</dimen>
+    <dimen name="detail_readouts_margin">5dp</dimen>
 
 </resources>
