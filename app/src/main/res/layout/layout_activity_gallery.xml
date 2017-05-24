@@ -49,7 +49,7 @@
                 android:layout_alignParentTop="true"
                 android:background="@color/colorDarkText"
                 android:elevation="@dimen/app_bar_elevation"
-                app:layout_scrollFlags="scroll|enterAlways">
+                app:layout_scrollFlags="enterAlways">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -112,6 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@android:color/white"
+            android:filterTouchesWhenObscured="true"
             android:minHeight="90dp"
             android:padding="10dp"
             app:gridEntries="@{entries}"
@@ -125,6 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimaryDark"
+            android:paddingTop="?android:attr/actionBarSize"
             android:visibility="invisible"
             >
 
@@ -134,6 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
+                android:layout_margin="@dimen/detail_readouts_margin"
                 android:background="@color/colorDarkText"
                 android:text="1337"
                 android:textSize="@dimen/a_o_box_text_size"
@@ -145,6 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:layout_margin="@dimen/detail_readouts_margin"
                 android:background="@color/colorDarkText"
                 android:text="7331"
                 android:textSize="@dimen/a_o_box_text_size"
@@ -153,9 +157,12 @@
             <ImageView
                 android:id="@+id/width_meter"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/cartesian_meter_width"
                 android:layout_below="@id/abscissaBox"
-                android:src="@android:drawable/divider_horizontal_bright"
+                android:layout_marginTop="5dp"
+                android:scaleType="fitXY"
+                android:src="@android:drawable/zoom_plate"
+                android:tint="@color/colorLightText"
                 />
 
             <ImageView
@@ -163,18 +170,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/width_meter"
-                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_chord_outline_100dp"
+                android:tint="@color/colorLightText"
                 />
 
             <ImageView
+                android:id="@+id/height_meter"
+                android:layout_width="@dimen/cartesian_meter_width"
+                android:layout_height="40dp"
+                android:layout_alignRight="@id/chord_outline"
+                android:layout_alignTop="@id/chord_outline"
+                android:layout_marginTop="40dp"
+                android:src="@android:drawable/zoom_plate"
+                android:tint="@color/colorLightText"
+                />
+
+            <ImageView
+                android:id="@+id/value_slider"
                 android:layout_width="@dimen/value_picker_height"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/chord_outline"
-                android:tint="@color/colorLightText"
+                android:scaleType="fitXY"
                 android:src="@android:drawable/zoom_plate"
+                android:tint="@color/colorRedAcc"
                 />
 
         </RelativeLayout>
