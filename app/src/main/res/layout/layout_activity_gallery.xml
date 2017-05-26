@@ -137,8 +137,10 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_margin="@dimen/detail_readouts_margin"
-                android:background="@color/colorDarkText"
+                android:background="@drawable/ic_empty_rect_24dp"
+                android:backgroundTint="@color/colorAccent"
                 android:text="1337"
+                android:textColor="@color/colorLightText"
                 android:textSize="@dimen/a_o_box_text_size"
                 />
 
@@ -149,8 +151,10 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_margin="@dimen/detail_readouts_margin"
-                android:background="@color/colorDarkText"
+                android:background="@drawable/ic_empty_rect_24dp"
+                android:backgroundTint="@color/colorAccent"
                 android:text="7331"
+                android:textColor="@color/colorLightText"
                 android:textSize="@dimen/a_o_box_text_size"
                 />
 
