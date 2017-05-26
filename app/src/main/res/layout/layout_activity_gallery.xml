@@ -112,7 +112,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@android:color/white"
-            android:filterTouchesWhenObscured="true"
             android:minHeight="90dp"
             android:padding="10dp"
             app:gridEntries="@{entries}"
@@ -130,6 +129,7 @@
             android:visibility="invisible"
             >
 
+            <!--Readouts for tools or polar/carteisan coordinates-->
             <Button
                 android:id="@+id/abscissaBox"
                 android:layout_width="@dimen/a_o_box_width"
@@ -137,11 +137,13 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_margin="@dimen/detail_readouts_margin"
-                android:background="@color/colorDarkText"
+                android:background="@drawable/ic_empty_rect_24dp"
+                android:textColor="@color/colorAccent"
                 android:text="1337"
+                android:backgroundTint="@color/colorLightText"
                 android:textSize="@dimen/a_o_box_text_size"
                 />
-
+`
             <Button
                 android:id="@+id/ordinalBox"
                 android:layout_width="@dimen/a_o_box_width"
@@ -149,11 +151,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_margin="@dimen/detail_readouts_margin"
-                android:background="@color/colorDarkText"
+                android:background="@drawable/ic_empty_rect_24dp"
+                android:textColor="@color/colorAccent"
                 android:text="7331"
+                android:backgroundTint="@color/colorLightText"
                 android:textSize="@dimen/a_o_box_text_size"
                 />
 
+            <!--TODO: make adapters to size these relative to the svg dimensions in the viewmodel-->
             <ImageView
                 android:id="@+id/width_meter"
                 android:layout_width="match_parent"
@@ -166,34 +171,36 @@
                 />
 
             <ImageView
+                android:id="@+id/height_meter"
+                android:layout_width="@dimen/cartesian_meter_width"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/width_meter"
+                android:layout_marginTop="40dp"
+                android:src="@android:drawable/zoom_plate"
+                android:tint="@color/colorLightText"
+                />
+
+            <!--TODO: Setter for size of footprint-->
+            <ImageView
                 android:id="@+id/chord_outline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/width_meter"
+                android:layout_toLeftOf="@id/height_meter"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_chord_outline_100dp"
                 android:tint="@color/colorLightText"
                 />
 
-            <ImageView
-                android:id="@+id/height_meter"
-                android:layout_width="@dimen/cartesian_meter_width"
-                android:layout_height="40dp"
-                android:layout_alignRight="@id/chord_outline"
-                android:layout_alignTop="@id/chord_outline"
-                android:layout_marginTop="40dp"
-                android:src="@android:drawable/zoom_plate"
-                android:tint="@color/colorLightText"
-                />
-
+            <!-- TODO: put this slider on it's own layer -->
             <ImageView
                 android:id="@+id/value_slider"
                 android:layout_width="@dimen/value_picker_height"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@id/chord_outline"
                 android:scaleType="fitXY"
                 android:src="@android:drawable/zoom_plate"
                 android:tint="@color/colorRedAcc"
