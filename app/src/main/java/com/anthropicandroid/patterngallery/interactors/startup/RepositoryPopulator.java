@@ -7,7 +7,7 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.anthropicandroid.patterngallery.R;
-import com.anthropicandroid.patterngallery.entities.framework.GalleryImage;
+import com.anthropicandroid.patterngallery.entities.framework.PatternMetaData;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ public class RepositoryPopulator
 
     @Override
     public void execute(final Realm realm) {
-        if (realm.where(GalleryImage.class).findAll().size() > 6) return;
+        if (realm.where(PatternMetaData.class).findAll().size() > 6) return;
         Observable<Map.Entry<Integer, String>> imageIdObs = Observable.from(imageIds.entrySet());
         Observable<byte[]> imageObs = imageIdObs
                 // get Image
@@ -93,12 +93,12 @@ public class RepositoryPopulator
                                 Log.d(TAG, "id is: " + imageData.first + " and image is " +
                                         "" + imageData.second.length + " long");
                                 // Yes this is ugly; it's the last thing I wrote =]
-                                final GalleryImage galleryImage = new GalleryImage();
-                                galleryImage.setIndex(imageData.first.getKey());
-                                galleryImage.setDescription(imageData.first.getValue());
-                                galleryImage.setImage(imageData.second);
-                                GalleryImage image = realm.copyToRealmOrUpdate(
-                                        galleryImage);
+                                final PatternMetaData patternMetaData = new PatternMetaData();
+                                patternMetaData.setIndex(imageData.first.getKey());
+                                patternMetaData.setDescription(imageData.first.getValue());
+                                patternMetaData.setImage(imageData.second);
+                                PatternMetaData image = realm.copyToRealmOrUpdate(
+                                        patternMetaData);
                             }
                         },
                         new Action1<Throwable>() {

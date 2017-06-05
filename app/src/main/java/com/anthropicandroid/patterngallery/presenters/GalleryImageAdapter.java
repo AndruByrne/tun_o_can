@@ -12,7 +12,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.anthropicandroid.patterngallery.entities.framework.GalleryImage;
+import com.anthropicandroid.patterngallery.entities.framework.PatternMetaData;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
 import com.anthropicandroid.patterngallery.entities.ui.GalleryItemViewModel;
 import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
@@ -50,10 +50,10 @@ public class GalleryImageAdapter {
         galleryActivityComponent.getRepository()
                 .getImage(galleryItemViewModel.getIndex())
                 // scale bitmap
-                .map(new Func1<GalleryImage, GalleryImageHolder>() {
+                .map(new Func1<PatternMetaData, GalleryImageHolder>() {
                     @Override
-                    public GalleryImageHolder call(GalleryImage galleryImage) {
-                        byte[] image     = galleryImage.getImage();
+                    public GalleryImageHolder call(PatternMetaData patternMetaData) {
+                        byte[] image     = patternMetaData.getImage();
                         int    itemWidth = galleryItemViewModel.getWidth();
                         Pair<Bitmap, Pair<Integer, Integer>> bitmapFields =
                                 decodeSampledBitmapAndReturnWithRatio(
@@ -61,7 +61,7 @@ public class GalleryImageAdapter {
                                         itemWidth,
                                         imageBoundsHeight);
                         return new GalleryImageHolder(bitmapFields.first, bitmapFields.second,
-                                                      galleryImage.getDescription());
+                                                      patternMetaData.getDescription());
                     }
                 })
                 .doOnNext(new Action1<GalleryImageHolder>() {

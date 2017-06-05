@@ -9,9 +9,9 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.anthropicandroid.patterngallery.entities.framework.PatternMetaData;
 import com.anthropicandroid.patterngallery.entities.ui.SVGDetailViewModel;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
-import com.anthropicandroid.patterngallery.entities.framework.GalleryImage;
 import com.anthropicandroid.patterngallery.view.BitmapUtils;
 import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
 
@@ -36,13 +36,13 @@ public class SVGDetailAdapter {
         galleryActivityComponent.getRepository()
                 .getImage(svgDetailViewModel.getDetailIndex())
                 // scale
-                .map(new Func1<GalleryImage, Bitmap>() {
+                .map(new Func1<PatternMetaData, Bitmap>() {
                     @Override
-                    public Bitmap call(GalleryImage galleryImage) {
+                    public Bitmap call(PatternMetaData patternMetaData) {
                         // Should null-check this, because user may click on image placeholder
-                        imageView.setContentDescription(galleryImage.getDescription());
+                        imageView.setContentDescription(patternMetaData.getDescription());
                         return BitmapUtils.decodeSampledBitmapWithPredicate(
-                                galleryImage.getImage(),
+                                patternMetaData.getImage(),
                                 rawBitmapMeasurement.getRawWidth(),
                                 rawBitmapMeasurement.getRawWidth(),
                                 galleryActivityComponent.getScreenWidthInPx(),
