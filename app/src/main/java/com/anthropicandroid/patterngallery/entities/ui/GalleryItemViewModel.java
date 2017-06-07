@@ -3,7 +3,7 @@ package com.anthropicandroid.patterngallery.entities.ui;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.android.databinding.library.baseAdapters.BR;
+import com.anthropicandroid.patterngallery.BR;
 
 /*
  * Created by Andrew Brin on 7/16/2016.

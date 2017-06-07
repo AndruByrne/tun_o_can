@@ -12,7 +12,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.anthropicandroid.patterngallery.entities.framework.PatternMetaData;
+import com.anthropicandroid.patterngallery.entities.interactions.PatternMetaData;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
 import com.anthropicandroid.patterngallery.entities.ui.GalleryItemViewModel;
 import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
@@ -20,9 +20,6 @@ import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
-
-import static com.anthropicandroid.patterngallery.view.BitmapUtils
-        .decodeSampledBitmapAndReturnWithRatio;
 
 public class GalleryImageAdapter {
 
@@ -46,53 +43,6 @@ public class GalleryImageAdapter {
         imageView.setBackgroundColor(ContextCompat.getColor(
                 imageView.getContext(),
                 galleryItemViewModel.getColorResId()));
-        // Here rxJava is necessary, as we seem to be on the main thread, /contra/ data binding docs
-        galleryActivityComponent.getRepository()
-                .getImage(galleryItemViewModel.getIndex())
-                // scale bitmap
-                .map(new Func1<PatternMetaData, GalleryImageHolder>() {
-                    @Override
-                    public GalleryImageHolder call(PatternMetaData patternMetaData) {
-                        byte[] image     = patternMetaData.getImage();
-                        int    itemWidth = galleryItemViewModel.getWidth();
-                        Pair<Bitmap, Pair<Integer, Integer>> bitmapFields =
-                                decodeSampledBitmapAndReturnWithRatio(
-                                        image,
-                                        itemWidth,
-                                        imageBoundsHeight);
-                        return new GalleryImageHolder(bitmapFields.first, bitmapFields.second,
-                                                      patternMetaData.getDescription());
-                    }
-                })
-                .doOnNext(new Action1<GalleryImageHolder>() {
-                    @Override
-                    public void call(GalleryImageHolder galleryImageHolder) {
-                        RawBitmapMeasurement rawBitmapMeasurement = galleryItemViewModel
-                                .getRawBitmapMeasurement();
-
-                        galleryItemViewModel.setDescription(galleryImageHolder.description);
-                        rawBitmapMeasurement.setRawWidth(galleryImageHolder.rawMeasurements.first);
-                        rawBitmapMeasurement.setRawHeight(galleryImageHolder.rawMeasurements
-                                                                  .second);
-
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        new Action1<GalleryImageHolder>() {
-                            @Override
-                            public void call(GalleryImageHolder galleryImageHolder) {
-                                imageView.setImageBitmap(galleryImageHolder.image);
-                            }
-                        },
-                        new Action1<Throwable>() {
-                            @Override
-                            public void call(Throwable throwable) {
-                                Log.d(TAG, "error retrieving gallery item bitmap: "
-                                        + throwable.getMessage());
-                                throwable.printStackTrace();
-                            }
-                        });
     }
 
     private static class GalleryImageHolder {

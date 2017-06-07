@@ -9,7 +9,6 @@ import com.anthropicandroid.patterngallery.view.animation.AnimatorModule;
 import com.anthropicandroid.patterngallery.routers.gallery.DaggerGalleryActivityComponent;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
 import com.anthropicandroid.patterngallery.routers.gallery.OnBackPressedModule;
-import com.anthropicandroid.patterngallery.frameworks.localstorage.RealmModule;
 import com.anthropicandroid.patterngallery.interactors.RepositoryModule;
 import com.anthropicandroid.patterngallery.view.ScreenMetricsModule;
 
@@ -29,7 +28,6 @@ public class PatternGalleryApplication
         applicationComponent = DaggerApplicationComponent
                 .builder()
                 .appModule(new AppModule(this))
-                .realmModule(new RealmModule()) // context required for constructor
                 .repositoryModule(new RepositoryModule())
                 .build();
     }
