@@ -7,17 +7,23 @@ package com.anthropicandroid.patterngallery.presenters;
 import android.content.res.TypedArray;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.anthropicandroid.patterngallery.R;
+import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.patterngallery.databinding.LayoutGalleryImageBinding;
+import com.anthropicandroid.patterngallery.entities.interactions.PatternMetaData;
 import com.anthropicandroid.patterngallery.entities.ui.GalleryItemViewModel;
+import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
 import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -29,36 +35,34 @@ public class GalleryListAdapter
     private GalleryActionHandlers galleryActionHandlers;
     private int childWidth;
     private TypedArray bgColors;
-    private List<Integer> imageIndicies;
 
     public GalleryListAdapter(
             GalleryActionHandlers galleryActionHandlers,
             int childWidth,
-            TypedArray bgColors,
-            List<Integer> imageIndicies
+            TypedArray bgColors
     ) {
         this.galleryActionHandlers = galleryActionHandlers;
         // class constructed by an annotated static function
         this.childWidth = childWidth;
         this.bgColors = bgColors;
-        this.imageIndicies = imageIndicies;
     }
 
     @BindingAdapter(value = {
             "numSpans",
-            "gridEntries"})
+            "patternSet"})
     public static void setEntries(
             GalleryActivityComponent galleryActivityComponent,
             RecyclerView view,
             Integer numSpans,
-            List<Integer> imageIndicies
+            String patternSet
     ) {
+//        create a new sortedarrylist
+//        ((LayoutActivityGalleryBinding) DataBindingUtil.findBinding(view)).getSvgGalleryViewModel().setPatterns();
         // create and populate list adapter and give it to the view
         view.setAdapter(new GalleryListAdapter(
                 galleryActivityComponent.getGalleryActionHandlers(),
                 galleryActivityComponent.getNarrowestScreenDimenInPx() / numSpans,
-                view.getContext().getResources().obtainTypedArray(R.array.bg_colors),
-                imageIndicies));
+                view.getContext().getResources().obtainTypedArray(R.array.bg_colors)));
     }
 
     public static class BindingHolder
@@ -105,12 +109,10 @@ public class GalleryListAdapter
         if (holder instanceof BindingHolder) {
             LayoutGalleryImageBinding galleryImageBinding = ((BindingHolder) holder)
                     .getDataBinding();
-            Integer imageIndex = imageIndicies.get(position);
 
             GalleryItemViewModel galleryItemViewModel = galleryImageBinding.getViewModel();
             galleryItemViewModel.setRawBitmapMeasurement(new RawBitmapMeasurement());
             galleryItemViewModel.setWidth(childWidth);
-            galleryItemViewModel.setIndex(imageIndex);
             galleryItemViewModel.setDescription("Photo " + position);
             galleryItemViewModel.setColorResId(bgColors
                                                        .getResourceId(position % 8, R.color.colorOrange));
@@ -119,6 +121,7 @@ public class GalleryListAdapter
 
     @Override
     public int getItemCount() {
-        return imageIndicies.size();
+//        return imageIndicies.size();
+        return 8;
     }
 }
