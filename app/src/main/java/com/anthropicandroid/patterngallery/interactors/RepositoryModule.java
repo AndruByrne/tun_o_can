@@ -5,30 +5,22 @@ package com.anthropicandroid.patterngallery.interactors;
  */
 
 import android.app.Application;
-
-import com.anthropicandroid.patterngallery.interactors.startup.RepositoryPopulator;
+import android.content.Context;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
-import rx.Observable;
 
 @Module
 public class RepositoryModule {
 
     @Provides
     @Singleton
-    Repository getRepository(
-            Observable<Realm> realmObservable
+    PatternRepository getRepository(
+            Application context
     ) {
-        return new Repository(realmObservable);
+        return new PatternRepository(context.getSharedPreferences("pattern_repository", Context.MODE_PRIVATE));
     }
 
-    @Provides
-    @Singleton
-    RepositoryPopulator getRepositoryPopulator(Application context) {
-        return new RepositoryPopulator(context);
-    }
 }

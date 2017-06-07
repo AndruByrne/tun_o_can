@@ -4,11 +4,10 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 import com.anthropicandroid.patterngallery.interactors.startup.PatternGalleryApplication;
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
-import com.anthropicandroid.patterngallery.interactors.Repository;
-import com.anthropicandroid.patterngallery.interactors.startup.RepositoryPopulator;
 import com.anthropicandroid.patterngallery.presenters.DetailActionHandlers;
 import com.anthropicandroid.patterngallery.presenters.GalleryActionHandlers;
 import com.anthropicandroid.patterngallery.entities.ui.SVGDetailViewModel;
@@ -23,7 +22,7 @@ public class GalleryActivity
     public static final String TAG = GalleryActivity.class.getSimpleName();
 
     @Inject BackPressedRepo backPressedRepo;
-    @Inject Repository repository;
+    @Inject PatternRepository patternRepository;
     @Inject GalleryActionHandlers galleryActionHandlers;
     @Inject DetailActionHandlers detailActionHandlers;
 
@@ -53,8 +52,6 @@ public class GalleryActivity
         // and detail view
         activityGalleryBinding.setDetailActionHandlers(detailActionHandlers);
         activityGalleryBinding.setSvgDetailViewModel(new SVGDetailViewModel());
-        // set entries for image grid
-        activityGalleryBinding.setEntries(new ArrayList<>(RepositoryPopulator.imageIds.keySet()));
         // set app bar with relative layout base
         setSupportActionBar(activityGalleryBinding.appBar);
         activityGalleryBinding.appBar.setContentInsetsAbsolute(0, 0);

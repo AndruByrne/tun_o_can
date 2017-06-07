@@ -9,7 +9,7 @@ import android.util.DisplayMetrics;
 import com.anthropicandroid.patterngallery.routers.ApplicationComponent;
 import com.anthropicandroid.patterngallery.view.animation.AnimatorModule;
 import com.anthropicandroid.patterngallery.view.ScreenMetricsModule;
-import com.anthropicandroid.patterngallery.interactors.Repository;
+import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 import com.anthropicandroid.patterngallery.presenters.ActionHandlersModule;
 import com.anthropicandroid.patterngallery.presenters.BottomNavActionHandlers;
 import com.anthropicandroid.patterngallery.presenters.DetailActionHandlers;
@@ -47,7 +47,7 @@ public interface GalleryActivityComponent
 
     GalleryToDetailAnimator getGalleryToDetailAnimator();
 
-    Repository getRepository();
+    PatternRepository getRepository();
 
     @Named("ScreenNarrowest")
     int getNarrowestScreenDimenInPx();

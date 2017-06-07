@@ -7,10 +7,8 @@ package com.anthropicandroid.patterngallery.routers;
 import android.app.Application;
 
 import com.anthropicandroid.patterngallery.interactors.startup.AppModule;
-import com.anthropicandroid.patterngallery.frameworks.localstorage.RealmModule;
 import com.anthropicandroid.patterngallery.interactors.RepositoryModule;
-import com.anthropicandroid.patterngallery.interactors.Repository;
-import com.anthropicandroid.patterngallery.interactors.startup.RepositoryPopulator;
+import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 
 import javax.inject.Singleton;
 
@@ -21,15 +19,11 @@ import rx.Observable;
 @Singleton //  Singleton is the annotation for the Application scope
 @Component(modules = {
         AppModule.class,
-        RealmModule.class,
         RepositoryModule.class})
 public interface ApplicationComponent {
 
     Application getApplication();
 
-    Observable<Realm> getRealmObs();
+    PatternRepository getRepository();
 
-    Repository getRepository();
-
-    RepositoryPopulator getRepositoryPopulator();
 }
