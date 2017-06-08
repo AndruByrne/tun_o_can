@@ -12,7 +12,7 @@ public class SVGDetailViewModel
         extends BaseObservable {
 
     String description;
-    Integer detailIndex;
+    String detailUri;
     RawBitmapMeasurement rawBitmapMeasurement;
 
     @Bindable
@@ -26,13 +26,13 @@ public class SVGDetailViewModel
     }
 
     @Bindable
-    public Integer getDetailIndex() {
-        return detailIndex;
+    public String getDetailUri() {
+        return detailUri;
     }
 
-    public void setDetailIndex(Integer detailIndex) {
-        this.detailIndex = detailIndex;
-        notifyPropertyChanged(BR.detailIndex);
+    public void setDetailUri(String detailUri) {
+        this.detailUri = detailUri;
+        notifyPropertyChanged(BR.detailUri);
     }
 
     @Bindable

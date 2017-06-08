@@ -69,7 +69,7 @@ final public class GalleryActionHandlers {
         // pass along the measurements for the raw bitmap
         svgDetailViewModel.setRawBitmapMeasurement(galleryItemViewModel.getRawBitmapMeasurement());
         // set detailIndex in data binding
-        svgDetailViewModel.setDetailIndex(galleryItemViewModel.getIndex());
+        svgDetailViewModel.setDetailUri(galleryItemViewModel.getUri());
         // set description in data binding
         svgDetailViewModel.setDescription(galleryItemViewModel.getDescription());
 
