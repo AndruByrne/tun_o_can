@@ -132,7 +132,7 @@ public class GalleryListAdapter
             },
             8);
 
-    public GalleryListAdapter(
+    private GalleryListAdapter(
             GalleryActionHandlers galleryActionHandlers,
             Observable<PatternMetaData> patternObservable,
             int childWidth,
@@ -166,7 +166,7 @@ public class GalleryListAdapter
                 });
     }
 
-    public static class BindingHolder
+    private static class BindingHolder
             extends RecyclerView.ViewHolder {
 
         private LayoutGalleryImageBinding dataBinding;
