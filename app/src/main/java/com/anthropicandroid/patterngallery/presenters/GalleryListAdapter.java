@@ -37,12 +37,12 @@ public class GalleryListAdapter
 
     @BindingAdapter(value = {
             "numSpans",
-            "patternSet"})
+            "patternGroup"})
     public static void setEntries(
             GalleryActivityComponent galleryActivityComponent,
             RecyclerView view,
             Integer numSpans,
-            String patternSet
+            String patternGroup
     ) {
         // create and populate list adapter and give it to the view
         view.setAdapter(new GalleryListAdapter(
