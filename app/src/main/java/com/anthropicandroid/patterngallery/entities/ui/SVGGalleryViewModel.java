@@ -7,7 +7,8 @@ import android.support.v7.util.SortedList;
 import com.anthropicandroid.patterngallery.BR;
 import com.anthropicandroid.patterngallery.entities.interactions.PatternMetaData;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Andrew Brin on 6/6/2017.
@@ -15,16 +16,22 @@ import java.util.List;
 public class SVGGalleryViewModel
         extends BaseObservable {
 
-    SortedList<PatternMetaData> patterns;
+    String patternGroup;
+
+    Map<String, String> patternPaths = new HashMap<>();
 
     @Bindable
-    public SortedList<PatternMetaData> getPatterns() {
-        return patterns;
+    public String getPatternGroup() {
+        return patternGroup;
     }
 
-    public void setPatterns(SortedList<PatternMetaData> patterns) {
-        this.patterns = patterns;
-        notifyPropertyChanged(BR.patterns);
+    public void setPatternGroup(String patternGroup) {
+        this.patternGroup = patternGroup;
+        notifyPropertyChanged(BR.patternGroup);
+    }
+
+    public Map<String, String> getPatternPaths() {
+        return patternPaths;
     }
 
 }
