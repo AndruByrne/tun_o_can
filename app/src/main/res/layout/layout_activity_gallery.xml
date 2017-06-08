@@ -117,7 +117,7 @@
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:numSpans="@{Integer.valueOf(2)}"
-            app:patternSet="@{com.anthropicandroid.patterngallery.interactors.PatternRepository.IMPORTED_PATTERN_URIS}"
+            app:patternGroup="@{svgGalleryViewModel.patternGroup}"
             app:spanCount="2"/>
 
         <RelativeLayout
