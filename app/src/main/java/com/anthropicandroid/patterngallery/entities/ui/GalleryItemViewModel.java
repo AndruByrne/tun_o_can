@@ -12,7 +12,7 @@ public class GalleryItemViewModel
         extends BaseObservable {
 
     private int width;
-    private int index;
+    private String uri;
     private int colorResId;
     private String description;
     private RawBitmapMeasurement rawBitmapMeasurement;
@@ -30,15 +30,15 @@ public class GalleryItemViewModel
     }
 
     @Bindable
-    public int getIndex() {
-        return index;
+    public String getUri() {
+        return uri;
     }
 
-    public void setIndex(
-            int index
+    public void setUri(
+            String uri
     ) {
-        this.index = index;
-        notifyPropertyChanged(BR.index);
+        this.uri = uri;
+        notifyPropertyChanged(BR.uri);
     }
 
     @Bindable
