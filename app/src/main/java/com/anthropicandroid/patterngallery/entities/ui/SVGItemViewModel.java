@@ -2,6 +2,7 @@ package com.anthropicandroid.patterngallery.entities.ui;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.graphics.drawable.Drawable;
 
 import com.anthropicandroid.patterngallery.BR;
 
@@ -18,6 +19,7 @@ public class SVGItemViewModel
     private String uri;
     private boolean wellBehaved;
     private int colorResId;
+    private Drawable drawable;
 
     @Bindable
     public int getLastKnownWidth() {
@@ -95,5 +97,15 @@ public class SVGItemViewModel
     public void setMaxChildWidth(int maxChildWidth) {
         this.maxChildWidth = maxChildWidth;
         notifyPropertyChanged(BR.maxChildWidth);
+    }
+
+    @Bindable
+    public Drawable getDrawable() {
+        return drawable;
+    }
+
+    public void setDrawable(Drawable drawable) {
+        this.drawable = drawable;
+        notifyPropertyChanged(BR.drawable);
     }
 }
