@@ -29,6 +29,6 @@ public class SVGDetailAdapter {
             final ImageView imageView,
             final SVGItemViewModel svgItemViewModel
     ) {
-       imageView.setImageDrawable(imageView.getContext().getResources().getDrawable(R.drawable.ic_empty_rect_24dp));
+       imageView.setImageDrawable(svgItemViewModel.getDrawable());
     }
 }
