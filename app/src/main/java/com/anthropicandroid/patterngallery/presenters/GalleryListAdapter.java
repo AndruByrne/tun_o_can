@@ -217,15 +217,26 @@ public class GalleryListAdapter
         if (holder instanceof BindingHolder) {
             LayoutGalleryImageBinding galleryImageBinding = ((BindingHolder) holder)
                     .getDataBinding();
-//            PatternMetaData patternMetaData = patterns.get(position);
 
             SVGItemViewModel svgItemViewModel = galleryImageBinding.getViewModel();
-            svgItemViewModel.setMaxChildWidth(maxChildWidth);
-            svgItemViewModel.setLastKnownWidth(0);
-            svgItemViewModel.setLastKnownHeight(0);
-            svgItemViewModel.setName("Pattern " + position);
             svgItemViewModel.setColorResId(bgColors.getResourceId(position % 8, R.color.colorOrange));
+            svgItemViewModel.setMaxChildWidth(maxChildWidth);
+            svgItemViewModel.setName("Pattern " + position);
+
+            if (position < patterns.size())
+                assignMetaData(svgItemViewModel, patterns.get(position));
         }
+    }
+
+    private void assignMetaData(
+            SVGItemViewModel svgItemViewModel,
+            PatternMetaData patternMetaData
+    ) {
+        svgItemViewModel.setLastKnownWidth(patternMetaData.getLastKnownWidth());
+        svgItemViewModel.setLastKnownHeight(patternMetaData.getLastKnownHeight());
+        svgItemViewModel.setUri(patternMetaData.getOriginalUri());
+        svgItemViewModel.setWellBehaved(patternMetaData.getWellBehaved());
+        svgItemViewModel.setName(patternMetaData.getName());
     }
 
     @Override
