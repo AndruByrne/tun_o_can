@@ -19,8 +19,8 @@
             type="com.anthropicandroid.patterngallery.presenters.GalleryActionHandlers"/>
 
         <variable
-            name="svgDetailViewModel"
-            type="com.anthropicandroid.patterngallery.entities.ui.SVGDetailViewModel"/>
+            name="svgItemViewModel"
+            type="com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel"/>
 
         <variable
             name="detailActionHandlers"
@@ -113,7 +113,8 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:minHeight="90dp"
-            android:padding="10dp"
+            android:orientation="vertical"
+            android:padding="@dimen/gallery_padding"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:numSpans="@{Integer.valueOf(2)}"
@@ -217,7 +218,7 @@
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
             android:visibility="gone"
-            app:svgDetailViewModel="@{svgDetailViewModel}"
+            app:svgDetailViewModel="@{svgItemViewModel}"
             />
 
         <LinearLayout
