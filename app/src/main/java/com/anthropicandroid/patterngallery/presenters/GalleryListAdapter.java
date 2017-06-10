@@ -48,8 +48,8 @@ public class GalleryListAdapter
             Integer numSpans,
             String patternGroup
     ) {
-        Activity       activity       = (Activity) view.getContext();
-        Resources      resources      = activity.getResources();
+        Activity  activity  = (Activity) view.getContext();
+        Resources resources = activity.getResources();
 
         // create and populate list adapter and give it to the view
         view.setAdapter(new GalleryListAdapter(
