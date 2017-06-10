@@ -95,12 +95,12 @@ public class PatternRepository {
                                             }
 
                                             @Override
-                                            public Integer getWidth() {
+                                            public Integer getLastKnownWidth() {
                                                 return width;
                                             }
 
                                             @Override
-                                            public Integer getHeight() {
+                                            public Integer getLastKnownHeight() {
                                                 return height;
                                             }
 

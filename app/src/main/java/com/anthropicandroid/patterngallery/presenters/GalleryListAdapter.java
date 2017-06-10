@@ -4,11 +4,15 @@ package com.anthropicandroid.patterngallery.presenters;
  * Created by Andrew Brin on 7/13/2016.
  */
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +21,9 @@ import android.view.ViewGroup;
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutGalleryImageBinding;
 import com.anthropicandroid.patterngallery.entities.interactions.PatternMetaData;
-import com.anthropicandroid.patterngallery.entities.ui.GalleryItemViewModel;
+import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
+import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivity;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
-import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -44,12 +48,17 @@ public class GalleryListAdapter
             Integer numSpans,
             String patternGroup
     ) {
+        Activity  activity  = (Activity) view.getContext();
+        Resources resources = activity.getResources();
+
         // create and populate list adapter and give it to the view
         view.setAdapter(new GalleryListAdapter(
                 galleryActivityComponent.getGalleryActionHandlers(),
                 galleryActivityComponent.getRepository().observePatterns(patternGroup),
-                galleryActivityComponent.getNarrowestScreenDimenInPx() / numSpans,
-                view.getContext().getResources().obtainTypedArray(R.array.bg_colors)));
+                (int) (galleryActivityComponent.getScreenWidthInPx() / numSpans  // Max width for a child
+                        - resources.getDimension(R.dimen.gallery_padding) * 2 / numSpans  // Account for padding across spans
+                        * galleryActivityComponent.getDisplayMetrics().xdpi / 160),  // Px-to-dp conversion factor
+                resources.obtainTypedArray(R.array.bg_colors)));
 
         view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
@@ -68,9 +77,6 @@ public class GalleryListAdapter
     }
 
 
-    private GalleryActionHandlers galleryActionHandlers;
-    private int childWidth;
-    private TypedArray bgColors;
     private SortedList<PatternMetaData> patterns = new SortedList<>(
             PatternMetaData.class,
             new SortedList.Callback<PatternMetaData>() {
@@ -129,19 +135,20 @@ public class GalleryListAdapter
                 ) {
                     return item1.getOriginalUri().equals(item2.getOriginalUri());
                 }
-            },
-            8);
+            });
+    private GalleryActionHandlers galleryActionHandlers;
+    private int maxChildWidth;
+    private TypedArray bgColors;
 
     private GalleryListAdapter(
             GalleryActionHandlers galleryActionHandlers,
             Observable<PatternMetaData> patternObservable,
-            int childWidth,
+            int maxChildWidth,
             TypedArray bgColors
     ) {
-        // class constructed by an annotated static function
 
         this.galleryActionHandlers = galleryActionHandlers;
-        this.childWidth = childWidth;
+        this.maxChildWidth = maxChildWidth;
         this.bgColors = bgColors;
 
         patternSubscription = patternObservable
@@ -179,7 +186,7 @@ public class GalleryListAdapter
             super(rowView);
             dataBinding = DataBindingUtil.bind(rowView);
             // add the binding objects
-            dataBinding.setViewModel(new GalleryItemViewModel());
+            dataBinding.setViewModel(new SVGItemViewModel());
             dataBinding.setGalleryActionHandlers(galleryActionHandlers);
         }
 
@@ -210,17 +217,21 @@ public class GalleryListAdapter
         if (holder instanceof BindingHolder) {
             LayoutGalleryImageBinding galleryImageBinding = ((BindingHolder) holder)
                     .getDataBinding();
+//            PatternMetaData patternMetaData = patterns.get(position);
 
-            GalleryItemViewModel galleryItemViewModel = galleryImageBinding.getViewModel();
-            galleryItemViewModel.setRawBitmapMeasurement(new RawBitmapMeasurement());
-            galleryItemViewModel.setWidth(childWidth);
-            galleryItemViewModel.setDescription("Photo " + position);
-            galleryItemViewModel.setColorResId(bgColors.getResourceId(position % 8, R.color.colorOrange));
+            SVGItemViewModel svgItemViewModel = galleryImageBinding.getViewModel();
+            svgItemViewModel.setMaxChildWidth(maxChildWidth);
+            svgItemViewModel.setLastKnownWidth(0);
+            svgItemViewModel.setLastKnownHeight(0);
+            svgItemViewModel.setName("Pattern " + position);
+            svgItemViewModel.setColorResId(bgColors.getResourceId(position % 8, R.color.colorOrange));
         }
     }
 
     @Override
     public int getItemCount() {
-        return patterns.size();
+//        return patterns.size();
+        int size = patterns.size();
+        return size > 8 ? size : 8;
     }
 }

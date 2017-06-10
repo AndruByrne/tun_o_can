@@ -8,41 +8,39 @@ import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
-import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.anthropicandroid.patterngallery.entities.interactions.PatternMetaData;
+import com.anthropicandroid.patterngallery.R;
+import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
-import com.anthropicandroid.patterngallery.entities.ui.GalleryItemViewModel;
-import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 public class GalleryImageAdapter {
 
     public static final String TAG = GalleryImageAdapter.class.getSimpleName();
 
-    @BindingAdapter("galleryItemViewModel")
-    public static void setImageIndex(
+    @BindingAdapter("svgItemViewModel")
+    public static void setItemViewModel(
             final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
-            final GalleryItemViewModel galleryItemViewModel
+            final SVGItemViewModel svgItemViewModel
     ) {
-        int width = galleryItemViewModel.getWidth();
+        int maxChildWidth = svgItemViewModel.getMaxChildWidth();
+        int width = svgItemViewModel.getLastKnownWidth();
+        int height = svgItemViewModel.getLastKnownHeight();
 
         // Set image parameters from assigned width
-        final int imageBoundsHeight = width * 3 / 5;
+//        final int imageBoundsHeight = width * 3 / 5;
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                width,
-                imageBoundsHeight);
+                maxChildWidth,
+                maxChildWidth);
         imageView.setLayoutParams(layoutParams);
 
         imageView.setBackgroundColor(ContextCompat.getColor(
                 imageView.getContext(),
-                galleryItemViewModel.getColorResId()));
+                svgItemViewModel.getColorResId()));
+
+        imageView.setImageDrawable(imageView.getContext().getResources().getDrawable(R.drawable.ic_empty_rect_24dp));
     }
 
     private static class GalleryImageHolder {

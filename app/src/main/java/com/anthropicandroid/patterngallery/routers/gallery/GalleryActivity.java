@@ -4,13 +4,13 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
 import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 import com.anthropicandroid.patterngallery.interactors.startup.PatternGalleryApplication;
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.patterngallery.presenters.DetailActionHandlers;
 import com.anthropicandroid.patterngallery.presenters.GalleryActionHandlers;
-import com.anthropicandroid.patterngallery.entities.ui.SVGDetailViewModel;
 
 import java.util.ArrayList;
 
@@ -51,7 +51,7 @@ public class GalleryActivity
         activityGalleryBinding.setGalleryActionHandlers(galleryActionHandlers);
         // and detail view
         activityGalleryBinding.setDetailActionHandlers(detailActionHandlers);
-        activityGalleryBinding.setSvgDetailViewModel(new SVGDetailViewModel());
+        activityGalleryBinding.setSvgItemViewModel(new SVGItemViewModel());
         // set app bar with relative layout base
         setSupportActionBar(activityGalleryBinding.appBar);
         activityGalleryBinding.appBar.setContentInsetsAbsolute(0, 0);
