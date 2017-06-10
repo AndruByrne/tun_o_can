@@ -9,8 +9,9 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.entities.interactions.PatternMetaData;
-import com.anthropicandroid.patterngallery.entities.ui.SVGDetailViewModel;
+import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
 import com.anthropicandroid.patterngallery.entities.ui.RawBitmapMeasurement;
 
@@ -26,10 +27,8 @@ public class SVGDetailAdapter {
     public static void setSVGDetailViewModel(
             final GalleryActivityComponent galleryActivityComponent,
             final ImageView imageView,
-            final SVGDetailViewModel svgDetailViewModel
+            final SVGItemViewModel svgItemViewModel
     ) {
-
-        final RawBitmapMeasurement rawBitmapMeasurement = svgDetailViewModel.getRawBitmapMeasurement();
-
+       imageView.setImageDrawable(imageView.getContext().getResources().getDrawable(R.drawable.ic_empty_rect_24dp));
     }
 }
