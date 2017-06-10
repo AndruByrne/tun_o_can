@@ -58,7 +58,7 @@ public class GalleryListAdapter
                 (int) (galleryActivityComponent.getScreenWidthInPx() / numSpans  // Max width for a child
                         - resources.getDimension(R.dimen.gallery_padding) * 2 / numSpans  // Account for padding across spans
                         * galleryActivityComponent.getDisplayMetrics().xdpi / 160),  // Px-to-dp conversion factor
-                resources.obtainTypedArray(R.array.bg_colors)));
+                resources));
 
         view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
@@ -138,18 +138,20 @@ public class GalleryListAdapter
             });
     private GalleryActionHandlers galleryActionHandlers;
     private int maxChildWidth;
+    private Resources resources;
     private TypedArray bgColors;
 
     private GalleryListAdapter(
             GalleryActionHandlers galleryActionHandlers,
             Observable<PatternMetaData> patternObservable,
             int maxChildWidth,
-            TypedArray bgColors
+            Resources resources
     ) {
 
         this.galleryActionHandlers = galleryActionHandlers;
         this.maxChildWidth = maxChildWidth;
-        this.bgColors = bgColors;
+        this.resources = resources;
+        this.bgColors = resources.obtainTypedArray(R.array.bg_colors);
 
         patternSubscription = patternObservable
                 .observeOn(AndroidSchedulers.mainThread())
@@ -217,11 +219,11 @@ public class GalleryListAdapter
         if (holder instanceof BindingHolder) {
             LayoutGalleryImageBinding galleryImageBinding = ((BindingHolder) holder)
                     .getDataBinding();
-
             SVGItemViewModel svgItemViewModel = galleryImageBinding.getViewModel();
             svgItemViewModel.setColorResId(bgColors.getResourceId(position % 8, R.color.colorOrange));
             svgItemViewModel.setMaxChildWidth(maxChildWidth);
             svgItemViewModel.setName("Pattern " + position);
+            svgItemViewModel.setDrawable(resources.getDrawable(R.drawable.ic_empty_rect_24dp));
 
             if (position < patterns.size())
                 assignMetaData(svgItemViewModel, patterns.get(position));
