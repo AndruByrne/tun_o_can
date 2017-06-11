@@ -43,7 +43,7 @@ public class GalleryImageAdapter {
                 imageView.getContext(),
                 svgItemViewModel.getColorResId()));
 
-        imageView.setImageDrawable(imageView.getContext().getResources().getDrawable(R.drawable.ic_empty_rect_24dp));
+        imageView.setImageDrawable(svgItemViewModel.getDrawable());
     }
 
     private static class GalleryImageHolder {
