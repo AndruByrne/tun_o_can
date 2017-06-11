@@ -11,7 +11,6 @@ import android.support.v4.util.Pair;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
 
