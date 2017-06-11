@@ -243,7 +243,6 @@ public class GalleryListAdapter
 
     @Override
     public int getItemCount() {
-//        return patterns.size();
         int size = patterns.size();
         return size > 8 ? size : 8;
     }
