@@ -25,15 +25,18 @@ public class GalleryImageAdapter {
             final ImageView imageView,
             final SVGItemViewModel svgItemViewModel
     ) {
-        int maxChildWidth = svgItemViewModel.getMaxChildWidth();
-        int width = svgItemViewModel.getLastKnownWidth();
-        int height = svgItemViewModel.getLastKnownHeight();
+        int   maxChildWidth = svgItemViewModel.getMaxChildWidth();
+        int   width         = svgItemViewModel.getLastKnownWidth();
+        int   height        = svgItemViewModel.getLastKnownHeight();
+        float heightToWidthRatio;
+        if (height == 0 || width == 0)
+            heightToWidthRatio = 1;
+        else heightToWidthRatio = height / width;
 
-        // Set image parameters from assigned width
-//        final int imageBoundsHeight = width * 3 / 5;
+        // Set image parameters from max possible width
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                maxChildWidth,
-                maxChildWidth);
+                maxChildWidth,  // The horizontal dimension will always be the maximum allowed
+                (int) (maxChildWidth * heightToWidthRatio));  // The vertical dimension will be variable
         imageView.setLayoutParams(layoutParams);
 
         imageView.setBackgroundColor(ContextCompat.getColor(
