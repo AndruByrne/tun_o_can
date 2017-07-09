@@ -63,7 +63,7 @@ public class GalleryListAdapter
         view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
             public void onViewAttachedToWindow(View view) {
-                Log.d(TAG, "I think the program will never get here");
+                Log.d(TAG, "attached gallery list view");
             }
 
             @Override
@@ -223,7 +223,6 @@ public class GalleryListAdapter
             svgItemViewModel.setColorResId(bgColors.getResourceId(position % 8, R.color.colorOrange));
             svgItemViewModel.setMaxChildWidth(maxChildWidth);
             svgItemViewModel.setName("Pattern " + position);
-            svgItemViewModel.setDrawable(resources.getDrawable(R.drawable.ic_empty_rect_24dp));
 
             if (position < patterns.size())
                 assignMetaData(svgItemViewModel, patterns.get(position));

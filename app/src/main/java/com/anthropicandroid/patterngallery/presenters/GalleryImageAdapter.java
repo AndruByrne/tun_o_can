@@ -4,15 +4,30 @@ package com.anthropicandroid.patterngallery.presenters;
  * Created by Andrew Brin on 7/13/2016.
  */
 
+import android.app.Activity;
+import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
+import android.graphics.Path;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
+import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringBufferInputStream;
+import java.io.StringReader;
 
 public class GalleryImageAdapter {
 
@@ -42,7 +57,8 @@ public class GalleryImageAdapter {
                 imageView.getContext(),
                 svgItemViewModel.getColorResId()));
 
-        imageView.setImageDrawable(svgItemViewModel.getDrawable());
+        Resources resources = ((Activity) imageView.getContext()).getResources();
+
     }
 
     private static class GalleryImageHolder {
