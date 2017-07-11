@@ -12,7 +12,9 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -89,39 +91,28 @@ public class GalleryToDetailAnimator
 
     private void detailImageAnim(
             Rect tappedRect,
-            ImageView detailImage,
+            final ImageView detailImage,
             float trueImageRatio,
             Rect mattingTargetRect
     ) {
         // Ratio of image starting width to screen width
         final float widthRatio = (float) tappedRect.width()
-                / ((float) mattingTargetRect.width() / 2);
-        // TODO: use TRANSLATION from the CENTER of the shape!!!
-        // half the shrinkage of the image is on the topside; that it is still there is what
-        // causes distortion; the final height is determined by the true ratio and the screen width
-        int startingTop = tappedRect.top -
-                ((int) (((float) mattingTargetRect.width() / trueImageRatio) / 2));
-        // the X axis is similar; 0 centers a former match_parent shunk to a pint in the middle
-        // of the screen, 1/2 screen to the left to start on left side
-        int startingLeft = (2 * tappedRect.left - mattingTargetRect.width() + tappedRect.width()) / 2;
-//        detailImage.setY(tappedRect.top);
-//        detailImage.setX(tappedRect.left);
-//        detailImage.setZ(resources.getInteger(R.integer.z_position_detail_image_start));
-        // image anim init
+                / ((float) detailImage.getWidth());
+
+        Log.d(getClass().getSimpleName(), "scaling to widthRatio:" + widthRatio);
+
+        float galleryPadding = resources.getDimension(R.dimen.gallery_padding);
+        detailImage.setTranslationX(galleryPadding + tappedRect.left - detailImage.getLeft());
+        detailImage.setTranslationY(galleryPadding + tappedRect.top - detailImage.getTop());
+        detailImage.setTranslationZ(-4);
         detailImage.setScaleX(widthRatio);
         detailImage.setScaleY(widthRatio);
         detailImage.setVisibility(View.VISIBLE);
 
-        Log.d(getClass().getSimpleName(), "animating image with cuurent Rect");
-        Log.d(getClass().getSimpleName(), "startingTop: " + detailImage.getTop());
-        Log.d(getClass().getSimpleName(), "startingLeft: " + detailImage.getLeft());
-        Log.d(getClass().getSimpleName(), "startingHeight: " + detailImage.getHeight());
-        Log.d(getClass().getSimpleName(), "startingWidth: " + detailImage.getWidth());
-
         detailImage.animate()
-                .translationY((mattingTargetRect.height() - (mattingTargetRect.width() / trueImageRatio)) / 2)
-                .translationX(mattingTargetRect.left)
-                .translationZ(8)
+                .translationY(0)
+                .translationX(0)
+                .translationZ(0)
 //                .translationZ(resources.getInteger(R.integer.z_position_detail_image_emd))
                 .scaleX(1)
                 .scaleY(1)
@@ -142,6 +133,8 @@ public class GalleryToDetailAnimator
                     public void onAnimationStart(Animator animation) {
                         super.onAnimationStart(animation);
                         Log.d(getClass().getSimpleName(), "image animation started");
+                        Log.d(getClass().getSimpleName(), "Y: " + detailImage.getY());
+                        Log.d(getClass().getSimpleName(), "Y trans: " + detailImage.getTranslationY());
                     }
                 });
     }
@@ -167,7 +160,7 @@ public class GalleryToDetailAnimator
         mattingLayout.setPivotX(clickRawX);
         mattingLayout.setPivotY(clickRawY);
         mattingLayout.requestFocus();
-        mattingLayout.setVisibility(View.INVISIBLE);
+        mattingLayout.setVisibility(View.VISIBLE);
 
         // I do not like this way of animating at all; regular animation objects are better
 
@@ -182,7 +175,13 @@ public class GalleryToDetailAnimator
                 .setListener(getNoFocusWhileAnimatingListener(mattingLayout))
                 .setInterpolator(new DecelerateInterpolator(2f));
     }
-
+    public static int dipToPixels(
+            DisplayMetrics metrics,
+            float dipValue
+    ) {
+        // Converts DP to Pixels
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
+    }
     @NonNull
     private static AnimatorListenerAdapter getNoFocusWhileAnimatingListener(
             final View view

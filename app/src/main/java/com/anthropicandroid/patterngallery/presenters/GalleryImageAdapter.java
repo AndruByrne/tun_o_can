@@ -33,6 +33,7 @@ public class GalleryImageAdapter {
 
     public static final String TAG = GalleryImageAdapter.class.getSimpleName();
 
+//    TODO: remove this class
     @BindingAdapter("svgItemViewModel")
     public static void setItemViewModel(
             final GalleryActivityComponent galleryActivityComponent,
