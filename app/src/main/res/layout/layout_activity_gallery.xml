@@ -215,9 +215,11 @@
         <ImageView
             android:id="@+id/svg_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            app:layout_anchor="@id/chord_outline"
+            app:layout_anchorGravity="top|center_vertical"
             android:scaleType="centerInside"
-            android:visibility="gone"
+            android:background="@color/colorLightGreen"
             app:svgDetailViewModel="@{svgItemViewModel}"
             />
 

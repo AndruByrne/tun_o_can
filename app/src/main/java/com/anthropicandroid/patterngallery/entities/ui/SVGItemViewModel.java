@@ -2,9 +2,20 @@ package com.anthropicandroid.patterngallery.entities.ui;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.graphics.drawable.Drawable;
+import android.graphics.Path;
+import android.graphics.PathMeasure;
+import android.support.v4.util.Pair;
+import android.util.Log;
 
 import com.anthropicandroid.patterngallery.BR;
+import com.google.common.collect.Lists;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action0;
+import rx.functions.Action2;
+import rx.functions.Func0;
+import rx.functions.Func1;
 
 /*
  * Created by Andrew Brin on 7/16/2016.
@@ -16,10 +27,10 @@ public class SVGItemViewModel
     private int maxChildWidth;
     private int lastKnownWidth;
     private int lastKnownHeight;
-    private String uri;
+    private String pathPoints;
     private boolean wellBehaved;
     private int colorResId;
-    private Drawable drawable;
+    private Path path;
 
     @Bindable
     public int getLastKnownWidth() {
@@ -44,15 +55,62 @@ public class SVGItemViewModel
     }
 
     @Bindable
-    public String getUri() {
-        return uri;
+    public String getPathPoints() {
+        return pathPoints;
     }
 
-    public void setUri(
-            String uri
+    public void setPathPoints(
+            String pathPoints
     ) {
-        this.uri = uri;
-        notifyPropertyChanged(BR.uri);
+        Log.d(getClass().getSimpleName(), "setting p[ath points");
+        this.pathPoints = pathPoints;
+        this.path = Observable
+                .just(pathPoints)
+                .doOnCompleted(new Action0() {
+                    @Override
+                    public void call() {
+                        notifyPropertyChanged(BR.pathPoints);
+                        notifyPropertyChanged(BR.path);
+                    }
+                })
+                .flatMapIterable(new Func1<String, Iterable<String>>() {
+                    @Override
+                    public Iterable<String> call(String s) {
+                        return Lists.newArrayList(s.split("/"));
+                    }
+                })
+                .map(new Func1<String, String[]>() {
+                    @Override
+                    public String[] call(String s) {
+                        return s.split(",");
+                    }
+                })
+                .map(new Func1<String[], float[]>() {
+                    @Override
+                    public float[] call(String[] strings) {
+                        float[] floats = new float[2];
+                        floats[0] = Float.valueOf(strings[0]);
+                        floats[1] = Float.valueOf(strings[1]);
+                        return floats;
+                    }
+                })
+                .collect(new Func0<Path>() {
+                    @Override
+                    public Path call() {
+                        Path path = new Path();
+                        return path;  // TODO: play the first path in a Move
+                    }
+                }, new Action2<Path, float[]>() {
+                    @Override
+                    public void call(Path path, float[] floats) {
+                        path.lineTo(floats[0], floats[1]);
+                    }
+                })
+                .toBlocking()
+                .first();
+        Log.d(getClass().getSimpleName(), "Created path, is it empyty? "+path.isEmpty());
+        PathMeasure pathMeasure = new PathMeasure(path, false);
+        Log.d(getClass().getSimpleName(), "path length: "+pathMeasure.getLength());
     }
 
     @Bindable
@@ -99,4 +157,8 @@ public class SVGItemViewModel
         notifyPropertyChanged(BR.maxChildWidth);
     }
 
+    @Bindable
+    public Path getPath() {
+        return path == null ? new Path() : path;
+    }
 }

@@ -6,6 +6,7 @@ import android.support.v7.util.SortedList;
 
 import com.anthropicandroid.patterngallery.BR;
 import com.anthropicandroid.patterngallery.entities.interactions.PatternMetaData;
+import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,22 +17,9 @@ import java.util.Map;
 public class SVGGalleryViewModel
         extends BaseObservable {
 
-    String patternGroup;
-
-    Map<String, String> patternPaths = new HashMap<>();
-
     @Bindable
     public String getPatternGroup() {
-        return patternGroup;
-    }
-
-    public void setPatternGroup(String patternGroup) {
-        this.patternGroup = patternGroup;
-        notifyPropertyChanged(BR.patternGroup);
-    }
-
-    public Map<String, String> getPatternPaths() {
-        return patternPaths;
+        return PatternRepository.READ_ONLY_PATTERNS;
     }
 
 }

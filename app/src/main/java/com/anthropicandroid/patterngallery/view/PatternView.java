@@ -28,14 +28,12 @@ public class PatternView
     final Paint writePaint = new Paint() {{
         setAntiAlias(false);
         setStyle(Style.STROKE);
-        setStrokeWidth(1f);
-        setStrokeCap(Cap.BUTT);
-        setStrokeJoin(Join.MITER);
-        setColor(Color.argb(150, 0,255,0));
+        setStrokeWidth(4f);
+        setColor(Color.BLACK);
         setAlpha(255);
     }};
     private SVGItemViewModel viewModel;
-    private Path viewPath = new Path();
+    private Path viewPath;
     private Matrix viewMatrix = new Matrix();
     private RectF computedPathBounds = new RectF();
     private RectF viewRect = new RectF();
@@ -70,12 +68,18 @@ public class PatternView
                         .getViewModel();
 
                 int maxChildWidth = viewModel.getMaxChildWidth();
-                int width = viewModel.getLastKnownWidth();
-                int height = viewModel.getLastKnownHeight();
+                viewPath = viewModel.getPath();
+                RectF rectF = new RectF();
+                viewPath.computeBounds(rectF, true);
+//                int width = viewModel.getLastKnownWidth();
+//                int height = viewModel.getLastKnownHeight();
                 float heightToWidthRatio;
-                if (height == 0 || width == 0)
+                if (viewPath.isEmpty())
                     heightToWidthRatio = 1;
-                else heightToWidthRatio = height / width;
+                else heightToWidthRatio = rectF.height() / rectF.width();
+//                if (height == 0 || width == 0)
+//                    heightToWidthRatio = 1;
+//                else heightToWidthRatio = (float)height / (float)width;
                 setBackgroundColor(ContextCompat.getColor(
                         view.getContext(),
                         R.color.colorLightMatteGray));
@@ -102,20 +106,8 @@ public class PatternView
         int heightPadding = getHeight()/5;
 
         viewMatrix.reset();
-        viewPath.reset();
-
-        viewPath.moveTo(0, 0);
-        viewPath.rLineTo(10, 0);
-        viewPath.rLineTo(5, 5);
-        viewPath.rLineTo(5, -5);
-        viewPath.rLineTo(10, 1);
-        viewPath.rLineTo(0, 19);
-        viewPath.rLineTo(-20, 0);
-        viewPath.rLineTo(-4, -10);
-        viewPath.rLineTo(-6, 0);
-        viewPath.rLineTo(0, -10);
         viewPath.computeBounds(computedPathBounds, true);
-
+//
         viewRect.set(
                 (float) (widthPadding ),
                 (float) (heightPadding),

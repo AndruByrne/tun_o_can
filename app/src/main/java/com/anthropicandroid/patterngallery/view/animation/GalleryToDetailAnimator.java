@@ -51,9 +51,9 @@ public class GalleryToDetailAnimator
 
 
     public void zoomToReplace(
-            Rect currentRect,
+            Rect tappedRect,
             View mattingLayout,
-            ImageView newImage,
+            ImageView detailImage,
             float trueImageRatio,
             int clickRawX,
             int clickRawY,
@@ -62,64 +62,88 @@ public class GalleryToDetailAnimator
         // hold a reference to the data binding to request unanimation
         binding = DataBindingUtil.findBinding(galleryGrid);
         // get rect to draw into
-        Rect  targetRect   = new Rect();
-        Point targetOffset = new Point();
-        if (galleryGrid.getGlobalVisibleRect(targetRect, targetOffset)) {
-            targetRect.offset(-targetOffset.x, statusBarHeight - targetOffset.y);
+        Rect mattingTargetRect = new Rect();
+        Point mattingTargetOffset = new Point();
+        if (galleryGrid.getGlobalVisibleRect(mattingTargetRect, mattingTargetOffset)) {
+
+            mattingTargetRect.offset(-mattingTargetOffset.x, statusBarHeight - mattingTargetOffset.y);
+
             // get imageview animation
-            detailImageAnim(currentRect, newImage, trueImageRatio, targetRect);
+            detailImageAnim(
+                    tappedRect,
+                    detailImage,
+                    trueImageRatio,
+                    mattingTargetRect);
 
             // get animation for fast matte
             detailMattingAnim(
                     mattingLayout,
-                    targetRect,
+                    mattingTargetRect,
                     clickRawX,
-                    clickRawY
-            );
-            detailToGalleryAnimator.storeRecentRect(currentRect);
+                    clickRawY);
+
+            detailToGalleryAnimator.storeRecentRect(tappedRect);
             backPressedRepo.addHandler(this);
         }
     }
 
     private void detailImageAnim(
-            Rect currentRect,
-            ImageView newImage,
+            Rect tappedRect,
+            ImageView detailImage,
             float trueImageRatio,
-            Rect targetRect
+            Rect mattingTargetRect
     ) {
         // Ratio of image starting width to screen width
-        final float widthRatio = (float) currentRect.width() / targetRect.width();
-        // image anim init
-        newImage.setScaleX(widthRatio);
-        newImage.setScaleY(widthRatio);
+        final float widthRatio = (float) tappedRect.width()
+                / ((float) mattingTargetRect.width() / 2);
         // TODO: use TRANSLATION from the CENTER of the shape!!!
         // half the shrinkage of the image is on the topside; that it is still there is what
         // causes distortion; the final height is determined by the true ratio and the screen width
-        int startingTop = currentRect.top -
-                ((int) (((float) targetRect.width() / trueImageRatio) / 2));
+        int startingTop = tappedRect.top -
+                ((int) (((float) mattingTargetRect.width() / trueImageRatio) / 2));
         // the X axis is similar; 0 centers a former match_parent shunk to a pint in the middle
         // of the screen, 1/2 screen to the left to start on left side
-        int startingLeft = (2 * currentRect.left - targetRect.width() + currentRect.width()) / 2;
-        newImage.setY(currentRect.centerY());
-        newImage.setX(startingLeft);
-        newImage.setZ(resources.getInteger(R.integer.z_position_detail_image_start));
-        newImage.setVisibility(View.VISIBLE);
+        int startingLeft = (2 * tappedRect.left - mattingTargetRect.width() + tappedRect.width()) / 2;
+//        detailImage.setY(tappedRect.top);
+//        detailImage.setX(tappedRect.left);
+//        detailImage.setZ(resources.getInteger(R.integer.z_position_detail_image_start));
+        // image anim init
+        detailImage.setScaleX(widthRatio);
+        detailImage.setScaleY(widthRatio);
+        detailImage.setVisibility(View.VISIBLE);
 
         Log.d(getClass().getSimpleName(), "animating image with cuurent Rect");
-        Log.d(getClass().getSimpleName(), "centerY: "+ currentRect.centerY());
+        Log.d(getClass().getSimpleName(), "startingTop: " + detailImage.getTop());
+        Log.d(getClass().getSimpleName(), "startingLeft: " + detailImage.getLeft());
+        Log.d(getClass().getSimpleName(), "startingHeight: " + detailImage.getHeight());
+        Log.d(getClass().getSimpleName(), "startingWidth: " + detailImage.getWidth());
 
-        newImage.animate()
-                .translationY(targetRect.centerY() - currentRect.centerY())
-                .translationX(targetRect.centerX() - currentRect.centerX())
-                .translationZ(resources.getInteger(R.integer.z_position_detail_image_emd))
+        detailImage.animate()
+                .translationY((mattingTargetRect.height() - (mattingTargetRect.width() / trueImageRatio)) / 2)
+                .translationX(mattingTargetRect.left)
+                .translationZ(8)
+//                .translationZ(resources.getInteger(R.integer.z_position_detail_image_emd))
                 .scaleX(1)
                 .scaleY(1)
-                .setListener(getNoFocusWhileAnimatingListener(newImage))
+                .setListener(getNoFocusWhileAnimatingListener(detailImage))
                 .setStartDelay(resources.getInteger(R.integer.duration_gallery_to_detail)
-                                       / 4)
+                        / 4)
                 .setDuration(resources.getInteger(R.integer.duration_gallery_to_detail)
-                                     * 3 / 4)
-                .setInterpolator(new LinearInterpolator());
+                        * 3 / 4)
+                .setInterpolator(new LinearInterpolator())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        Log.d(getClass().getSimpleName(), "image animation ended");
+                        super.onAnimationEnd(animation);
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        Log.d(getClass().getSimpleName(), "image animation started");
+                    }
+                });
     }
 
     private void detailMattingAnim(
@@ -129,10 +153,10 @@ public class GalleryToDetailAnimator
             int clickRawY
     ) {
         // matting anim init
-        int mattingWidthScaleShift  = mattingLayout.getWidth() / 2;
+        int mattingWidthScaleShift = mattingLayout.getWidth() / 2;
         int mattingHeightScaleShift = mattingLayout.getHeight() / 2;
-        int offsetY                 = clickRawY - mattingHeightScaleShift;
-        int offsetX                 = clickRawX - mattingWidthScaleShift;
+        int offsetY = clickRawY - mattingHeightScaleShift;
+        int offsetX = clickRawX - mattingWidthScaleShift;
 
         mattingLayout.setScaleX(0);
         mattingLayout.setScaleY(0);
@@ -143,7 +167,7 @@ public class GalleryToDetailAnimator
         mattingLayout.setPivotX(clickRawX);
         mattingLayout.setPivotY(clickRawY);
         mattingLayout.requestFocus();
-        mattingLayout.setVisibility(View.VISIBLE);
+        mattingLayout.setVisibility(View.INVISIBLE);
 
         // I do not like this way of animating at all; regular animation objects are better
 
