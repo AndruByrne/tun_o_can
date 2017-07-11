@@ -12,7 +12,7 @@ public abstract class PatternMetaData {
 
     public abstract Integer getLastKnownHeight();
 
-    public abstract String getOriginalUri();
+    public abstract String getPathPoints();
 
     public abstract Boolean getWellBehaved();
 
@@ -28,7 +28,7 @@ public abstract class PatternMetaData {
         if (!getName().equals(that.getName())) return false;
         if (!getLastKnownWidth().equals(that.getLastKnownWidth())) return false;
         if (!getLastKnownHeight().equals(that.getLastKnownHeight())) return false;
-        if (!getOriginalUri().equals(that.getOriginalUri())) return false;
+        if (!getPathPoints().equals(that.getPathPoints())) return false;
         if (!getWellBehaved().equals(that.getWellBehaved())) return false;
         return getNumPermutations().equals(that.getNumPermutations());
 
@@ -39,7 +39,7 @@ public abstract class PatternMetaData {
         int result = getName().hashCode();
         result = 31 * result + getLastKnownWidth().hashCode();
         result = 31 * result + getLastKnownHeight().hashCode();
-        result = 31 * result + getOriginalUri().hashCode();
+        result = 31 * result + getPathPoints().hashCode();
         result = 31 * result + getWellBehaved().hashCode();
         result = 31 * result + getNumPermutations().hashCode();
         return result;

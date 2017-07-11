@@ -29,5 +29,6 @@ public class SVGDetailAdapter {
             final ImageView imageView,
             final SVGItemViewModel svgItemViewModel
     ) {
+
     }
 }

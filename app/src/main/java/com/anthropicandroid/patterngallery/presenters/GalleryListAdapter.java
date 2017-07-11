@@ -5,14 +5,12 @@ package com.anthropicandroid.patterngallery.presenters;
  */
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +20,6 @@ import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutGalleryImageBinding;
 import com.anthropicandroid.patterngallery.entities.interactions.PatternMetaData;
 import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
-import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivity;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
 
 import rx.Observable;
@@ -54,7 +51,7 @@ public class GalleryListAdapter
         // create and populate list adapter and give it to the view
         view.setAdapter(new GalleryListAdapter(
                 galleryActivityComponent.getGalleryActionHandlers(),
-                galleryActivityComponent.getRepository().observePatterns(patternGroup),
+                galleryActivityComponent.getRepository().observePatterns(patternGroup).take(8),
                 (int) (galleryActivityComponent.getScreenWidthInPx() / numSpans  // Max width for a child
                         - resources.getDimension(R.dimen.gallery_padding) * 2 / numSpans  // Account for padding across spans
                         * galleryActivityComponent.getDisplayMetrics().xdpi / 160),  // Px-to-dp conversion factor
@@ -93,7 +90,7 @@ public class GalleryListAdapter
                         int position,
                         int count
                 ) {
-                    onInserted(position, count);
+                    notifyDataSetChanged();
                 }
 
                 @Override
@@ -101,7 +98,7 @@ public class GalleryListAdapter
                         int position,
                         int count
                 ) {
-                    onRemoved(position, count);
+                    notifyDataSetChanged();
                 }
 
                 @Override
@@ -109,7 +106,7 @@ public class GalleryListAdapter
                         int fromPosition,
                         int toPosition
                 ) {
-                    onMoved(fromPosition, toPosition);
+                    notifyDataSetChanged();
                 }
 
                 @Override
@@ -117,7 +114,7 @@ public class GalleryListAdapter
                         int position,
                         int count
                 ) {
-                    onChanged(position, count);
+                    notifyDataSetChanged();
                 }
 
                 @Override
@@ -133,7 +130,7 @@ public class GalleryListAdapter
                         PatternMetaData item1,
                         PatternMetaData item2
                 ) {
-                    return item1.getOriginalUri().equals(item2.getOriginalUri());
+                    return item1.getPathPoints().equals(item2.getPathPoints());
                 }
             });
     private GalleryActionHandlers galleryActionHandlers;
@@ -170,7 +167,7 @@ public class GalleryListAdapter
                     @Override
                     public void onNext(PatternMetaData patternMetaData) {
                         patterns.add(patternMetaData);
-                        Log.d(TAG, "gallery list adapter");
+                        Log.d(TAG, "pattern observable onNext");
                     }
                 });
     }
@@ -223,7 +220,10 @@ public class GalleryListAdapter
             svgItemViewModel.setColorResId(bgColors.getResourceId(position % 8, R.color.colorOrange));
             svgItemViewModel.setMaxChildWidth(maxChildWidth);
             svgItemViewModel.setName("Pattern " + position);
+            svgItemViewModel.setLastKnownHeight(400);
+            svgItemViewModel.setLastKnownWidth(900);
 
+            Log.d(getClass().getSimpleName(), "at position: "+position+" and the count is: "+patterns.size());
             if (position < patterns.size())
                 assignMetaData(svgItemViewModel, patterns.get(position));
         }
@@ -233,16 +233,16 @@ public class GalleryListAdapter
             SVGItemViewModel svgItemViewModel,
             PatternMetaData patternMetaData
     ) {
+        Log.d(getClass().getSimpleName(), "assigning a data");
         svgItemViewModel.setLastKnownWidth(patternMetaData.getLastKnownWidth());
         svgItemViewModel.setLastKnownHeight(patternMetaData.getLastKnownHeight());
-        svgItemViewModel.setUri(patternMetaData.getOriginalUri());
+        svgItemViewModel.setPathPoints(patternMetaData.getPathPoints());
         svgItemViewModel.setWellBehaved(patternMetaData.getWellBehaved());
         svgItemViewModel.setName(patternMetaData.getName());
     }
 
     @Override
     public int getItemCount() {
-        int size = patterns.size();
-        return size > 8 ? size : 8;
+        return patterns.size();
     }
 }

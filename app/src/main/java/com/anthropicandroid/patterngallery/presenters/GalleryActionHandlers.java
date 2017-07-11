@@ -49,26 +49,26 @@ final public class GalleryActionHandlers {
     }
 
     private boolean bindDataAndAnimate(
-            View view,
+            View tappedView,
             int clickRawX,
             int clickRawY
     ) {
         if (activityGalleryBinding == null) activityGalleryBinding = DataBindingUtil
-                .findBinding((View) view.getParent().getParent());
+                .findBinding((View) tappedView.getParent().getParent());
 
-        LayoutGalleryImageBinding gridItemBinding    = DataBindingUtil.findBinding(view);
+        LayoutGalleryImageBinding gridItemBinding    = DataBindingUtil.findBinding(tappedView);
         SVGItemViewModel          svgItemViewModel   = gridItemBinding.getViewModel();
-        Rect                      currentViewBounds  = new Rect();
+        Rect                      tappedViewBounds  = new Rect();
 
         // measure current view
-        view.getGlobalVisibleRect(currentViewBounds);
+        tappedView.getGlobalVisibleRect(tappedViewBounds);
 
         activityGalleryBinding.setSvgItemViewModel(svgItemViewModel);
 
         // animate the detail in
         //  TODO: discuss the identity between the animator and the handlers; maybe a useful concept
         animator.zoomToReplace(
-                currentViewBounds,
+                tappedViewBounds,
                 activityGalleryBinding.alphaDetailMattingLayout,
                 activityGalleryBinding.svgDetail,
                 (float) svgItemViewModel.getLastKnownWidth() /
