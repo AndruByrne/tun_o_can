@@ -112,7 +112,7 @@
             android:minHeight="90dp"
             android:orientation="vertical"
             android:padding="@dimen/gallery_padding"
-            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            app:layoutManager="android.support.v7.widget.StaggeredGridLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:numSpans="@{Integer.valueOf(2)}"
             app:patternGroup="@{svgGalleryViewModel.patternGroup}"
@@ -202,13 +202,10 @@
 
         </RelativeLayout>
 
-        <ImageView
+        <com.anthropicandroid.patterngallery.view.PatternDetailView
             android:id="@+id/svg_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorLightText"
-            android:alpha=".2"
-            android:scaleType="centerInside"
             android:elevation="14dp"
             app:layout_anchor="@id/root_app_bar_layout"
             app:layout_anchorGravity="bottom|center_vertical"

@@ -5,6 +5,7 @@ package com.anthropicandroid.patterngallery.view.animation;
  */
 
 import android.app.Application;
+import android.util.DisplayMetrics;
 
 import com.anthropicandroid.patterngallery.routers.gallery.BackPressedRepo;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityScope;
@@ -23,11 +24,13 @@ public class AnimatorModule {
             BackPressedRepo backPressedRepo,
             @Named("StatusBarHeight") int statusBarHeight,
             DetailToGalleryAnimator detailToGalleryAnimator,
+            DisplayMetrics displayMetrics,
             Application context
     ) {
         return new GalleryToDetailAnimator(
                 backPressedRepo,
                 detailToGalleryAnimator,
+                displayMetrics,
                 statusBarHeight,
                 context.getResources());
     }
