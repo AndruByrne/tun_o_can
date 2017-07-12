@@ -230,7 +230,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
-                android:drawableTop="@drawable/ic_plus_one_black_24dp" />
+                android:drawableTop="@drawable/ic_measure_black_24dp"
+                />
 
             <Button
                 android:id="@+id/document"
@@ -241,10 +242,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
-                android:drawableTop="@drawable/ic_message_black_24dp" />
+                android:drawableTop="@drawable/ic_tool_black_24dp" />
 
             <Button
-                android:id="@+id/just_plus"
+                android:id="@+id/all_done"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -252,7 +253,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
-                android:drawableTop="@drawable/ic_add_black_24dp" />
+                android:drawableTop="@drawable/ic_reverse_black_24dp"
+                />
 
             <Button
                 android:id="@+id/forward"
@@ -263,8 +265,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
-                android:drawableTop="@drawable/ic_share_backwards_black_24dp"
-                android:scaleX="-1" />
+                android:drawableTop="@drawable/ic_done_all_black_24dp"
+                />
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
