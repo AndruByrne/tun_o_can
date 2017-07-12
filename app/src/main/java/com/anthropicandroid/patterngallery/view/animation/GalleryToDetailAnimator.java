@@ -8,6 +8,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
@@ -22,7 +26,9 @@ import android.widget.ImageView;
 
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
+import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
 import com.anthropicandroid.patterngallery.routers.gallery.BackPressedRepo;
+import com.anthropicandroid.patterngallery.view.PatternDetailView;
 
 public class GalleryToDetailAnimator
         implements BackPressedRepo.BackPressedHandler {
@@ -30,6 +36,7 @@ public class GalleryToDetailAnimator
     public static final String TAG = GalleryToDetailAnimator.class.getSimpleName();
     private BackPressedRepo backPressedRepo;
     private DetailToGalleryAnimator detailToGalleryAnimator;
+    private DisplayMetrics displayMetrics;
     private int statusBarHeight;
     private Resources resources;
     private LayoutActivityGalleryBinding binding;
@@ -37,11 +44,13 @@ public class GalleryToDetailAnimator
     public GalleryToDetailAnimator(
             BackPressedRepo backPressedRepo,
             DetailToGalleryAnimator detailToGalleryAnimator,
+            DisplayMetrics displayMetrics,
             int statusBarHeight,
             Resources resources
     ) {
         this.backPressedRepo = backPressedRepo;
         this.detailToGalleryAnimator = detailToGalleryAnimator;
+        this.displayMetrics = displayMetrics;
         this.statusBarHeight = statusBarHeight;
         this.resources = resources;
     }
@@ -55,7 +64,7 @@ public class GalleryToDetailAnimator
     public void zoomToReplace(
             Rect tappedRect,
             View mattingLayout,
-            ImageView detailImage,
+            PatternDetailView detailImage,
             float trueImageRatio,
             int clickRawX,
             int clickRawY,
@@ -91,17 +100,18 @@ public class GalleryToDetailAnimator
 
     private void detailImageAnim(
             Rect tappedRect,
-            final ImageView detailImage,
+            final PatternDetailView detailImage,
             float trueImageRatio,
             Rect mattingTargetRect
     ) {
+        final SVGItemViewModel svgItemViewModel = ((LayoutActivityGalleryBinding) DataBindingUtil.findBinding(detailImage)).getSvgItemViewModel();
+
         // Ratio of image starting width to screen width
         final float widthRatio = (float) tappedRect.width()
                 / ((float) detailImage.getWidth());
 
-        Log.d(getClass().getSimpleName(), "scaling to widthRatio:" + widthRatio);
-
-        float galleryPadding = resources.getDimension(R.dimen.gallery_padding);
+        Log.d(getClass().getSimpleName(), "defining detail image anim");
+        float galleryPadding = dipToPixels(displayMetrics, resources.getDimension(R.dimen.gallery_padding));
         detailImage.setTranslationX(galleryPadding + tappedRect.left - detailImage.getLeft());
         detailImage.setTranslationY(galleryPadding + tappedRect.top - detailImage.getTop());
         detailImage.setTranslationZ(-4);
@@ -109,11 +119,19 @@ public class GalleryToDetailAnimator
         detailImage.setScaleY(widthRatio);
         detailImage.setVisibility(View.VISIBLE);
 
+        final Paint paint = new Paint() {{
+            setAntiAlias(false);
+            setStyle(Style.STROKE);
+            setStrokeWidth(4f);
+            setColor(Color.WHITE);
+            setAlpha(255);
+        }};
+
+
         detailImage.animate()
                 .translationY(0)
                 .translationX(0)
                 .translationZ(0)
-//                .translationZ(resources.getInteger(R.integer.z_position_detail_image_emd))
                 .scaleX(1)
                 .scaleY(1)
                 .setListener(getNoFocusWhileAnimatingListener(detailImage))
@@ -127,6 +145,13 @@ public class GalleryToDetailAnimator
                     public void onAnimationEnd(Animator animation) {
                         Log.d(getClass().getSimpleName(), "image animation ended");
                         super.onAnimationEnd(animation);
+                        Canvas canvas = new Canvas(Bitmap.createBitmap((int) detailImage.getWidth(), (int) detailImage.getHeight(), Bitmap.Config.ARGB_8888));
+                        canvas.save();
+                        canvas.drawPath(svgItemViewModel.getPath(), paint);
+                        canvas.translate(detailImage.getLeft(), detailImage.getTop());
+                        detailImage.draw(canvas);
+                        canvas.restore();
+
                     }
 
                     @Override
@@ -175,6 +200,7 @@ public class GalleryToDetailAnimator
                 .setListener(getNoFocusWhileAnimatingListener(mattingLayout))
                 .setInterpolator(new DecelerateInterpolator(2f));
     }
+
     public static int dipToPixels(
             DisplayMetrics metrics,
             float dipValue
@@ -182,6 +208,7 @@ public class GalleryToDetailAnimator
         // Converts DP to Pixels
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
+
     @NonNull
     private static AnimatorListenerAdapter getNoFocusWhileAnimatingListener(
             final View view
