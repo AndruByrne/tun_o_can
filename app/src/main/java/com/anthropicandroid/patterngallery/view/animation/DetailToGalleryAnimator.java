@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
+import com.anthropicandroid.patterngallery.view.PatternDetailView;
 
 /*
  * Created by Andrew Brin on 7/19/2016.
@@ -57,7 +58,6 @@ public class DetailToGalleryAnimator {
                                                              .duration_detail_to_gallery_animator));
         animatorSet.addListener(getActionListener(binding));
         animatorSet.start();
-        binding.svgDetail.setImageBitmap(null);
         return true;
     }
 
@@ -88,7 +88,7 @@ public class DetailToGalleryAnimator {
     }
 
     private AnimatorSet getImageAnim(
-            ImageView imageView,
+            PatternDetailView imageView,
             Rect currentRect
     ) {
         AnimatorSet animatorSet = new AnimatorSet();
@@ -119,7 +119,7 @@ public class DetailToGalleryAnimator {
             public void onAnimationEnd(Animator animation) {
                 binding.alphaDetailMattingLayout.setVisibility(View.GONE);
                 binding.svgDetail.setVisibility(View.GONE);
-                binding.svgDetail.setImageBitmap(null);
+//                binding.getSvgItemViewModel().setPathPoints("");
                 super.onAnimationEnd(animation);
             }
 

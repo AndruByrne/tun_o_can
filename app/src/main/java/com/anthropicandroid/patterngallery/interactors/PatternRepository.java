@@ -12,29 +12,24 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.anthropicandroid.patterngallery.entities.interactions.PatternMetaData;
-import com.google.common.collect.Lists;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 import rx.Observable;
-import rx.functions.Action0;
 import rx.functions.Action2;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func3;
-import rx.functions.Func6;
 import rx.schedulers.Schedulers;
 
 public class PatternRepository {
 
     public static final String IMPORTED_PATTERN_URIS = "imported_pattern_uris";
     public static final String READ_ONLY_PATTERNS = "READ_ONLY_PATTERNS";
-    private static final float DEGREES_IN_A_CIRCLE = 360;
-    private static final float DEMO_RADIUS = 512;
+    public static final float DEMO_RADIUS = 512;
+    private static final double DEGREES_IN_A_CIRCLE = 2 * Math.PI;
     private SharedPreferences sharedPreferences;
 
     public PatternRepository(
@@ -56,8 +51,8 @@ public class PatternRepository {
                 .range(3, 8)
                 .flatMap(new Func1<Integer, Observable<PatternMetaData>>() {
                     @Override
-                    public Observable<PatternMetaData> call(Integer numberOfPoints) {
-                        final float unitOfRotation = DEGREES_IN_A_CIRCLE / numberOfPoints;
+                    public Observable<PatternMetaData> call(final Integer numberOfPoints) {
+                        final double unitOfRotation = DEGREES_IN_A_CIRCLE / numberOfPoints;
                         return Observable
                                 .combineLatest(
                                         Observable.just(numberOfPoints + " sided demo object"),
@@ -65,15 +60,15 @@ public class PatternRepository {
 //                                        Observable.just("400,10/800,800/0,800"),
                                         Observable
                                                 .range(1, numberOfPoints)
-                                                .map(new Func1<Integer, Float>() {
+                                                .map(new Func1<Integer, Double>() {
                                                     @Override
-                                                    public Float call(Integer point) {
+                                                    public Double call(Integer point) {
                                                         return unitOfRotation * point;
                                                     }
                                                 })
-                                                .map(new Func1<Float, Pair<BigDecimal, BigDecimal>>() {
+                                                .map(new Func1<Double, Pair<BigDecimal, BigDecimal>>() {
                                                     @Override
-                                                    public Pair<BigDecimal, BigDecimal> call(Float degressOfRotation) {
+                                                    public Pair<BigDecimal, BigDecimal> call(Double degressOfRotation) {
                                                         return new Pair<>(
                                                                 new BigDecimal(DEMO_RADIUS * Math.cos(degressOfRotation))
                                                                         .setScale(4, RoundingMode.HALF_EVEN),
