@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.support.v4.util.Pair;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,9 @@ public class PatternDetailView
     private Matrix viewMatrix = new Matrix();
     private RectF computedPathBounds = new RectF();
     private RectF viewRect = new RectF();
+    private Paint shapePaint;
+    private float sparkX;
+    private float sparkY;
     private Paint writePaint;
 
     public PatternDetailView(Context context) {
@@ -55,12 +59,18 @@ public class PatternDetailView
         addOnAttachStateChangeListener(new OnAttachStateChangeListener() {
             @Override
             public void onViewAttachedToWindow(final View view) {
-                writePaint = new Paint() {{
+                shapePaint = new Paint() {{
                     setAntiAlias(false);
                     setStyle(Style.STROKE);
                     setStrokeWidth(36f);
                     setColor(Color.WHITE);
                     setAlpha(255);
+                }};
+
+                writePaint = new Paint() {{
+                    setStyle(Style.STROKE);
+                    setStrokeWidth(128f);
+                    setColor(Color.YELLOW);
                 }};
 
                 viewModel = ((LayoutActivityGalleryBinding) DataBindingUtil.findBinding(PatternDetailView.this))
@@ -74,6 +84,12 @@ public class PatternDetailView
 
             }
         });
+    }
+
+    public void showSparkAt(float sparkX, float sparkY) {
+        this.sparkX = sparkX;
+        this.sparkY = sparkY;
+        invalidate();
     }
 
     @Override
@@ -100,7 +116,11 @@ public class PatternDetailView
         );
 
         canvas.concat(viewMatrix);
-        canvas.drawPath(viewPath, writePaint);
+        canvas.drawPath(viewPath, shapePaint);
+        if (sparkX != 0 || sparkY != 0) {
+            Log.d(getClass().getSimpleName(),"got a spark");
+            canvas.drawPoint(sparkX, sparkY, writePaint);
+        }
     }
 
     public void setPath(Path path) {

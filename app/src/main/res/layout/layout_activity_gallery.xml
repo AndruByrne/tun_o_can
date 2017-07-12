@@ -25,6 +25,10 @@
             name="detailActionHandlers"
             type="com.anthropicandroid.patterngallery.presenters.DetailActionHandlers" />
 
+        <variable
+            name="bottomNavActionHandlers"
+            type="com.anthropicandroid.patterngallery.presenters.BottomNavActionHandlers" />
+
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -230,22 +234,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
-                android:drawableTop="@drawable/ic_measure_black_24dp"
-                />
+                android:drawableTop="@drawable/ic_measure_black_24dp" />
 
             <Button
                 android:id="@+id/document"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:drawableTint="@color/colorLightText"
-                android:drawableTop="@drawable/ic_tool_black_24dp" />
-
-            <Button
-                android:id="@+id/all_done"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -257,7 +249,7 @@
                 />
 
             <Button
-                android:id="@+id/forward"
+                android:id="@+id/all_done"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -265,8 +257,20 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
-                android:drawableTop="@drawable/ic_done_all_black_24dp"
+                android:drawableTop="@drawable/ic_tool_black_24dp"
                 />
+
+            <Button
+                android:id="@+id/forward"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:onClick="@{bottomNavActionHandlers::writePatternToDevice}"
+                android:drawableTint="@color/colorLightText"
+                android:drawableTop="@drawable/ic_done_all_black_24dp" />
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
