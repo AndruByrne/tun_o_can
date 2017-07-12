@@ -8,21 +8,15 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
-import android.widget.ImageView;
 
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
@@ -104,29 +98,17 @@ public class GalleryToDetailAnimator
             float trueImageRatio,
             Rect mattingTargetRect
     ) {
-        final SVGItemViewModel svgItemViewModel = ((LayoutActivityGalleryBinding) DataBindingUtil.findBinding(detailImage)).getSvgItemViewModel();
-
         // Ratio of image starting width to screen width
         final float widthRatio = (float) tappedRect.width()
                 / ((float) detailImage.getWidth());
 
-        Log.d(getClass().getSimpleName(), "defining detail image anim");
-        float galleryPadding = dipToPixels(displayMetrics, resources.getDimension(R.dimen.gallery_padding));
-        detailImage.setTranslationX(galleryPadding + tappedRect.left - detailImage.getLeft());
-        detailImage.setTranslationY(galleryPadding + tappedRect.top - detailImage.getTop());
+        float galleryPadding = resources.getDimension(R.dimen.gallery_padding);
+        detailImage.setTranslationX(2 * galleryPadding + tappedRect.left - detailImage.getLeft());
+        detailImage.setTranslationY(2 * galleryPadding + tappedRect.top - detailImage.getTop());
         detailImage.setTranslationZ(-4);
         detailImage.setScaleX(widthRatio);
         detailImage.setScaleY(widthRatio);
         detailImage.setVisibility(View.VISIBLE);
-
-        final Paint paint = new Paint() {{
-            setAntiAlias(false);
-            setStyle(Style.STROKE);
-            setStrokeWidth(4f);
-            setColor(Color.WHITE);
-            setAlpha(255);
-        }};
-
 
         detailImage.animate()
                 .translationY(0)
@@ -139,29 +121,7 @@ public class GalleryToDetailAnimator
                         / 4)
                 .setDuration(resources.getInteger(R.integer.duration_gallery_to_detail)
                         * 3 / 4)
-                .setInterpolator(new LinearInterpolator())
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        Log.d(getClass().getSimpleName(), "image animation ended");
-                        super.onAnimationEnd(animation);
-                        Canvas canvas = new Canvas(Bitmap.createBitmap((int) detailImage.getWidth(), (int) detailImage.getHeight(), Bitmap.Config.ARGB_8888));
-                        canvas.save();
-                        canvas.drawPath(svgItemViewModel.getPath(), paint);
-                        canvas.translate(detailImage.getLeft(), detailImage.getTop());
-                        detailImage.draw(canvas);
-                        canvas.restore();
-
-                    }
-
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                        super.onAnimationStart(animation);
-                        Log.d(getClass().getSimpleName(), "image animation started");
-                        Log.d(getClass().getSimpleName(), "Y: " + detailImage.getY());
-                        Log.d(getClass().getSimpleName(), "Y trans: " + detailImage.getTranslationY());
-                    }
-                });
+                .setInterpolator(new LinearInterpolator());
     }
 
     private void detailMattingAnim(

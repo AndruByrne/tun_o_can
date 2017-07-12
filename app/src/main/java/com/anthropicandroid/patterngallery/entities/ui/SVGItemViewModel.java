@@ -8,6 +8,7 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.anthropicandroid.patterngallery.BR;
+import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 import com.google.common.collect.Lists;
 
 import rx.Observable;
@@ -62,7 +63,6 @@ public class SVGItemViewModel
     public void setPathPoints(
             String pathPoints
     ) {
-        Log.d(getClass().getSimpleName(), "setting p[ath points");
         this.pathPoints = pathPoints;
         this.path = Observable
                 .just(pathPoints)
@@ -85,6 +85,13 @@ public class SVGItemViewModel
                         return s.split(",");
                     }
                 })
+//                .map(new Func1<String[], String[]>() {
+//                    @Override
+//                    public String[] call(String[] strings) {
+//                        if(!strings[0].isEmpty()) return strings;
+//                        else return new String[]{""+PatternRepository.DEMO_RADIUS, "0"};
+//                    }
+//                })
                 .map(new Func1<String[], float[]>() {
                     @Override
                     public float[] call(String[] strings) {
@@ -98,6 +105,7 @@ public class SVGItemViewModel
                     @Override
                     public Path call() {
                         Path path = new Path();
+                        path.moveTo(PatternRepository.DEMO_RADIUS, 0);
                         return path;  // TODO: play the first path in a Move
                     }
                 }, new Action2<Path, float[]>() {
@@ -108,7 +116,8 @@ public class SVGItemViewModel
                 })
                 .toBlocking()
                 .first();
-        Log.d(getClass().getSimpleName(), "Created path, is it empyty? "+path.isEmpty());
+
+
         PathMeasure pathMeasure = new PathMeasure(path, false);
         Log.d(getClass().getSimpleName(), "path length: "+pathMeasure.getLength());
     }

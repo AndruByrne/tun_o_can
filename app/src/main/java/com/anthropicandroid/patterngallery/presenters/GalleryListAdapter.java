@@ -40,27 +40,27 @@ public class GalleryListAdapter
             "numSpans",
             "patternGroup"})
     public static void setEntries(
-            GalleryActivityComponent galleryActivityComponent,
+            final GalleryActivityComponent galleryActivityComponent,
             RecyclerView view,
-            Integer numSpans,
-            String patternGroup
+            final Integer numSpans,
+            final String patternGroup
     ) {
-        Activity  activity  = (Activity) view.getContext();
-        Resources resources = activity.getResources();
-
-        // create and populate list adapter and give it to the view
-        view.setAdapter(new GalleryListAdapter(
-                galleryActivityComponent.getGalleryActionHandlers(),
-                galleryActivityComponent.getRepository().observePatterns(patternGroup).take(8),
-                (int) (galleryActivityComponent.getScreenWidthInPx() / numSpans  // Max width for a child
-                        - resources.getDimension(R.dimen.gallery_padding) * 2 / numSpans  // Account for padding across spans
-                        * galleryActivityComponent.getDisplayMetrics().xdpi / 160),  // Px-to-dp conversion factor
-                resources));
-
         view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
             public void onViewAttachedToWindow(View view) {
                 Log.d(TAG, "attached gallery list view");
+                Activity  activity  = (Activity) view.getContext();
+                Resources resources = activity.getResources();
+
+                // create and populate list adapter and give it to the view
+                ((RecyclerView)view).setAdapter(new GalleryListAdapter(
+                        galleryActivityComponent.getGalleryActionHandlers(),
+                        galleryActivityComponent.getRepository().observePatterns(patternGroup).take(8),
+                        (int) (galleryActivityComponent.getScreenWidthInPx() / numSpans  // Max width for a child
+                                - resources.getDimension(R.dimen.gallery_padding) * 2 / numSpans  // Account for padding across spans
+                                * galleryActivityComponent.getDisplayMetrics().xdpi / 160),  // Px-to-dp conversion factor
+                        resources));
+
             }
 
             @Override
