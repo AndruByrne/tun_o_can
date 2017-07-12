@@ -9,6 +9,7 @@ import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 import com.anthropicandroid.patterngallery.interactors.startup.PatternGalleryApplication;
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
+import com.anthropicandroid.patterngallery.presenters.BottomNavActionHandlers;
 import com.anthropicandroid.patterngallery.presenters.DetailActionHandlers;
 import com.anthropicandroid.patterngallery.presenters.GalleryActionHandlers;
 
@@ -25,6 +26,7 @@ public class GalleryActivity
     @Inject PatternRepository patternRepository;
     @Inject GalleryActionHandlers galleryActionHandlers;
     @Inject DetailActionHandlers detailActionHandlers;
+    @Inject BottomNavActionHandlers bottomNavActionHandlers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class GalleryActivity
         activityGalleryBinding.setGalleryActionHandlers(galleryActionHandlers);
         // and detail view
         activityGalleryBinding.setDetailActionHandlers(detailActionHandlers);
+        activityGalleryBinding.setBottomNavActionHandlers(bottomNavActionHandlers);
         activityGalleryBinding.setSvgItemViewModel(new SVGItemViewModel());
         // set app bar with relative layout base
         setSupportActionBar(activityGalleryBinding.appBar);
