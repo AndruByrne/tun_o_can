@@ -41,7 +41,9 @@ public class DetailToGalleryAnimator {
         this.screenWidth = screenWidth;
     }
 
-    public void storeRecentRect(Rect currentRect) { this.currentRect = currentRect; }
+    public void storeRecentRect(Rect currentRect) {
+        this.currentRect = currentRect;
+    }
 
     public boolean returnToGallery(
             LayoutActivityGalleryBinding binding
@@ -55,7 +57,7 @@ public class DetailToGalleryAnimator {
         animatorSet.play(getImageAnim(binding.svgDetail, currentRect))
                 .with(getMattingAnim(binding.alphaDetailMattingLayout, currentRect));
         animatorSet.setDuration(resources.getInteger(R.integer
-                                                             .duration_detail_to_gallery_animator));
+                .duration_detail_to_gallery_animator));
         animatorSet.addListener(getActionListener(binding));
         animatorSet.start();
         return true;
@@ -93,17 +95,16 @@ public class DetailToGalleryAnimator {
     ) {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet
-                .play(ObjectAnimator.ofFloat(imageView, View.Z, 12, 8))
-                .with(ObjectAnimator.ofFloat(
+                .play(ObjectAnimator.ofFloat(
                         imageView,
-                        View.X,
+                        View.TRANSLATION_X,
                         0,
-                        currentRect.left - screenWidth / 2))
+                        currentRect.left - imageView.getLeft()))
                 .with(ObjectAnimator.ofFloat(
                         imageView,
-                        View.Y,
-                        statusBarHeight,
-                        currentRect.top + currentRect.height() - imageViewHeight / 2))
+                        View.TRANSLATION_Y,
+                        0,
+                        currentRect.top - imageView.getTop()))
                 .with(ObjectAnimator.ofFloat(imageView, View.SCALE_X, 0))
                 .with(ObjectAnimator.ofFloat(imageView, View.SCALE_Y, 0));
         animatorSet.setInterpolator(new LinearInterpolator());
