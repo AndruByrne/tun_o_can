@@ -73,10 +73,6 @@ public class PatternDetailView
                     setColor(Color.YELLOW);
                 }};
 
-                viewModel = ((LayoutActivityGalleryBinding) DataBindingUtil.findBinding(PatternDetailView.this))
-                        .getSvgItemViewModel();
-
-                viewPath = viewModel.getPath();
             }
 
             @Override
@@ -97,30 +93,32 @@ public class PatternDetailView
         super.onDraw(canvas);
         canvas.drawColor(Color.TRANSPARENT);
 
-        int widthPadding = getWidth() / 5;
-        int heightPadding = getHeight() / 5;
+        if(viewPath != null) {
+            int widthPadding = getWidth() / 5;
+            int heightPadding = getHeight() / 5;
 
-        viewMatrix.reset();
-        viewPath.computeBounds(computedPathBounds, true);
+            viewMatrix.reset();
+            viewPath.computeBounds(computedPathBounds, true);
 
-        viewRect.set(
-                (float) (widthPadding),
-                (float) (heightPadding),
-                (float) (widthPadding * 4),
-                (float) (heightPadding * 4));
+            viewRect.set(
+                    (float) (widthPadding),
+                    (float) (heightPadding),
+                    (float) (widthPadding * 4),
+                    (float) (heightPadding * 4));
 
-        boolean b = viewMatrix.setRectToRect(
-                computedPathBounds,
-                viewRect,
-                Matrix.ScaleToFit.FILL
-        );
+            boolean b = viewMatrix.setRectToRect(
+                    computedPathBounds,
+                    viewRect,
+                    Matrix.ScaleToFit.FILL
+            );
 
-        canvas.concat(viewMatrix);
-        canvas.drawPath(viewPath, shapePaint);
-        if (sparkX != 0 || sparkY != 0) {
-            Log.d(getClass().getSimpleName(),"got a spark");
-            canvas.drawPoint(sparkX, sparkY, writePaint);
+            canvas.concat(viewMatrix);
+
+            canvas.drawPath(viewPath, shapePaint);
+            if (sparkX != 0 || sparkY != 0) canvas
+                    .drawPoint(sparkX, sparkY, writePaint);
         }
+
     }
 
     public void setPath(Path path) {
