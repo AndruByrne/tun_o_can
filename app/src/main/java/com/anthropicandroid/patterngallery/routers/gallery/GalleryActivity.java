@@ -54,7 +54,6 @@ public class GalleryActivity
         // and detail view
         activityGalleryBinding.setDetailActionHandlers(detailActionHandlers);
         activityGalleryBinding.setBottomNavActionHandlers(bottomNavActionHandlers);
-        activityGalleryBinding.setSvgItemViewModel(new SVGItemViewModel());
         // set app bar with relative layout base
         setSupportActionBar(activityGalleryBinding.appBar);
         activityGalleryBinding.appBar.setContentInsetsAbsolute(0, 0);

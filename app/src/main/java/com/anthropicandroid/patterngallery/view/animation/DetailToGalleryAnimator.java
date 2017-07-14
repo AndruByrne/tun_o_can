@@ -118,7 +118,6 @@ public class DetailToGalleryAnimator {
             public void onAnimationEnd(Animator animation) {
                 binding.alphaDetailMattingLayout.setVisibility(View.GONE);
                 binding.svgDetail.setVisibility(View.GONE);
-//                binding.getSvgItemViewModel().setPathPoints("");
                 super.onAnimationEnd(animation);
             }
 
