@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -110,6 +111,8 @@ public class GalleryToDetailAnimator
         detailImage.setScaleY(widthRatio);
         detailImage.setVisibility(View.VISIBLE);
 
+        final Rect bounds = new Rect();
+
         detailImage.animate()
                 .translationY(0)
                 .translationX(0)
@@ -121,7 +124,21 @@ public class GalleryToDetailAnimator
                         / 4)
                 .setDuration(resources.getInteger(R.integer.duration_gallery_to_detail)
                         * 3 / 4)
-                .setInterpolator(new LinearInterpolator());
+                .setInterpolator(new LinearInterpolator())
+        .setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Log.d(TAG,"svg detail animation ended");
+                detailImage.getGlobalVisibleRect(bounds);
+                Log.d(TAG, "visible rect: "+bounds.toShortString());
+                super.onAnimationEnd(animation);
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+            }
+        });
     }
 
     private void detailMattingAnim(

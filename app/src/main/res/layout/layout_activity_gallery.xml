@@ -18,8 +18,12 @@
             type="com.anthropicandroid.patterngallery.presenters.GalleryActionHandlers" />
 
         <variable
-            name="svgItemViewModel"
-            type="com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel" />
+            name="detailName"
+            type="java.lang.String"/>
+
+        <variable
+            name="detailPath"
+            type="android.graphics.Path"/>
 
         <variable
             name="detailActionHandlers"
@@ -108,26 +112,13 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/gallery_grid"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:minHeight="90dp"
-            android:orientation="vertical"
-            android:padding="@dimen/gallery_padding"
-            app:layoutManager="android.support.v7.widget.StaggeredGridLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:numSpans="@{Integer.valueOf(2)}"
-            app:patternGroup="@{svgGalleryViewModel.patternGroup}"
-            app:spanCount="2" />
-
         <RelativeLayout
             android:id="@+id/alpha_detail_matting_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimaryDark"
             android:paddingTop="?android:attr/actionBarSize"
+            android:clickable="true"
             android:visibility="invisible">
 
             <!--Readouts for tools or polar/carteisan coordinates-->
@@ -213,7 +204,22 @@
             android:elevation="14dp"
             app:layout_anchor="@id/root_app_bar_layout"
             app:layout_anchorGravity="bottom|center_vertical"
-            app:svgDetailPath="@{svgItemViewModel.path}" />
+            app:svgDetailPath="@{detailPath}"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gallery_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:minHeight="90dp"
+            android:orientation="vertical"
+            android:padding="@dimen/gallery_padding"
+            app:layoutManager="android.support.v7.widget.StaggeredGridLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:numSpans="@{Integer.valueOf(2)}"
+            app:patternGroup="@{svgGalleryViewModel.patternGroup}"
+            app:spanCount="2" />
 
         <LinearLayout
             android:id="@+id/bottom_nav_bar"
@@ -234,7 +240,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
-                android:drawableTop="@drawable/ic_measure_black_24dp" />
+                android:drawableTop="@drawable/ic_measure_black_24dp"
+                android:onClick="@{bottomNavActionHandlers::valueIncreaser}" />
 
             <Button
                 android:id="@+id/document"
@@ -245,8 +252,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
-                android:drawableTop="@drawable/ic_reverse_black_24dp"
-                />
+                android:drawableTop="@drawable/ic_reverse_horiz_black_24dp"
+                android:onClick="@{bottomNavActionHandlers::reverseDirection}" />
 
             <Button
                 android:id="@+id/all_done"
@@ -258,7 +265,7 @@
                 android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
                 android:drawableTop="@drawable/ic_tool_black_24dp"
-                />
+                android:onClick="@{bottomNavActionHandlers::selectTool}" />
 
             <Button
                 android:id="@+id/forward"
@@ -268,9 +275,9 @@
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:onClick="@{bottomNavActionHandlers::writePatternToDevice}"
                 android:drawableTint="@color/colorLightText"
-                android:drawableTop="@drawable/ic_done_all_black_24dp" />
+                android:drawableTop="@drawable/ic_done_all_black_24dp"
+                android:onClick="@{bottomNavActionHandlers::writePatternToDevice}" />
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>

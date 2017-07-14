@@ -8,6 +8,7 @@ import android.graphics.PathMeasure;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.patterngallery.view.PatternDetailView;
@@ -36,7 +37,7 @@ public class BottomNavActionHandlers {
         final Button abscissaBox = binding.abscissaBox;
         final Button ordinalBox = binding.ordinalBox;
 
-        Path path = binding.getSvgItemViewModel().getPath();
+        Path path = binding.getDetailPath();
         Observable
                 .just(path)
                 .filter(new Func1<Path, Boolean>() {
@@ -71,7 +72,6 @@ public class BottomNavActionHandlers {
                                         return pos;
                                     }
                                 });
-
                     }
                 })
                 .subscribeOn(Schedulers.computation())
@@ -95,5 +95,17 @@ public class BottomNavActionHandlers {
                         svgDetail.showSparkAt(floats[0], floats[1]);
                     }
                 });
+    }
+
+    public void selectTool(View view){
+        Toast.makeText(view.getContext(), "tool selection not yet implemented", Toast.LENGTH_SHORT).show();
+    }
+
+    public void reverseDirection(View view){
+        Toast.makeText(view.getContext(), "direction reversal not yet implemented", Toast.LENGTH_SHORT).show();
+    }
+
+    public void valueIncreaser(View view){
+        Toast.makeText(view.getContext(), "value changing not yet implemented", Toast.LENGTH_SHORT).show();
     }
 }

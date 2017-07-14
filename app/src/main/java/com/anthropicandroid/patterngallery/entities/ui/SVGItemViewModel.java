@@ -63,12 +63,14 @@ public class SVGItemViewModel
     public void setPathPoints(
             String pathPoints
     ) {
+        Log.d(getClass().getSimpleName(), "setting path points");
         this.pathPoints = pathPoints;
         this.path = Observable
                 .just(pathPoints)
                 .doOnCompleted(new Action0() {
                     @Override
                     public void call() {
+                        Log.d(getClass().getSimpleName(), "updating path");
                         notifyPropertyChanged(BR.pathPoints);
                         notifyPropertyChanged(BR.path);
                     }
@@ -119,7 +121,7 @@ public class SVGItemViewModel
 
 
         PathMeasure pathMeasure = new PathMeasure(path, false);
-        Log.d(getClass().getSimpleName(), "path length: "+pathMeasure.getLength());
+        Log.d(getClass().getSimpleName(), "path length: " + pathMeasure.getLength());
     }
 
     @Bindable
@@ -168,6 +170,7 @@ public class SVGItemViewModel
 
     @Bindable
     public Path getPath() {
+        Log.d(getClass().getSimpleName(), "giving path");
         return path == null ? new Path() : path;
     }
 }

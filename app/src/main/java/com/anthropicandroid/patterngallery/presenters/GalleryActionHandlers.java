@@ -6,7 +6,9 @@ package com.anthropicandroid.patterngallery.presenters;
 
 import android.app.Application;
 import android.databinding.DataBindingUtil;
+import android.graphics.Path;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,7 +65,9 @@ final public class GalleryActionHandlers {
         // measure current view
         tappedView.getGlobalVisibleRect(tappedViewBounds);
 
-        activityGalleryBinding.setSvgItemViewModel(svgItemViewModel);
+        Path path = svgItemViewModel.getPath();
+        activityGalleryBinding.setDetailPath(path);
+        activityGalleryBinding.setDetailName(svgItemViewModel.getName());
 
         //  TODO: discuss the identity between the animator and the handlers; maybe a useful concept
         animator.zoomToReplace(
