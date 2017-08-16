@@ -13,8 +13,6 @@ import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import io.realm.Realm;
-import rx.Observable;
 
 @Singleton //  Singleton is the annotation for the Application scope
 @Component(modules = {

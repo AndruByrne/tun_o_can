@@ -5,6 +5,7 @@
     <color name="colorAccent">#ffd600</color>
     <color name="colorDarkText">#000000</color>
     <color name="colorLightText">#64dd17</color>
+    <color name="colorLightMatteGray">#bdbdbd</color>
     <color name="colorMatteGray">#424242</color>
     <color name="colorOrange">#ff6d00</color>
     <color name="colorLightGreen">#64dd17</color>

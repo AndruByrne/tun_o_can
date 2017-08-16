@@ -18,18 +18,17 @@
         android:id="@+id/item_image_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:padding="10dp"
         android:elevation="8dp"
         >
 
-        <ImageView
+        <com.anthropicandroid.patterngallery.view.PatternView
             android:id="@+id/item_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:onTouch="@{galleryActionHandlers::gridTouched}"
             android:contentDescription="@{viewModel.name}"
-            android:scaleType="fitXY"
-            app:svgItemViewModel="@{viewModel}"
+            android:scaleType="matrix"
             />
     </FrameLayout>
 </layout>

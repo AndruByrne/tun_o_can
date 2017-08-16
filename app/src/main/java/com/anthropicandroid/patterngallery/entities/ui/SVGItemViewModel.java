@@ -99,13 +99,4 @@ public class SVGItemViewModel
         notifyPropertyChanged(BR.maxChildWidth);
     }
 
-    @Bindable
-    public Drawable getDrawable() {
-        return drawable;
-    }
-
-    public void setDrawable(Drawable drawable) {
-        this.drawable = drawable;
-        notifyPropertyChanged(BR.drawable);
-    }
 }
