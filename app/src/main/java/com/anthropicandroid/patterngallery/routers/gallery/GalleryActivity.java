@@ -4,16 +4,13 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
-import com.anthropicandroid.patterngallery.interactors.PatternRepository;
-import com.anthropicandroid.patterngallery.interactors.startup.PatternGalleryApplication;
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
+import com.anthropicandroid.patterngallery.interactors.PatternRepository;
+import com.anthropicandroid.patterngallery.interactors.startup.PatternGalleryApplication;
 import com.anthropicandroid.patterngallery.presenters.BottomNavActionHandlers;
 import com.anthropicandroid.patterngallery.presenters.DetailActionHandlers;
 import com.anthropicandroid.patterngallery.presenters.GalleryActionHandlers;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 

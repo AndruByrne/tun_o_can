@@ -4,7 +4,6 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
-import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.anthropicandroid.patterngallery.BR;
@@ -12,7 +11,6 @@ import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 import com.google.common.collect.Lists;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Action0;
 import rx.functions.Action2;
 import rx.functions.Func0;

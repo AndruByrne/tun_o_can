@@ -1,19 +1,15 @@
 package com.anthropicandroid.patterngallery.view;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.support.v4.util.Pair;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
-import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
 import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
 
 

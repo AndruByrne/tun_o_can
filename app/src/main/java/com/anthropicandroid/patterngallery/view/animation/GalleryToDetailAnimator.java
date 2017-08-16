@@ -21,7 +21,6 @@ import android.view.animation.LinearInterpolator;
 
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
-import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
 import com.anthropicandroid.patterngallery.routers.gallery.BackPressedRepo;
 import com.anthropicandroid.patterngallery.view.PatternDetailView;
 

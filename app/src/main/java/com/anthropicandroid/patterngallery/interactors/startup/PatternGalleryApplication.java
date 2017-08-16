@@ -2,15 +2,15 @@ package com.anthropicandroid.patterngallery.interactors.startup;
 
 import android.app.Application;
 
+import com.anthropicandroid.patterngallery.interactors.RepositoryModule;
 import com.anthropicandroid.patterngallery.presenters.ActionHandlersModule;
 import com.anthropicandroid.patterngallery.routers.ApplicationComponent;
 import com.anthropicandroid.patterngallery.routers.DaggerApplicationComponent;
-import com.anthropicandroid.patterngallery.view.animation.AnimatorModule;
 import com.anthropicandroid.patterngallery.routers.gallery.DaggerGalleryActivityComponent;
 import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityComponent;
 import com.anthropicandroid.patterngallery.routers.gallery.OnBackPressedModule;
-import com.anthropicandroid.patterngallery.interactors.RepositoryModule;
 import com.anthropicandroid.patterngallery.view.ScreenMetricsModule;
+import com.anthropicandroid.patterngallery.view.animation.AnimatorModule;
 
 /*
  * Created by Andrew Brin on 7/12/2016.

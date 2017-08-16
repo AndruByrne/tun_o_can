@@ -2,7 +2,6 @@ package com.anthropicandroid.patterngallery.presenters;
 
 import android.app.Application;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.util.Log;

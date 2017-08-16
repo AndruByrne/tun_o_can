@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutGalleryImageBinding;
 import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
 

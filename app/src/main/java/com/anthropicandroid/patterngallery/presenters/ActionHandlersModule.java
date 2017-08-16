@@ -6,8 +6,8 @@ package com.anthropicandroid.patterngallery.presenters;
 
 import android.app.Application;
 
-import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityScope;
 import com.anthropicandroid.patterngallery.routers.gallery.BackPressedRepo;
+import com.anthropicandroid.patterngallery.routers.gallery.GalleryActivityScope;
 import com.anthropicandroid.patterngallery.view.animation.DetailToGalleryAnimator;
 import com.anthropicandroid.patterngallery.view.animation.GalleryToDetailAnimator;
 
