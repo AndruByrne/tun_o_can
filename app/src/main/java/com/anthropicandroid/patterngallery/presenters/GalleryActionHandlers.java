@@ -35,23 +35,6 @@ final public class GalleryActionHandlers {
         downCatchDetector = new GestureDetector(context, new DownCatch());
     }
 
-    public void selectImageForIndex(
-            int index
-    ) {
-        RecyclerView               galleryGrid   = activityGalleryBinding.galleryGrid;
-        RecyclerView.LayoutManager layoutManager = galleryGrid.getLayoutManager();
-        View                       view          = layoutManager.getChildAt(index);
-        Rect                       rect          = new Rect();
-
-        layoutManager.scrollToPosition(index);
-        view.getGlobalVisibleRect(rect);
-        bindDataAndAnimate(
-                view,
-                rect.centerX(),
-                rect.centerY());
-    }
-
-
     public boolean gridTouched(
             View view,
             MotionEvent motionEvent
