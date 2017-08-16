@@ -6,14 +6,14 @@ package com.anthropicandroid.patterngallery.routers.gallery;
 
 import android.util.DisplayMetrics;
 
-import com.anthropicandroid.patterngallery.routers.ApplicationComponent;
-import com.anthropicandroid.patterngallery.view.animation.AnimatorModule;
-import com.anthropicandroid.patterngallery.view.ScreenMetricsModule;
 import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 import com.anthropicandroid.patterngallery.presenters.ActionHandlersModule;
 import com.anthropicandroid.patterngallery.presenters.BottomNavActionHandlers;
 import com.anthropicandroid.patterngallery.presenters.DetailActionHandlers;
 import com.anthropicandroid.patterngallery.presenters.GalleryActionHandlers;
+import com.anthropicandroid.patterngallery.routers.ApplicationComponent;
+import com.anthropicandroid.patterngallery.view.ScreenMetricsModule;
+import com.anthropicandroid.patterngallery.view.animation.AnimatorModule;
 import com.anthropicandroid.patterngallery.view.animation.GalleryToDetailAnimator;
 import com.anthropicandroid.patterngallery.view.animation.ToolBarFlippingAnimator;
 

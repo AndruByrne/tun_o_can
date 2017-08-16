@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.util.Pair;
-import android.util.Log;
 
 import com.anthropicandroid.patterngallery.entities.interactions.PatternMetaData;
 

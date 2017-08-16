@@ -7,7 +7,6 @@ package com.anthropicandroid.patterngallery.presenters;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Path;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;

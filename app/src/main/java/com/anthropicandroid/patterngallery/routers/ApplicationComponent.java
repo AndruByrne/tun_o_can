@@ -6,9 +6,9 @@ package com.anthropicandroid.patterngallery.routers;
 
 import android.app.Application;
 
-import com.anthropicandroid.patterngallery.interactors.startup.AppModule;
-import com.anthropicandroid.patterngallery.interactors.RepositoryModule;
 import com.anthropicandroid.patterngallery.interactors.PatternRepository;
+import com.anthropicandroid.patterngallery.interactors.RepositoryModule;
+import com.anthropicandroid.patterngallery.interactors.startup.AppModule;
 
 import javax.inject.Singleton;
 
