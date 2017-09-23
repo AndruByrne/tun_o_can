@@ -26,7 +26,6 @@ public class DetailToGalleryAnimator {
     private int imageViewHeight;
     private int statusBarHeight;
     private int screenWidth;
-    private LayoutActivityGalleryBinding binding;
 
     public DetailToGalleryAnimator(
             Resources resources,
@@ -55,7 +54,7 @@ public class DetailToGalleryAnimator {
         animatorSet.play(getImageAnim(binding.alphaDetailImageView, currentRect))
                 .with(getMattingAnim(binding.alphaDetailMattingLayout, currentRect));
         animatorSet.setDuration(resources.getInteger(R.integer.duration_detail_to_gallery_animator));
-        animatorSet.addListener(getActionListener());
+        animatorSet.addListener(getActionListener(binding));
         animatorSet.start();
         binding.alphaDetailImageView.setImageBitmap(null);
         return true;
@@ -111,7 +110,9 @@ public class DetailToGalleryAnimator {
     }
 
     @NonNull
-    private AnimatorListenerAdapter getActionListener() {
+    private AnimatorListenerAdapter getActionListener(
+            final LayoutActivityGalleryBinding binding
+    ) {
         return new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
