@@ -44,7 +44,7 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
 
     @Override
     public boolean backPressedConsumed() {
-        return detailToGalleryAnimator.returnToGallery(binding);
+        return binding != null && detailToGalleryAnimator.returnToGallery(binding);
     }
 
 
