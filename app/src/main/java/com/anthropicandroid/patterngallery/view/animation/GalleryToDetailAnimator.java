@@ -12,6 +12,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -99,14 +100,17 @@ public class GalleryToDetailAnimator
         // the X axis is similar; 0 centers a former match_parent shunk to a pint in the middle
         // of the screen, 1/2 screen to the left to start on left side
         int startingLeft = (2 * currentRect.left - targetRect.width() + currentRect.width()) / 2;
-        newImage.setY(startingTop);
+        newImage.setY(currentRect.centerY());
         newImage.setX(startingLeft);
         newImage.setZ(resources.getInteger(R.integer.z_position_detail_image_start));
         newImage.setVisibility(View.VISIBLE);
 
+        Log.d(getClass().getSimpleName(), "animating image with cuurent Rect");
+        Log.d(getClass().getSimpleName(), "centerY: "+ currentRect.centerY());
+
         newImage.animate()
-                .translationY((targetRect.height() - (targetRect.width() / trueImageRatio)) / 2)
-                .translationX(targetRect.left)
+                .translationY(targetRect.centerY() - currentRect.centerY())
+                .translationX(targetRect.centerX() - currentRect.centerX())
                 .translationZ(resources.getInteger(R.integer.z_position_detail_image_emd))
                 .scaleX(1)
                 .scaleY(1)
