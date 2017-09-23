@@ -39,7 +39,7 @@ public class DetailToGalleryAnimator {
         this.screenWidth = screenWidth;
     }
 
-    public void recentRect(Rect currentRect) { this.currentRect = currentRect; }
+    public void storeRecentRect(Rect currentRect) { this.currentRect = currentRect; }
 
     public boolean returnToGallery(
             LayoutActivityGalleryBinding binding
