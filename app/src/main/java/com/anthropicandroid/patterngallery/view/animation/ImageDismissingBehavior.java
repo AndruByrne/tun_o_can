@@ -41,24 +41,30 @@ public class ImageDismissingBehavior extends SwipeDismissBehavior<FrameLayout> {
     public boolean layoutDependsOn(
             CoordinatorLayout parent,
             FrameLayout child,
-            View dependency) {
+            View dependency
+    ) {
         return dependency instanceof ImageView;
     }
 
     @Override
-    public void setSwipeDirection(int direction) {
+    public void setSwipeDirection(
+            int direction
+    ) {
         super.setSwipeDirection(SwipeDismissBehavior.SWIPE_DIRECTION_ANY);
     }
 
+    //  TODO: rip out the swipy-swipes; just give a button
     @Override
     public boolean onDependentViewChanged(
             CoordinatorLayout parent,
             FrameLayout child,
-            View dependency) {
+            View dependency
+    ) {
         // Focus is serving as an excellent flag; I was considering using a data binding var
-        if (!dependency.isFocusable()) return true;
-        // It could happen
-        if (dependency.getVisibility() != View.VISIBLE) return true;
+        if (!dependency.isFocusable() ||
+                // It could happen
+                dependency.getVisibility() != View.VISIBLE
+                ) return true;
 
         if (0 == rentMeasureRight) {
             Rect rentMeasurer = new Rect();
@@ -68,7 +74,8 @@ public class ImageDismissingBehavior extends SwipeDismissBehavior<FrameLayout> {
         }
         dependency.getGlobalVisibleRect(imageMeasurer);
         if (imageMeasurer.right - rentMeasureLeft > 100
-                && rentMeasureRight - imageMeasurer.left > 100) return true;
+                && rentMeasureRight - imageMeasurer.left > 100
+                ) return true;
         rentMeasureRight = 0;
         child.setFocusable(false);
         dependency.setFocusable(false);
@@ -79,7 +86,10 @@ public class ImageDismissingBehavior extends SwipeDismissBehavior<FrameLayout> {
 
     @Override
     public void onDependentViewRemoved(
-            CoordinatorLayout parent, FrameLayout child, View dependency) {
+            CoordinatorLayout parent,
+            FrameLayout child,
+            View dependency
+    ) {
         Log.d(TAG, "dependent view removed");
         GalleryActivityComponent activityComponent = (GalleryActivityComponent) DataBindingUtil
                 .getDefaultComponent();
@@ -108,7 +118,9 @@ public class ImageDismissingBehavior extends SwipeDismissBehavior<FrameLayout> {
     }
 
     @Override
-    public void setDragDismissDistance(float distance) {
+    public void setDragDismissDistance(
+            float distance
+    ) {
         super.setDragDismissDistance(.2f);
     }
 }

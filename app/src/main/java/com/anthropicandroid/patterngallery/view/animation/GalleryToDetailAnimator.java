@@ -34,7 +34,8 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
             BackPressedRepo backPressedRepo,
             DetailToGalleryAnimator detailToGalleryAnimator,
             int statusBarHeight,
-            Resources resources) {
+            Resources resources
+    ) {
         this.backPressedRepo = backPressedRepo;
         this.detailToGalleryAnimator = detailToGalleryAnimator;
         this.statusBarHeight = statusBarHeight;
@@ -54,7 +55,8 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
             float trueImageRatio,
             int rawY,
             int rawX,
-            RecyclerView galleryGrid) {
+            RecyclerView galleryGrid
+    ) {
         // hold a reference to the data binding to request unanimation
         binding = DataBindingUtil.findBinding(galleryGrid);
         // get rect to draw into
@@ -66,24 +68,27 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
         detailImageAnim(currentRect, newImage, trueImageRatio, targetRect);
 
         // get animation for fast matte
-        detailMattingAnim(mattingLayout, targetRect, rawY, rawX);
-
-        detailToGalleryAnimator.recentRect(currentRect);
+        detailMattingAnim(
+                mattingLayout,
+                targetRect,
+                rawY,
+                rawX);
+        detailToGalleryAnimator.storeRecentRect(currentRect);
         backPressedRepo.addHandler(this);
-
-
     }
 
     private void detailImageAnim(
             Rect currentRect,
             ImageView newImage,
             float trueImageRatio,
-            Rect targetRect) {
+            Rect targetRect
+    ) {
         // Ratio of image starting width to screen width
-        float widthRatio = (float) currentRect.width() / targetRect.width();
+        final float widthRatio = (float) currentRect.width() / targetRect.width();
         // image anim init
         newImage.setScaleX(widthRatio);
         newImage.setScaleY(widthRatio);
+        // TODO: use TRANSLATION from the CENTER of the shape!!!
         // half the shrinkage of the image is on the topside; that it is still there is what
         // causes distortion; the final height is determined by the true ratio and the screen width
         int startingTop = currentRect.top -
@@ -147,7 +152,9 @@ public class GalleryToDetailAnimator implements BackPressedRepo.BackPressedHandl
     }
 
     @NonNull
-    private static AnimatorListenerAdapter getTacticalListener(final View view) {
+    private static AnimatorListenerAdapter getTacticalListener(
+            final View view
+    ) {
         return new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

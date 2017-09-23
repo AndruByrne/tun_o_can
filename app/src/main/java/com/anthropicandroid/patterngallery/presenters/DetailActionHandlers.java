@@ -22,14 +22,17 @@ public class DetailActionHandlers {
             Application context,
             BackPressedRepo backPressedRepo,
             GalleryToDetailAnimator galleryToDetailAnimator,
-            DetailToGalleryAnimator detailToGalleryAnimator) {
+            DetailToGalleryAnimator detailToGalleryAnimator
+    ) {
         this.context = context;
         this.backPressedRepo = backPressedRepo;
         this.galleryToDetailAnimator = galleryToDetailAnimator;
         this.detailToGalleryAnimator = detailToGalleryAnimator;
     }
 
-    public void returnToGallery(View view) {
+    public void returnToGallery(
+            View view
+    ) {
         // give animator a hook to the UI
         detailToGalleryAnimator.returnToGallery((LayoutActivityGalleryBinding)DataBindingUtil.findBinding(view));
         // release the g3d anim

@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
@@ -31,7 +32,8 @@ public class DetailToGalleryAnimator {
             Resources resources,
             int statusBarHeight,
             int imageViewHeight,
-            int screenWidth) {
+            int screenWidth
+    ) {
         this.resources = resources;
         this.imageViewHeight = imageViewHeight;
         this.statusBarHeight = statusBarHeight;
@@ -40,9 +42,14 @@ public class DetailToGalleryAnimator {
 
     public void recentRect(Rect currentRect) { this.currentRect = currentRect; }
 
-    public boolean returnToGallery(LayoutActivityGalleryBinding binding) {
-        this.binding = binding;
-        if (currentRect == null || binding == null) return false;
+    public boolean returnToGallery(
+            LayoutActivityGalleryBinding binding
+    ) {
+        if (currentRect == null || binding == null)
+        {
+            Log.w(getClass().getSimpleName(), "unexpected state while returning to gallery");
+            return false;
+        }
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(getImageAnim(binding.alphaDetailImageView, currentRect))
@@ -51,12 +58,13 @@ public class DetailToGalleryAnimator {
         animatorSet.addListener(getActionListener());
         animatorSet.start();
         binding.alphaDetailImageView.setImageBitmap(null);
-
-
         return true;
     }
 
-    private AnimatorSet getMattingAnim(FrameLayout frameLayout, Rect currentRect) {
+    private AnimatorSet getMattingAnim(
+            FrameLayout frameLayout,
+            Rect currentRect
+    ) {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet
                 .play(ObjectAnimator.ofFloat(
@@ -79,7 +87,10 @@ public class DetailToGalleryAnimator {
         return animatorSet;
     }
 
-    private AnimatorSet getImageAnim(ImageView imageView, Rect currentRect) {
+    private AnimatorSet getImageAnim(
+            ImageView imageView,
+            Rect currentRect
+    ) {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet
                 .play(ObjectAnimator.ofFloat(imageView, View.Z, 12, 8))
