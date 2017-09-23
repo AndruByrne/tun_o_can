@@ -45,7 +45,10 @@ final public class GalleryActionHandlers {
         View view = layoutManager.getChildAt(index);
         Rect rect = new Rect();
         view.getGlobalVisibleRect(rect);
-        bindDataAndAnimate(view, rect.left+rect.width()/2, rect.top+rect.height()/2);
+        bindDataAndAnimate(
+                view,
+                rect.centerX(),
+                rect.centerY());
     }
 
 
