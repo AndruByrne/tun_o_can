@@ -43,6 +43,7 @@ public class BottomNavActionHandlers {
                     @Override
                     public Boolean call(Path path) {
                         boolean empty = path.isEmpty();
+
                         return !empty;
                     }
                 })
