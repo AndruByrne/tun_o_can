@@ -51,6 +51,7 @@ public class BottomNavActionHandlers {
                     public Observable<float[]> call(Path path) {
                         final PathMeasure pathMeasure = new PathMeasure(path, false);
                         final float length = pathMeasure.getLength();
+
                         return Observable
                                 .interval(100, TimeUnit.MILLISECONDS)
                                 .takeUntil(new Func1<Long, Boolean>() {
