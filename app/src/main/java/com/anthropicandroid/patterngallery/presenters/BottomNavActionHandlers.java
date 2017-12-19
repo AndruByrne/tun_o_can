@@ -4,6 +4,7 @@ import android.app.Application;
 import android.databinding.DataBindingUtil;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -111,7 +112,19 @@ public class BottomNavActionHandlers {
             View view,
             MotionEvent motionEvent
     ){
-        Toast.makeText(view.getContext(), "value changing not yet implemented", Toast.LENGTH_SHORT).show();
-        return true;
+        int                          action = MotionEventCompat.getActionMasked(motionEvent);
+        LayoutActivityGalleryBinding binding = DataBindingUtil.findBinding(view);
+
+        switch (action){
+            case MotionEvent.ACTION_DOWN:
+                binding.sliderControlLayout.setVisibility(View.VISIBLE);
+                return true;
+            case MotionEvent.ACTION_UP:
+                binding.sliderControlLayout.setVisibility(View.GONE);
+                return true;
+            default: return false;
+        }
     }
+
+
 }
