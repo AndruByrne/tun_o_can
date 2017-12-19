@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -106,7 +107,11 @@ public class BottomNavActionHandlers {
         Toast.makeText(view.getContext(), "direction reversal not yet implemented", Toast.LENGTH_SHORT).show();
     }
 
-    public void valueIncreaser(View view){
+    public boolean valueIncreaser(
+            View view,
+            MotionEvent motionEvent
+    ){
         Toast.makeText(view.getContext(), "value changing not yet implemented", Toast.LENGTH_SHORT).show();
+        return true;
     }
 }

@@ -280,7 +280,7 @@
                 android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
                 android:drawableTop="@drawable/ic_measure_black_24dp"
-                android:onClick="@{bottomNavActionHandlers::valueIncreaser}"/>
+                android:onTouch="@{bottomNavActionHandlers::valueIncreaser}"/>
 
             <Button
                 android:id="@+id/document"
