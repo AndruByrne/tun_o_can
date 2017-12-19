@@ -82,7 +82,7 @@ public class GalleryListAdapter
                         PatternMetaData o1,
                         PatternMetaData o2
                 ) {
-                    return 0;
+                    return o1.getPathPoints().length()-o2.getPathPoints().length();
                 }
 
                 @Override
