@@ -276,7 +276,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:drawableTint="@color/colorLightText"
-                android:drawableTop="@drawable/ic_done_all_black_24dp"
+                android:drawableTop="@drawable/ic_play_circle_outline_black_24dp"
                 android:onClick="@{bottomNavActionHandlers::writePatternToDevice}" />
         </LinearLayout>
 
