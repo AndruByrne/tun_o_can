@@ -122,6 +122,9 @@ public class BottomNavActionHandlers {
             case MotionEvent.ACTION_UP:
                 binding.sliderControlLayout.setVisibility(View.GONE);
                 return true;
+            case MotionEvent.ACTION_CANCEL:
+                binding.sliderControlLayout.setVisibility(View.GONE);
+                return true;
             default: return false;
         }
     }
