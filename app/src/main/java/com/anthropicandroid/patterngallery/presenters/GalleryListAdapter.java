@@ -155,7 +155,6 @@ public class GalleryListAdapter
                 .subscribe(new Subscriber<PatternMetaData>() {
                     @Override
                     public void onCompleted() {
-                        Log.d(TAG, "pattern observable completed");
                     }
 
                     @Override
@@ -167,7 +166,6 @@ public class GalleryListAdapter
                     @Override
                     public void onNext(PatternMetaData patternMetaData) {
                         patterns.add(patternMetaData);
-                        Log.d(TAG, "pattern observable onNext");
                     }
                 });
     }
@@ -223,7 +221,6 @@ public class GalleryListAdapter
             svgItemViewModel.setLastKnownHeight(400);
             svgItemViewModel.setLastKnownWidth(900);
 
-            Log.d(getClass().getSimpleName(), "at position: "+position+" and the count is: "+patterns.size());
             if (position < patterns.size())
                 assignMetaData(svgItemViewModel, patterns.get(position));
         }
@@ -233,7 +230,6 @@ public class GalleryListAdapter
             SVGItemViewModel svgItemViewModel,
             PatternMetaData patternMetaData
     ) {
-        Log.d(getClass().getSimpleName(), "assigning a data");
         svgItemViewModel.setLastKnownWidth(patternMetaData.getLastKnownWidth());
         svgItemViewModel.setLastKnownHeight(patternMetaData.getLastKnownHeight());
         svgItemViewModel.setPathPoints(patternMetaData.getPathPoints());
