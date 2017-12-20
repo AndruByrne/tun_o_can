@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
+import com.anthropicandroid.patterngallery.entities.ui.SVGGalleryViewModel;
 import com.anthropicandroid.patterngallery.view.PatternDetailView;
 
 import java.math.BigDecimal;
@@ -158,12 +159,15 @@ public class BottomNavActionHandlers
                 sliderVelocityTracker.recycle();
                 return true;
             case MotionEvent.ACTION_MOVE:
+                SVGGalleryViewModel svgGalleryViewModel = binding.getSvgGalleryViewModel();
+
                 sliderVelocityTracker.addMovement(motionEvent);
                 sliderVelocityTracker.computeCurrentVelocity(1000);
-                binding.getSvgGalleryViewModel()
+                svgGalleryViewModel
                        .setYVelocity(VelocityTrackerCompat.getYVelocity(
                                sliderVelocityTracker,
                                pointerId));
+                svgGalleryViewModel.setYPosition(motionEvent.getY());
                 return true;
             default:
                 return false;

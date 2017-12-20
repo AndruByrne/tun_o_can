@@ -13,6 +13,7 @@ public class SVGGalleryViewModel
         extends BaseObservable {
 
     private float yVelocity;
+    private float yPosition;
 
     @Bindable
     public String getPatternGroup() {
@@ -28,4 +29,15 @@ public class SVGGalleryViewModel
     public float getYVelocity() {
         return yVelocity;
     }
+
+    public void setYPosition(float yPosition) {
+        this.yPosition = yPosition;
+        notifyPropertyChanged(BR.yPosition);
+    }
+
+    @Bindable
+    public float getYPosition() {
+        return yPosition;
+    }
+
 }
