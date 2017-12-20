@@ -5,8 +5,10 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.VelocityTrackerCompat;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -28,6 +30,8 @@ import rx.schedulers.Schedulers;
  */
 public class BottomNavActionHandlers
 {
+
+    private VelocityTracker sliderVelocityTracker;
 
     public BottomNavActionHandlers(Application context) {
 
@@ -133,18 +137,33 @@ public class BottomNavActionHandlers
             View view,
             MotionEvent motionEvent
     ) {
-        int                          action  = MotionEventCompat.getActionMasked(motionEvent);
-        LayoutActivityGalleryBinding binding = DataBindingUtil.findBinding(view);
+        LayoutActivityGalleryBinding binding     = DataBindingUtil.findBinding(view);
+        int                          action      = motionEvent.getActionMasked();
+        int                          actionIndex = motionEvent.getActionIndex();
+        int                          pointerId   = motionEvent.getPointerId(actionIndex);
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 binding.sliderControlLayout.setVisibility(View.VISIBLE);
+                if (sliderVelocityTracker == null) sliderVelocityTracker = VelocityTracker.obtain();
+                else sliderVelocityTracker.clear();
+                sliderVelocityTracker.addMovement(motionEvent);
                 return true;
             case MotionEvent.ACTION_UP:
                 binding.sliderControlLayout.setVisibility(View.GONE);
+                sliderVelocityTracker.recycle();
                 return true;
             case MotionEvent.ACTION_CANCEL:
                 binding.sliderControlLayout.setVisibility(View.GONE);
+                sliderVelocityTracker.recycle();
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                sliderVelocityTracker.addMovement(motionEvent);
+                sliderVelocityTracker.computeCurrentVelocity(1000);
+                binding.getSvgGalleryViewModel()
+                       .setYVelocity(VelocityTrackerCompat.getYVelocity(
+                               sliderVelocityTracker,
+                               pointerId));
                 return true;
             default:
                 return false;
