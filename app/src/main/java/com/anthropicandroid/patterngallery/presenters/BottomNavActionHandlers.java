@@ -163,11 +163,10 @@ public class BottomNavActionHandlers
 
                 sliderVelocityTracker.addMovement(motionEvent);
                 sliderVelocityTracker.computeCurrentVelocity(1000);
-                svgGalleryViewModel
-                       .setYVelocity(VelocityTrackerCompat.getYVelocity(
-                               sliderVelocityTracker,
-                               pointerId));
-                svgGalleryViewModel.setYPosition(motionEvent.getY());
+                svgGalleryViewModel.setValue(
+                        VelocityTrackerCompat.getYVelocity(sliderVelocityTracker, pointerId),
+                        motionEvent.getHistorySize() < 1 ? 0 : motionEvent.getHistoricalY(0),
+                        motionEvent.getY());
                 return true;
             default:
                 return false;

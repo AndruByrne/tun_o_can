@@ -131,7 +131,7 @@
                 android:layout_margin="@dimen/detail_readouts_margin"
                 android:background="@drawable/ic_empty_rect_24dp"
                 android:backgroundTint="@color/colorLightText"
-                android:text="1337"
+                android:text="@{String.valueOf(svgGalleryViewModel.sliderValue)}"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/a_o_box_text_size"/>
 

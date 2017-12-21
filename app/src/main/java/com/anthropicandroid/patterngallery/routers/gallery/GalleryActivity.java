@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.anthropicandroid.patterngallery.R;
 import com.anthropicandroid.patterngallery.databinding.LayoutActivityGalleryBinding;
+import com.anthropicandroid.patterngallery.entities.ui.SVGGalleryViewModel;
 import com.anthropicandroid.patterngallery.interactors.PatternRepository;
 import com.anthropicandroid.patterngallery.interactors.startup.PatternGalleryApplication;
 import com.anthropicandroid.patterngallery.presenters.BottomNavActionHandlers;
@@ -46,6 +47,8 @@ public class GalleryActivity
 
         activityGalleryBinding.rootActivityLayout.setCameraDistance(9001 * scale);
 
+        // set view model for gallery (gallery items have their own view model)
+        activityGalleryBinding.setSvgGalleryViewModel(new SVGGalleryViewModel());
         // set action handlers for grid view and app bar
         activityGalleryBinding.setGalleryActionHandlers(galleryActionHandlers);
         // and detail view
