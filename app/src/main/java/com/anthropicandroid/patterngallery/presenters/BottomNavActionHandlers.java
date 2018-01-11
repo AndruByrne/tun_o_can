@@ -153,7 +153,9 @@ public class BottomNavActionHandlers
                 return true;
             case MotionEvent.ACTION_UP:
                 binding.sliderControlLayout.setVisibility(View.GONE);
-                sliderVelocityTracker.recycle();
+                BigDecimal sliderValue = svgGalleryViewModel.clearSliderValue();
+                if (unitOfScreenWidthTouched > 3) svgGalleryViewModel
+                        .setOrdinalValue(sliderValue.toPlainString());
                 return true;
             case MotionEvent.ACTION_CANCEL:
                 binding.sliderControlLayout.setVisibility(View.GONE);
