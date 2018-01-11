@@ -25,10 +25,10 @@ import rx.schedulers.Schedulers;
 
 public class PatternRepository {
 
-    public static final String IMPORTED_PATTERN_URIS = "imported_pattern_uris";
-    public static final String READ_ONLY_PATTERNS = "READ_ONLY_PATTERNS";
-    public static final float DEMO_RADIUS = 512;
-    private static final double DEGREES_IN_A_CIRCLE = 2 * Math.PI;
+    public static final String  IMPORTED_PATTERN_URIS = "imported_pattern_uris";
+    public static final String  READ_ONLY_PATTERNS    = "READ_ONLY_PATTERNS";
+    public static final float   DEMO_RADIUS           = 512;
+    private static final double RADIANS_IN_A_CIRCLE   = 2 * Math.PI;
     private SharedPreferences sharedPreferences;
 
     public PatternRepository(
@@ -51,7 +51,7 @@ public class PatternRepository {
                 .flatMap(new Func1<Integer, Observable<PatternMetaData>>() {
                     @Override
                     public Observable<PatternMetaData> call(final Integer numberOfPoints) {
-                        final double unitOfRotation = DEGREES_IN_A_CIRCLE / numberOfPoints;
+                        final double unitOfRotation = RADIANS_IN_A_CIRCLE / numberOfPoints;
                         return Observable
                                 .combineLatest(
                                         Observable.just(numberOfPoints + " sided demo object"),
@@ -67,11 +67,11 @@ public class PatternRepository {
                                                 })
                                                 .map(new Func1<Double, Pair<BigDecimal, BigDecimal>>() {
                                                     @Override
-                                                    public Pair<BigDecimal, BigDecimal> call(Double degressOfRotation) {
+                                                    public Pair<BigDecimal, BigDecimal> call(Double radiansOfRotation) {
                                                         return new Pair<>(
-                                                                new BigDecimal(DEMO_RADIUS * Math.cos(degressOfRotation))
+                                                                new BigDecimal(DEMO_RADIUS * Math.cos(radiansOfRotation))
                                                                         .setScale(4, RoundingMode.HALF_EVEN),
-                                                                new BigDecimal(DEMO_RADIUS * Math.sin(degressOfRotation))
+                                                                new BigDecimal(DEMO_RADIUS * Math.sin(radiansOfRotation))
                                                                         .setScale(4, RoundingMode.HALF_EVEN));
                                                     }
                                                 })
