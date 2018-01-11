@@ -4,7 +4,6 @@ import android.app.Application;
 import android.databinding.DataBindingUtil;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.VelocityTrackerCompat;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -138,10 +137,12 @@ public class BottomNavActionHandlers
             View view,
             MotionEvent motionEvent
     ) {
-        LayoutActivityGalleryBinding binding     = DataBindingUtil.findBinding(view);
-        int                          action      = motionEvent.getActionMasked();
-        int                          actionIndex = motionEvent.getActionIndex();
-        int                          pointerId   = motionEvent.getPointerId(actionIndex);
+        LayoutActivityGalleryBinding binding                  = DataBindingUtil.findBinding(view);
+        SVGGalleryViewModel          svgGalleryViewModel      = binding.getSvgGalleryViewModel();
+        int                          unitOfScreenWidthTouched = (int) (5 * motionEvent.getX() / binding.galleryGrid.getWidth() % 5) + 1;
+        int                          action                   = motionEvent.getActionMasked();
+        int                          actionIndex              = motionEvent.getActionIndex();
+        int                          pointerId                = motionEvent.getPointerId(actionIndex);
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -159,19 +160,21 @@ public class BottomNavActionHandlers
                 sliderVelocityTracker.recycle();
                 return true;
             case MotionEvent.ACTION_MOVE:
-                SVGGalleryViewModel svgGalleryViewModel = binding.getSvgGalleryViewModel();
-
-                sliderVelocityTracker.addMovement(motionEvent);
-                sliderVelocityTracker.computeCurrentVelocity(1000);
-                svgGalleryViewModel.setValue(
-                        VelocityTrackerCompat.getYVelocity(sliderVelocityTracker, pointerId),
-                        motionEvent.getHistorySize() < 1 ? 0 : motionEvent.getHistoricalY(0),
-                        motionEvent.getY());
+                    // Continue to track movement regardless of X axis position
+                    sliderVelocityTracker.addMovement(motionEvent);
+                    if (unitOfScreenWidthTouched < 4) {
+                        sliderVelocityTracker.computeCurrentVelocity(1000, SVGGalleryViewModel.SLIDER_MAX_VELOCITY);
+                        int historySize = motionEvent.getHistorySize();
+                        svgGalleryViewModel.setSliderValue(
+                                VelocityTrackerCompat.getYVelocity(
+                                        sliderVelocityTracker,
+                                        pointerId),
+                                (historySize < 1 ? 0 : motionEvent.getHistoricalY(historySize - 1)),
+                                motionEvent.getY());
+                    }
                 return true;
             default:
                 return false;
         }
     }
-
-
 }
