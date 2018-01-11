@@ -25,7 +25,6 @@ import rx.schedulers.Schedulers;
 
 public class PatternRepository {
 
-    public static final String  IMPORTED_PATTERN_URIS = "imported_pattern_uris";
     public static final String  READ_ONLY_PATTERNS    = "READ_ONLY_PATTERNS";
     public static final float   DEMO_RADIUS           = 512;
     private static final double RADIANS_IN_A_CIRCLE   = 2 * Math.PI;
@@ -142,98 +141,6 @@ public class PatternRepository {
                     }
                 })
                 .subscribeOn(Schedulers.newThread());
-//        else return Observable
-//                .fromCallable(new Callable<Set<String>>() {
-//                    @Override
-//                    public Set<String> call()
-//                            throws Exception {
-//                        return sharedPreferences.getStringSet(IMPORTED_PATTERN_URIS, new HashSet<String>());
-//                    }
-//                })
-//                .doOnSubscribe(new Action0() {
-//                    @Override
-//                    public void call() {
-//                        Log.d(getClass().getSimpleName(), "incorrect obs subscribed to");
-//                    }
-//                })
-//                .flatMapIterable(new Func1<Set<String>, Iterable<? extends String>>() {
-//                    @Override
-//                    public Iterable<? extends String> call(Set<String> strings) {
-//                        return strings;
-//                    }
-//                })
-//                .flatMap(new Func1<String, Observable<PatternMetaData>>() {
-//                    @Override
-//                    public Observable<PatternMetaData> call(final String uri) {
-//                        return Observable.combineLatest(
-//                                Observable.just(uri),
-//                                Observable
-//                                        .just(uri)
-//                                        .flatMapIterable(new Func1<String, Iterable<? extends String>>() {
-//                                            @Override
-//                                            public Iterable<String> call(String uri) {
-//                                                return Lists.newArrayList(uri.split("/"));
-//                                            }
-//                                        })
-//                                        .last()
-//                                        .map(new Func1<String, String>() {
-//                                            @Override
-//                                            public String call(String s) {
-//                                                return s.substring(0, s.length() - 5);
-//                                            }
-//                                        }),
-//                                Observable.fromCallable(callGetIntForParam(sharedPreferences, uri, "height+")),
-//                                Observable.fromCallable(callGetIntForParam(sharedPreferences, uri, "width+")),
-//                                Observable.fromCallable(callGetBooleanForParam(sharedPreferences, uri, "well_behaved+")),
-//                                Observable.fromCallable(callGetIntForParam(sharedPreferences, uri, "num_permutations+")),
-//                                new Func6<String, String, Integer, Integer, Boolean, Integer, PatternMetaData>() {
-//                                    @Override
-//                                    public PatternMetaData call(
-//                                            final String uri,
-//                                            final String name,
-//                                            final Integer height,
-//                                            final Integer width,
-//                                            final Boolean wellBehaved,
-//                                            final Integer numberOfPermutations
-//                                    ) {
-//                                        return new PatternMetaData() {
-//                                            @Override
-//                                            public String getName() {
-//                                                return name;
-//                                            }
-//
-//                                            @Override
-//                                            public Integer getLastKnownWidth() {
-//                                                return width;
-//                                            }
-//
-//                                            @Override
-//                                            public Integer getLastKnownHeight() {
-//                                                return height;
-//                                            }
-//
-//                                            @Override
-//                                            public String getPathPoints() {
-//                                                return uri;
-//                                            }
-//
-//                                            @Override
-//                                            public Boolean getWellBehaved() {
-//                                                return wellBehaved;
-//                                            }
-//
-//                                            @Override
-//                                            public Integer getNumPermutations() {
-//                                                return numberOfPermutations;
-//                                            }
-//                                        };
-//                                    }
-//                                }
-//                        );
-//                    }
-//                });
-//
-
     }
 
     @NonNull
