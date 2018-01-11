@@ -218,8 +218,8 @@ public class GalleryListAdapter
             svgItemViewModel.setColorResId(bgColors.getResourceId(position % 8, R.color.colorOrange));
             svgItemViewModel.setMaxChildWidth(maxChildWidth);
             svgItemViewModel.setName("Pattern " + position);
-            svgItemViewModel.setLastKnownHeight(400);
-            svgItemViewModel.setLastKnownWidth(900);
+            svgItemViewModel.setLastKnownHeight("400");
+            svgItemViewModel.setLastKnownWidth("900");
 
             if (position < patterns.size())
                 assignMetaData(svgItemViewModel, patterns.get(position));

@@ -8,9 +8,9 @@ public abstract class PatternMetaData {
 
     public abstract String getName();
 
-    public abstract Integer getLastKnownWidth();
+    public abstract String getLastKnownWidth();
 
-    public abstract Integer getLastKnownHeight();
+    public abstract String getLastKnownHeight();
 
     public abstract String getPathPoints();
 

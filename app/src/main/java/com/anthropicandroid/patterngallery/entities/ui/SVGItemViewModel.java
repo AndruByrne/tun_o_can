@@ -24,31 +24,31 @@ public class SVGItemViewModel
 
     private String name;
     private int maxChildWidth;
-    private int lastKnownWidth;
-    private int lastKnownHeight;
+    private String lastKnownWidth;
+    private String lastKnownHeight;
     private String pathPoints;
     private boolean wellBehaved;
     private int colorResId;
     private Path path;
 
     @Bindable
-    public int getLastKnownWidth() {
+    public String getLastKnownWidth() {
         return lastKnownWidth;
     }
 
     public void setLastKnownWidth(
-            int lastKnownWidth
+            String lastKnownWidth
     ) {
         this.lastKnownWidth = lastKnownWidth;
         notifyPropertyChanged(BR.lastKnownWidth);
     }
 
     @Bindable
-    public int getLastKnownHeight() {
+    public String getLastKnownHeight() {
         return lastKnownHeight;
     }
 
-    public void setLastKnownHeight(int lastKnownHeight) {
+    public void setLastKnownHeight(String lastKnownHeight) {
         this.lastKnownHeight = lastKnownHeight;
         notifyPropertyChanged(BR.lastKnownHeight);
     }

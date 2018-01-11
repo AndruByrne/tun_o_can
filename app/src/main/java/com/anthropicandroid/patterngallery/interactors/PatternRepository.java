@@ -112,13 +112,13 @@ public class PatternRepository {
                                                     }
 
                                                     @Override
-                                                    public Integer getLastKnownWidth() {
-                                                        return 20;
+                                                    public String getLastKnownWidth() {
+                                                        return "20";
                                                     }
 
                                                     @Override
-                                                    public Integer getLastKnownHeight() {
-                                                        return 300;
+                                                    public String getLastKnownHeight() {
+                                                        return "300";
                                                     }
 
                                                     @Override
