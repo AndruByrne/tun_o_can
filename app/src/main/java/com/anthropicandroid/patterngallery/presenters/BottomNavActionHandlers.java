@@ -43,9 +43,8 @@ public class BottomNavActionHandlers
         final Button                 abscissaBox = binding.abscissaBox;
         final Button                 ordinalBox  = binding.ordinalBox;
 
-        Path path = binding.getDetailPath();
         Observable
-                .just(path)
+                .just(binding.getDetailPath())
                 .filter(new Func1<Path, Boolean>()
                 {
                     @Override
