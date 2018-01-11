@@ -17,13 +17,14 @@ import com.anthropicandroid.patterngallery.databinding.LayoutGalleryImageBinding
 import com.anthropicandroid.patterngallery.entities.ui.SVGItemViewModel;
 import com.anthropicandroid.patterngallery.view.animation.GalleryToDetailAnimator;
 
-final public class GalleryActionHandlers {
+final public class GalleryActionHandlers
+{
 
     public static final String TAG = GalleryActionHandlers.class.getSimpleName();
-    private GalleryToDetailAnimator animator;
-    private final GestureDetector singleTapUpDetector;
-    private final GestureDetector downCatchDetector;
-    private LayoutActivityGalleryBinding activityGalleryBinding;
+    private       GalleryToDetailAnimator      animator;
+    private final GestureDetector              singleTapUpDetector;
+    private final GestureDetector              downCatchDetector;
+    private       LayoutActivityGalleryBinding activityGalleryBinding;
 
     public GalleryActionHandlers(
             GalleryToDetailAnimator animator,
@@ -55,11 +56,12 @@ final public class GalleryActionHandlers {
             int clickRawY
     ) {
         if (activityGalleryBinding == null) activityGalleryBinding = DataBindingUtil
-                .findBinding((View) tappedView.getParent().getParent());
+                .findBinding((View) tappedView.getParent()
+                                              .getParent());
 
-        LayoutGalleryImageBinding gridItemBinding    = DataBindingUtil.findBinding(tappedView);
-        SVGItemViewModel          svgItemViewModel   = gridItemBinding.getViewModel();
-        Rect                      tappedViewBounds  = new Rect();
+        LayoutGalleryImageBinding gridItemBinding  = DataBindingUtil.findBinding(tappedView);
+        SVGItemViewModel          svgItemViewModel = gridItemBinding.getViewModel();
+        Rect                      tappedViewBounds = new Rect();
 
         // measure current view
         tappedView.getGlobalVisibleRect(tappedViewBounds);
@@ -73,8 +75,8 @@ final public class GalleryActionHandlers {
                 tappedViewBounds,
                 activityGalleryBinding.alphaDetailMattingLayout,
                 activityGalleryBinding.svgDetail,
-                (float) svgItemViewModel.getLastKnownWidth() /
-                        svgItemViewModel.getLastKnownHeight(),
+                Float.valueOf(svgItemViewModel.getLastKnownWidth()) /
+                        Float.valueOf(svgItemViewModel.getLastKnownHeight()),
                 clickRawX,
                 clickRawY,
                 activityGalleryBinding.galleryGrid);
@@ -82,19 +84,27 @@ final public class GalleryActionHandlers {
     }
 
     private class SingleTapUp
-            extends GestureDetector.SimpleOnGestureListener {
+            extends GestureDetector.SimpleOnGestureListener
+    {
         // return true for event we want, and also onDown
         @Override
-        public boolean onSingleTapUp(MotionEvent e) { return true; }
+        public boolean onSingleTapUp(MotionEvent e) {
+            return true;
+        }
 
         @Override
-        public boolean onDown(MotionEvent e) { return true; }
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
     }
 
     private class DownCatch
-            extends GestureDetector.SimpleOnGestureListener {
+            extends GestureDetector.SimpleOnGestureListener
+    {
         // return true for onDown so we can eliminate it
         @Override
-        public boolean onDown(MotionEvent e) { return true; }
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
     }
 }
