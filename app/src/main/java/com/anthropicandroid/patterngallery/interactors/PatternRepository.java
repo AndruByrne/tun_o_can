@@ -36,11 +36,6 @@ public class PatternRepository {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public Observable<VectorDrawableCompat> getImage(final String imageUri) {
-        if (imageUri == null) return Observable.empty();
-        else return Observable.empty();
-    }
-
     // TODO: define setters for changing the metadata of the files; they should require a PatternMetaData object to ensure good metadata accounting
     public Observable<PatternMetaData> observePatterns(
             String uriSet
