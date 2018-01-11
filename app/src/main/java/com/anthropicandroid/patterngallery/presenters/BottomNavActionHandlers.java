@@ -25,6 +25,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+import static java.lang.Math.*;
+
 /*
  * Created by Andrew Brin on 7/17/2016.
  */
@@ -104,17 +106,28 @@ public class BottomNavActionHandlers
 
                     @Override
                     public void onNext(float[] floats) {
-                        abscissaBox.setText(new BigDecimal(
-                                floats[0]).setScale(
-                                2,
-                                BigDecimal.ROUND_DOWN)
-                                          .toString());
-                        ordinalBox.setText(new BigDecimal(
-                                floats[1]).setScale(
-                                2,
-                                BigDecimal.ROUND_DOWN)
-                                          .toString());
-                        svgDetail.showSparkAt(floats[0], floats[1]);
+                        float  xFloat = floats[0];
+                        float  yFloat = floats[1];
+                        double radial = hypot(xFloat, yFloat);
+                        //  This is not the final number we want; it is the degree turn relative to the center of the object, not the machine
+                        double degreesFromOrigin = toDegrees(acos(xFloat / radial));
+
+                        abscissaBox.setText(
+                                new BigDecimal(radial)
+                                        .setScale(
+                                                2,
+                                                BigDecimal.ROUND_DOWN)
+                                        .toString());
+                        ordinalBox.setText(
+                                new BigDecimal(
+                                        0 < yFloat ?
+                                                degreesFromOrigin :
+                                                360 - degreesFromOrigin)
+                                        .setScale(
+                                                2,
+                                                BigDecimal.ROUND_DOWN)
+                                        .toString());
+                        svgDetail.showSparkAt(xFloat, yFloat);
                     }
                 });
     }
@@ -161,18 +174,20 @@ public class BottomNavActionHandlers
                 sliderVelocityTracker.recycle();
                 return true;
             case MotionEvent.ACTION_MOVE:
-                    // Continue to track movement regardless of X axis position
-                    sliderVelocityTracker.addMovement(motionEvent);
-                    if (unitOfScreenWidthTouched < 4) {
-                        sliderVelocityTracker.computeCurrentVelocity(1000, SVGGalleryViewModel.SLIDER_MAX_VELOCITY);
-                        int historySize = motionEvent.getHistorySize();
-                        svgGalleryViewModel.setSliderValue(
-                                VelocityTrackerCompat.getYVelocity(
-                                        sliderVelocityTracker,
-                                        pointerId),
-                                (historySize < 1 ? 0 : motionEvent.getHistoricalY(historySize - 1)),
-                                motionEvent.getY());
-                    }
+                // Continue to track movement regardless of X axis position
+                sliderVelocityTracker.addMovement(motionEvent);
+                if (unitOfScreenWidthTouched < 4) {
+                    sliderVelocityTracker.computeCurrentVelocity(
+                            1000,
+                            SVGGalleryViewModel.SLIDER_MAX_VELOCITY);
+                    int historySize = motionEvent.getHistorySize();
+                    svgGalleryViewModel.setSliderValue(
+                            VelocityTrackerCompat.getYVelocity(
+                                    sliderVelocityTracker,
+                                    pointerId),
+                            (historySize < 1 ? 0 : motionEvent.getHistoricalY(historySize - 1)),
+                            motionEvent.getY());
+                }
                 return true;
             default:
                 return false;
